@@ -1,35 +1,31 @@
-@import './base.css';
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap');
+@import "tailwindcss";
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+
+/* 基本元素設定 */
+* {
+  box-sizing: border-box;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+/* 全站 body 預設字體與樣式 */
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  @apply text-base text-neutral-700 leading-relaxed;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.title {
+  @apply text-xl font-bold leading-7;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.navbtn {
+  @apply px-5 py-3 hover:opacity-70 transition duration-300;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.btn-white {
+  @apply border px-6 py-2 w-fit cursor-pointer transition-all hover:text-white hover:bg-neutral-700;
+}
+
+.btn-dark {
+  @apply border text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:bg-white hover:text-neutral-700;
 }

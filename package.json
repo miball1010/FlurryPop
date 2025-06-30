@@ -9,7 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "axios": "^1.10.0",
+    "gsap": "^3.13.0",
+    "lottie-web": "^5.13.0",
     "pinia": "^2.1.7",
+    "swiper": "^11.2.8",
+    "tailwindcss": "^4.1.10",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
