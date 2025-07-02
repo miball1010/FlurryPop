@@ -1,50 +1,83 @@
 <script setup>
-//1.登入
+import axios from 'axios'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 const router = useRouter()
+import { ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useAdminStore } from '@/stores/adminStore.js'
+const store = useAdminStore()
+const { } = storeToRefs(store)
+const { checkLogin } = store
 
+const admin = ref({
+  username: 'FlurryPop@gmail.com',
+  password: 'FlurryPop'
+})
 
-const account = ref('')
-const password = ref('')
+async function login() {
+  let apiPath = `${import.meta.env.VITE_API}admin/signin`
 
-function login() {
-  router.push('/dashboard/product')
+  try {
+    const res = await axios.post(apiPath, admin.value)
+    console.log(res)
+    if (res.data.success) {
+      console.log("登入成功", res.data)
+      const { token, expired } = res.data
+      document.cookie = `token=${token};expires=${new Date(expired)}`
+      router.push('/dashboard/product')
+    }
+    else {
+      alert(res.data.message)
+    }
+  } catch (err) {
+    alert(err)
+  }
 }
+
+onMounted(async () => {
+  const isLoggedIn = await checkLogin()
+  if (!isLoggedIn) {
+    console.log("未登入")
+    router.push({ path: "/login" })
+  } else {
+    console.log("已登入")
+    router.push('/dashboard/product')
+  }
+})
 </script>
 
 <template>
   <div class="bg-[url('images/bg-2.jpg')] bg-cover bg-center h-screen w-full flex justify-center items-center">
     <div class="w-[90%] max-w-lg bg-white rounded-lg p-10">
-      <div class="flex items-center justify-center gap-3">
+      <div class="flex items-center justify-center gap-3 flex-col sm:flex-row">
         <img src="/images/logo-black.svg" alt="">
         <div class="title">後臺系統</div>
       </div>
 
       <form action="" class="max-w-[350px] mx-auto mt-10">
         <div class="relative">
-          <input type="text" v-model="account" id="account"
-            class="peer w-full border-b pt-7 pb-3 placeholder-transparent focus:outline-none"
-            placeholder="帳號" />
-          <label for="account"
+          <input type="text" v-model="admin.username" id="username" autocomplete="username"
+            class="peer w-full border-b pt-7 pb-3 placeholder-transparent focus:outline-none" placeholder="帳號" />
+          <label for="username"
             class="absolute  left-0 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-7 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
             帳號
           </label>
         </div>
 
         <div class="relative mt-5">
-          <input type="password" v-model="password" id="password"
-            class="peer w-full border-b pt-7 pb-3 placeholder-transparent focus:outline-none"
-            placeholder="密碼" />
+          <input type="password" v-model="admin.password" id="password" autocomplete="current-password"
+            class="peer w-full border-b pt-7 pb-3 placeholder-transparent focus:outline-none" placeholder="密碼" />
           <label for="password"
             class="absolute  left-0 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-7 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
             密碼
           </label>
         </div>
-        <button @click="login"
-          class="btn-white float-right mt-15">
-          登入
-        </button>
+        <div class="mt-15 flex justify-between items-end ">
+          <router-link class="underline text-[#3F88B4] hover:opacity-80" to="/">回到前台</router-link>
+          <button @click.prevent="login" class="btn-white">
+            登入
+          </button>
+        </div>
       </form>
     </div>
   </div>

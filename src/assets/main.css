@@ -11,6 +11,7 @@
 /* 全站 body 預設字體與樣式 */
 body {
   font-family: 'Noto Sans TC', sans-serif;
+  min-width: 300px;
   @apply text-base text-neutral-700 leading-relaxed;
 }
 
@@ -19,7 +20,7 @@ body {
 }
 
 .navbtn {
-  @apply px-5 py-3 hover:opacity-70 transition duration-300;
+  @apply  hover:text-[#3F88B4] transition duration-300;
 }
 
 .btn-white {
