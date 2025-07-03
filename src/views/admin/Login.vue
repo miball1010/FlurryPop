@@ -6,7 +6,7 @@ import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useAdminStore } from '@/stores/adminStore.js'
 const store = useAdminStore()
-const { } = storeToRefs(store)
+const {loadingIsOpen } = storeToRefs(store)
 const { checkLogin } = store
 
 const admin = ref({
@@ -15,6 +15,7 @@ const admin = ref({
 })
 
 async function login() {
+    loadingIsOpen.value = true
   let apiPath = `${import.meta.env.VITE_API}admin/signin`
 
   try {

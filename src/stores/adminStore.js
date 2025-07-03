@@ -12,6 +12,32 @@ export const useAdminStore = defineStore('adminStore', () => {
   //   } catch (err) {
   //      console.error(err)
   //   }
+
+  //Loading
+  const loadingIsOpen = ref(false)
+
+  //通知
+  const message = ref({
+    text: '',
+    status: false,
+    active: false
+  })
+
+  let time = null
+  function pushMessage(success, newMessage) {
+    if (newMessage) {
+      if (message.value.active)
+        clearTimeout(time)
+
+      message.value.text = newMessage
+      message.value.status = success
+      message.value.active = true
+      time = setTimeout(() => {
+        message.value.active = false
+      }, 3000)
+    }
+  }
+
   //登入
   async function checkLogin() {
     const token = getCookie('token')
@@ -59,7 +85,6 @@ export const useAdminStore = defineStore('adminStore', () => {
     isNew.value = New
     if (!isNew.value) {
       NowProduct.value = JSON.parse(JSON.stringify(product))
-      // NowProduct.value = { ...product }
     }
     else {
       NowProduct.value = {
@@ -82,59 +107,44 @@ export const useAdminStore = defineStore('adminStore', () => {
     productIsOpen.value = false
   }
 
-  function addImage() {
-
-  }
-
   async function getProduct() {
+    loadingIsOpen.value = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/products/all`
     try {
       const res = await axios.get(apiPath)
       products.value = res.data.products
+      // console.log(products.value)
+      loadingIsOpen.value = false
     } catch (err) {
       console.error(err)
     }
   }
 
   async function updateProduct() {
+    loadingIsOpen.value = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
     let method = 'post'
     if (!isNew.value) {
       apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${NowProduct.value.id}`
       method = 'put'
     }
-
     try {
       const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
-      console.log(res.data.message)
-
       if (res.data.success) {
         productIsOpen.value = false
         getProduct()
       }
-
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  async function delProduct(product) {
-    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${product.id}`
-    try {
-      const res = await axios.delete(apiPath)
-      if (res.data.success) {
-        getProduct()
-      }
+      pushMessage(res.data.success, res.data.message)
     } catch (err) {
       console.error(err)
     }
   }
 
   return {
-
-    checkLogin,
+    loadingIsOpen, message,
+    pushMessage,checkLogin,
 
     products, productIsOpen, NowProduct, isNew,
-    openProductModal, closeProductModal, addImage, getProduct, updateProduct, delProduct
+    openProductModal, closeProductModal, getProduct, updateProduct
   }
 })

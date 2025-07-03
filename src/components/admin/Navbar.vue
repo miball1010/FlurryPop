@@ -31,7 +31,7 @@ function CloseMenu() {
 </script>
 
 <template>
-    <div class="px-5 py-4 fixed top-0 left-0 bg-white w-full z-10">
+    <div class="px-5 py-4 fixed top-0 left-0 bg-white w-full z-10 shadow-sm">
         <div class="w-full max-w-[1400px] mx-auto flex justify-between items-center">
             <!-- 背景 -->
             <div @click="CloseMenu"
@@ -62,4 +62,10 @@ function CloseMenu() {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media screen and (max-width:375px) {
+    .title {
+        display: none;
+    }
+}
+</style>
