@@ -1,8 +1,4 @@
 <script setup>
-import { storeToRefs } from 'pinia';
-import { useAdminStore } from '@/stores/adminStore.js'
-const store = useAdminStore()
-const { loadingIsOpen } = storeToRefs(store)
 </script>
 
 <template>

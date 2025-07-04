@@ -1,0 +1,47 @@
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+
+export const useGlobalStore = defineStore('globalStore', () => {
+  //Loading
+  const isFullLoading = ref(false)
+  const isInlineLoading = ref(false)
+
+  //通知
+  const message = ref({
+    text: '',
+    status: false,
+    active: false
+  })
+
+  let time = null
+  function pushMessage(success, newMessage) {
+    if (newMessage) {
+      if (message.value.active)
+        clearTimeout(time)
+
+      message.value.text = newMessage
+      message.value.status = success
+      message.value.active = true
+      time = setTimeout(() => {
+        message.value.active = false
+      }, 3000)
+    }
+  }
+  //doubleCheck
+  const confirm = ref({
+    show: false,
+    text: '',
+    item: null
+  })
+
+  function doubleCheck(item) {
+    confirm.value.item = item
+    confirm.value.text = `你確定要刪除${item.title}嗎?`
+    confirm.value.show = true
+  }
+
+  return {
+    isFullLoading, isInlineLoading, message, confirm,
+    pushMessage, doubleCheck
+  }
+})

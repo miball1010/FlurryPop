@@ -1,14 +1,14 @@
 <script setup>
 import Navbar from '@/components/admin/Navbar.vue'
 import ProductModal from '@/components/admin/ProductModal.vue'
-import DoubleCheck from '@/components/DoubleCheck.vue'
-import Message from '@/components/Message.vue'
 
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
 import { useAdminStore } from '@/stores/adminStore.js'
-const store = useAdminStore()
-const { checkLogin } = store
+const adminStore = useAdminStore()
+const { checkLogin } = adminStore
+
 import { onMounted } from 'vue'
 
 onMounted(async () => {
@@ -24,9 +24,7 @@ onMounted(async () => {
 
 <template>
   <Navbar />
-  <DoubleCheck />
   <ProductModal />
-  <Message />
   <div class="bg-gray-100 min-h-screen w-full relative pb-35 sm:pb-50">
     <div class="w-full bg-[url('images/bg-2.jpg')] h-70 bg-cover bg-[position:center_40%] absolute">
     </div>

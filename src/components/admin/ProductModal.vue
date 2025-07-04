@@ -1,16 +1,24 @@
 <script setup>
 import { storeToRefs } from 'pinia';
+
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isFullLoading } = storeToRefs(globalStore)
+const { pushMessage } = globalStore
+
 import { useAdminStore } from '@/stores/adminStore.js'
-const store = useAdminStore()
-const { NowProduct, productIsOpen, isNew } = storeToRefs(store)
-const { updateProduct, closeProductModal } = store
+const adminStore = useAdminStore()
+const { NowProduct, productIsOpen, isNew } = storeToRefs(adminStore)
+const { updateProduct, closeProductModal } = adminStore
+
 import { ref } from 'vue'
 import axios from 'axios';
 
 const fileInput1 = ref(null)
 const fileInput2 = ref(null)
 
-function uploadFile(isMain) {
+async function uploadFile(isMain) {
+    isFullLoading.value = true
     let uploadfiel = null
     if (isMain) {
         uploadfiel = fileInput1.value.files[0]
@@ -20,32 +28,33 @@ function uploadFile(isMain) {
     }
     const formData = new FormData()
     formData.append('file-to-upload', uploadfiel)
-    console.log(formData)
-
-    axios.post(`${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/upload`, formData)
-        .then(res => {
-            if (res.data.success) {
-                if (isMain) {
-                    NowProduct.value.imageUrl = res.data.imageUrl
-                }
-                else {
-                    NowProduct.value.imagesUrl.push(res.data.imageUrl)
-                }
-
-                console.log(res.data)
+    let api = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/upload`
+    let res = await axios.post(api, formData)
+    try {
+        if (res.data.success) {
+            if (isMain) {
+                NowProduct.value.imageUrl = res.data.imageUrl
             }
             else {
-                alert("產品圖片錯誤")
+                NowProduct.value.imagesUrl.push(res.data.imageUrl)
             }
-        })
+        }
+        pushMessage(res.data.success, res.data.message)
+    }
+    catch (err) {
+        pushMessage(false, err.message)
+    }
+    finally {
+        isFullLoading.value = false
+    }
 }
 
 function delImage(id) {
     if (id == "main") {
         NowProduct.value.imageUrl = ''
     }
-    else{
-        NowProduct.value.imagesUrl.splice(id,1)
+    else {
+        NowProduct.value.imagesUrl.splice(id, 1)
     }
 }
 </script>
@@ -150,10 +159,6 @@ function delImage(id) {
 
 <style scoped>
 .active {
-    z-index: 20;
-}
-
-.a {
-    position: absolute;
+    z-index: 50;
 }
 </style>

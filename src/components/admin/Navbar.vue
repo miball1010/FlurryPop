@@ -4,18 +4,29 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
+import { storeToRefs } from 'pinia';
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isFullLoading } = storeToRefs(globalStore)
+const { pushMessage } = globalStore
+
 async function logout() {
+    isFullLoading.value = true
     let apiPath = `${import.meta.env.VITE_API}logout`
     try {
         const res = await axios.post(apiPath)
+
         if (res.data.success) {
             router.push('/login')
         }
         else {
-            alert(res.data.message)
+            pushMessage(res.data.success, res.data.message)
         }
     } catch (err) {
-        console.error(err)
+        pushMessage(false,err.message)
+    }
+    finally {
+        isFullLoading.value = false
     }
 }
 

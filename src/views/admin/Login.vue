@@ -3,11 +3,15 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { ref, onMounted } from 'vue'
+
 import { storeToRefs } from 'pinia';
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isFullLoading } = storeToRefs(globalStore)
+const { pushMessage } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
-const store = useAdminStore()
-const {loadingIsOpen } = storeToRefs(store)
-const { checkLogin } = store
+const adminStore = useAdminStore()
+const { checkLogin } = adminStore
 
 const admin = ref({
   username: 'FlurryPop@gmail.com',
@@ -15,23 +19,25 @@ const admin = ref({
 })
 
 async function login() {
-    loadingIsOpen.value = true
+  isFullLoading.value = true
   let apiPath = `${import.meta.env.VITE_API}admin/signin`
 
   try {
     const res = await axios.post(apiPath, admin.value)
     console.log(res)
     if (res.data.success) {
-      console.log("登入成功", res.data)
       const { token, expired } = res.data
       document.cookie = `token=${token};expires=${new Date(expired)}`
       router.push('/dashboard/product')
     }
     else {
-      alert(res.data.message)
+      pushMessage(res.data.success, res.data.message)
     }
   } catch (err) {
-    alert(err)
+    global.pushMessage(false, err.message)
+  }
+  finally {
+    isFullLoading.value = false
   }
 }
 

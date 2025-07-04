@@ -1,8 +1,11 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useGlobalStore } from './globalStore.js'
+
+import { ref, computed } from 'vue'
 import axios from 'axios'
 
 export const useAdminStore = defineStore('adminStore', () => {
+  const global = useGlobalStore()
   // let api="https://vue3-course-api.hexschool.io/"
   // let path="flurrypop-api"
   // let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
@@ -13,30 +16,6 @@ export const useAdminStore = defineStore('adminStore', () => {
   //      console.error(err)
   //   }
 
-  //Loading
-  const loadingIsOpen = ref(false)
-
-  //通知
-  const message = ref({
-    text: '',
-    status: false,
-    active: false
-  })
-
-  let time = null
-  function pushMessage(success, newMessage) {
-    if (newMessage) {
-      if (message.value.active)
-        clearTimeout(time)
-
-      message.value.text = newMessage
-      message.value.status = success
-      message.value.active = true
-      time = setTimeout(() => {
-        message.value.active = false
-      }, 3000)
-    }
-  }
 
   //登入
   async function checkLogin() {
@@ -44,17 +23,13 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (!token) {
       return false
     }
-
     axios.defaults.headers.common['Authorization'] = token
     const apiPath = `${import.meta.env.VITE_API}api/user/check`
-
     try {
       const res = await axios.post(apiPath)
-      console.log("登入驗證結果:", res.data)
       return res.data.success
     }
     catch (err) {
-      console.error("驗證失敗:", err)
       return false
     }
   }
@@ -108,20 +83,21 @@ export const useAdminStore = defineStore('adminStore', () => {
   }
 
   async function getProduct() {
-    loadingIsOpen.value = true
+    global.isInlineLoading = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/products/all`
     try {
       const res = await axios.get(apiPath)
       products.value = res.data.products
-      // console.log(products.value)
-      loadingIsOpen.value = false
     } catch (err) {
-      console.error(err)
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      global.isInlineLoading = false
     }
   }
 
   async function updateProduct() {
-    loadingIsOpen.value = true
+    global.isFullLoading = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
     let method = 'post'
     if (!isNew.value) {
@@ -134,17 +110,38 @@ export const useAdminStore = defineStore('adminStore', () => {
         productIsOpen.value = false
         getProduct()
       }
-      pushMessage(res.data.success, res.data.message)
+      global.pushMessage(res.data.success, res.data.message)
+    } catch (err) {
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      global.isFullLoading = false
+    }
+  }
+
+  async function delProduct(item) {
+    global.isFullLoading = true
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${item.id}`
+    try {
+      const res = await axios.delete(apiPath)
+      if (res.data.success) {
+        global.confirm.show = false
+        getProduct()
+      }
+      global.pushMessage(res.data.success, res.data.message)
     } catch (err) {
       console.error(err)
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      global.isFullLoading = false
     }
   }
 
   return {
-    loadingIsOpen, message,
-    pushMessage,checkLogin,
+    checkLogin,
 
     products, productIsOpen, NowProduct, isNew,
-    openProductModal, closeProductModal, getProduct, updateProduct
+    openProductModal, closeProductModal, getProduct, updateProduct, delProduct
   }
 })

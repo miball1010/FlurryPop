@@ -1,51 +1,28 @@
 <script setup>
-import Loading from '@/components/Loading.vue'
-import DoubleCheck from '@/components/DoubleCheck.vue'
-import Message from '@/components/Message.vue'
+import InlineLoading from '@/components/InlineLoading.vue'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia';
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isInlineLoading } = storeToRefs(globalStore)
+const { doubleCheck } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
-const store = useAdminStore()
-const { products, loadingIsOpen } = storeToRefs(store)
-const { getProduct, openProductModal, pushMessage } = store
+const adminStore = useAdminStore()
+const { products } = storeToRefs(adminStore)
+const { getProduct, openProductModal } = adminStore
 
 onMounted(() => {
   products.value = []
-  loadingIsOpen.value = true
+  isInlineLoading.value = true
   setTimeout(() => {
     getProduct()
   }, 100)
 })
 
-const showConfirm = ref(false)
-const confirmText = ref('')
-const itemToDelete = ref(null)
-
-function openDelete(item) {
-  itemToDelete.value = item
-  confirmText.value = `你確定要刪除${item.title}嗎?`
-  showConfirm.value = true
-}
-
-async function delProduct() {
-  let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${itemToDelete.value.id}`
-  try {
-    const res = await axios.delete(apiPath)
-    if (res.data.success) {
-      showConfirm.value = false
-      getProduct()
-    }
-    pushMessage(res.data.success, res.data.message)
-  } catch (err) {
-    console.error(err)
-  }
-}
 </script>
 
 <template>
-  <DoubleCheck :text="confirmText" :show="showConfirm" @cancel="showConfirm = false" @confirm="delProduct" />
-
   <div class="flex justify-end mb-5">
     <button @click="openProductModal(true)" class="btn-dark">新增商品</button>
   </div>
@@ -60,8 +37,8 @@ async function delProduct() {
       <div class="w-46"></div>
     </div>
 
-    <div class="w-full p-10 text-center" v-if="loadingIsOpen">
-      <Loading />
+    <div class="w-full p-10 text-center" v-if="isInlineLoading">
+      <InlineLoading />
     </div>
 
     <div class="flex flex-wrap gap-4" v-else>
@@ -84,7 +61,7 @@ async function delProduct() {
         </div>
         <div class="w-auto flex justify-end gap-5 items-center lg:w-46">
           <button class="font-semibold btn-white" @click="openProductModal(false, item)">編輯</button>
-          <button class="font-semibold btn-white" @click="openDelete(item)">刪除</button>
+          <button class="font-semibold btn-white" @click="doubleCheck(item)">刪除</button>
         </div>
       </div>
     </div>
