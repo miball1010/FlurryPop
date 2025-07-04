@@ -23,7 +23,7 @@ async function logout() {
             pushMessage(res.data.success, res.data.message)
         }
     } catch (err) {
-        pushMessage(false,err.message)
+        pushMessage(false, err.message)
     }
     finally {
         isFullLoading.value = false
@@ -52,7 +52,7 @@ function CloseMenu() {
             <!-- logo -->
             <div class="flex items-center gap-4">
                 <img src="/images/logo-black.svg" alt="" class="h-8">
-                <div class="title">後臺系統</div>
+                <div class="text-xl font-bold">後臺系統</div>
             </div>
             <!-- menu -->
             <div class="fixed flex gap-8 items-center bg-white pt-25 px-25 pb-7 flex-col top-0  shadow-lg h-screen right-0 transition-transform duration-0
@@ -61,9 +61,9 @@ function CloseMenu() {
 
                 <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden"> <img
                         src="/images/cross.svg" alt="" class="h-5"></button>
-                <RouterLink to="/dashboard/product" class="navbtn">產品</RouterLink>
-                <RouterLink to="/dashboard/order" class="navbtn">訂單</RouterLink>
-                <RouterLink to="/dashboard/coupon" class="navbtn">優惠券</RouterLink>
+                <RouterLink :to="{ name: 'admin-product' }" class="navbtn">產品</RouterLink>
+                <RouterLink :to="{ name: 'admin-order' }" class="navbtn">訂單</RouterLink>
+                <RouterLink :to="{ name: 'admin-coupon' }" class="navbtn">優惠券</RouterLink>
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
             <!-- menu-btn -->

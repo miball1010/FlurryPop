@@ -1,12 +1,21 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useGlobalStore } from './globalStore.js'
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+export const useUserStore = defineStore('userStore', () => {
+  const global = useGlobalStore()
+  // let api="https://vue3-course-api.hexschool.io/"
+  // let path="flurrypop-api"
+  // let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
+  //   try {
+  //     const res = await axios.post(apiPath)
+  //     console.log(res.data)
+  //   } catch (err) {
+  //      console.error(err)
+  //   }
+  //   finally{
+      
+  //   }
 
-  return { count, doubleCount, increment }
+  return {  }
 })

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { useGlobalStore } from './globalStore.js'
-
 import { ref, computed } from 'vue'
 import axios from 'axios'
 
@@ -14,6 +13,9 @@ export const useAdminStore = defineStore('adminStore', () => {
   //     console.log(res.data)
   //   } catch (err) {
   //      console.error(err)
+  //   }
+  //   finally{
+      
   //   }
 
 

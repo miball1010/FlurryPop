@@ -1,5 +1,7 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap'); */
+
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap');
 @import "tailwindcss";
 
 
@@ -15,12 +17,20 @@ body {
   @apply text-base text-neutral-700 leading-relaxed;
 }
 
-.title {
-  @apply text-xl font-bold leading-7;
+.itali {
+  font-family: 'italiana';
 }
 
+.serif {
+  font-family: 'Noto Serif TC';
+}
+
+/* .title {
+  @apply text-xl font-bold leading-7;
+} */
+
 .navbtn {
-  @apply  hover:text-[#3F88B4] transition duration-300;
+  @apply hover:text-[#3F88B4] transition duration-300;
 }
 
 .btn-white {

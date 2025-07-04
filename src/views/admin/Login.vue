@@ -58,7 +58,7 @@ onMounted(async () => {
     <div class="w-[90%] max-w-lg bg-white rounded-lg p-10">
       <div class="flex items-center justify-center gap-3 flex-col sm:flex-row">
         <img src="/images/logo-black.svg" alt="">
-        <div class="title">後臺系統</div>
+        <div class="text-xl font-bold">後臺系統</div>
       </div>
 
       <form action="" class="max-w-[350px] mx-auto mt-10">
