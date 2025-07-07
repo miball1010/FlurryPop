@@ -40,3 +40,37 @@ body {
 .btn-dark {
   @apply border text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:bg-white hover:text-neutral-700;
 }
+
+
+.pop-swiper {
+    width: 100%;
+    padding: 100px 0 10px !important;
+}
+
+.pop-swiper .swiper-button-next:after,
+.pop-swiper .swiper-button-prev:after {
+    content: '';
+}
+
+.pop-swiper .swiper-button-prev,
+.pop-swiper .swiper-button-next {
+    background-image: url(../images/arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    top: 30px;
+}
+
+
+.pop-swiper .swiper-button-prev {
+   right: calc(12vw + 70px);
+   left: auto;
+    transform: scale(-1.5);
+    transition: 0.3s;
+}
+
+.pop-swiper .swiper-button-next {
+    right: 12vw;
+    transform: scale(1.5);
+    transition: 0.3s;
+}
