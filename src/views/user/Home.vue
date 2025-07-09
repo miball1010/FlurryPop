@@ -1,4 +1,15 @@
 <script setup>
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/userStore.js'
+const userStore = useUserStore()
+const { product } = storeToRefs(userStore)
+const { getProduct } = userStore
+// onMounted(()=>{
+//     getProduct()
+
+// })
+import ProductCard from '@/components/user/ProductCard.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 
@@ -69,19 +80,7 @@ const modules = [Pagination, Navigation, Virtual]
 
 
             <div class="flex overflow-y-hidden overflow-x-scroll p-10">
-                <div class="box p-5 mr-10" v-for="item in 8">
-                    <div class="w-full pt-[100%] relative overflow-hidden">
-                        <img src="/images/a.jpg" alt="" class="ice-img ">
-                        <img src="/images/heart-hollow-red-icon.svg" alt="" class="absolute top-4 left-4 h-6">
-                    </div>
-                    <div class="text-lg font-bold mt-3 mb-5">
-                        月光花冰淇淋 500ml
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="font-bold text-[#3F88B4]">NT$ 450</div>
-                        <img src="/images/cart-hollow-icon.svg" alt="" class="h-6">
-                    </div>
-                </div>
+                <ProductCard :product="product" :page="'home'"/>
             </div>
 
 
@@ -125,34 +124,6 @@ const modules = [Pagination, Navigation, Virtual]
 </template>
 
 <style scoped>
-.aaa {
-    display: flex;
-
-    overflow-y: auto;
-}
-
-.box {
-    box-shadow: 0 0 10px #85b1ca34;
-    background: white;
-    min-width: 300px;
-    cursor: pointer;
-
-}
-
-.ice-img {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 100%;
-    height: auto;
-    transform: translateX(-50%);
-    transition: transform 0.3s ease;
-}
-
-.box:hover .ice-img {
-    transform: translateX(-50%) scale(1.1);
-}
-
 .title {
     position: relative;
     text-align: center;
@@ -180,12 +151,5 @@ const modules = [Pagination, Navigation, Virtual]
     box-shadow: 0 0 10px #97C9E6;
     background-color: rgba(255, 255, 255, 0);
     backdrop-filter: blur(15px);
-}
-
-.pop-title {
-    writing-mode: vertical-lr;
-    font-size: 3rem;
-    color: #3F88B4;
-    font-weight: bold;
 }
 </style>

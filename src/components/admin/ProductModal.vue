@@ -105,6 +105,20 @@ function delImage(id) {
                         <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
                             :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>
                     </div>
+                    <div>
+                        <div> 類別</div>
+                         <div class="flex items-center gap-2">
+
+                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
+                            value="ice"><label for="category">冰淇淋</label>
+                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
+                            value="bar"><label for="category">雪糕</label>
+                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
+                            value="store"><label for="category">門市限定</label>
+                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
+                            value="other"><label for="category">其他</label>
+                    </div>
+                    </div>
                 </div>
 
                 <div class="flex-1 flex flex-col justify-between">

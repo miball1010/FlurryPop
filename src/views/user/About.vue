@@ -3,17 +3,17 @@
 </script>
 
 <template>
-    <div class="bg-gray-100 min-h-screen w-full relative pb-35 sm:pb-50">
+    <div class="bg-gray-100 min-h-screen w-full relative pb-60 sm:pb-100">
         <div
-            class="w-full bg-[url('images/bg-2.jpg')] h-100 bg-cover bg-[position:center_40%] absolute flex items-center">
+            class="w-full bg-[url('images/bg-2.jpg')] h-60 bg-cover bg-[position:center_40%] absolute flex items-center justify-center sm:h-100">
             <!-- 會改變的內容 -->
-            <div class="title itali ">ABOUT</div>
+            <div class="title itali text-[40px] text-white sm:text-[80px]">ABOUT</div>
         </div>
 
         <div
-            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-25 mx-auto rounded-lg px-5 py-5 shadow-md sm:px-15 sm:py-28  sm:top-80">
+            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg px-5 py-10 shadow-md sm:px-15 sm:py-28  sm:top-80">
             <!-- 會改變的內容 -->
-            <div class="max-w-[700px] mx-auto flex flex-col gap-15">
+            <div class="max-w-[700px] mx-auto flex flex-col gap-10 sm:gap-15">
                 <div>
                     不是每一種冰，都值得慢慢融化。<br>Flurry Pop，誕生於對溫度與情感的執著。<br><br>
                     我們相信，味道不只取悅味蕾，更能喚醒記憶、安靜片刻、照亮某段模糊的心情。<br><br>
@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <img src="/images/about-1.jpg" alt="">
-                    <div class="text-gray-400 text-sm text-center">Flurry Pop店內裝潢</div>
+                    <div class="text-gray-400 text-sm mt-1">Flurry Pop店內裝潢</div>
                 </div>
                 <div>
                     從選料、調香到製作，我們堅持少即是多。<br>
@@ -30,10 +30,10 @@
                 </div>
                 <div>
                     <img src="/images/about-2.jpg" alt="">
-                    <div class="text-gray-400 text-sm text-center">喜愛Flurry Pop的客人</div>
+                    <div class="text-gray-400 text-sm mt-1">喜愛Flurry Pop的客人</div>
                 </div>
             </div>
-            <div class="mt-30 p-4 border border-gray-300 flex gap-10">
+            <div class="mt-20 p-4 border border-gray-300 flex gap-5 flex-col md:flex-row sm:mt-30 sm:gap-10">
                 <div class="flex-1"><img src="/images/shop.jpg" alt=""></div>
                 <div class="flex-1">
                     <div class="itali text-2xl my-4">Flurry Pop</div>
@@ -47,10 +47,4 @@
 </template>
 
 <style scoped>
-.title {
-    font-size: 80px;
-    color: white;
-    width: fit-content;
-    margin: 0 auto;
-}
 </style>

@@ -1,6 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { useGlobalStore } from './globalStore.js'
+import axios from 'axios'
 
 export const useUserStore = defineStore('userStore', () => {
   const global = useGlobalStore()
@@ -14,8 +15,70 @@ export const useUserStore = defineStore('userStore', () => {
   //      console.error(err)
   //   }
   //   finally{
-      
+
   //   }
 
-  return {  }
+  // 我的最愛
+  const favorite = ref([])
+  function addFavorite(id) {
+    const index = favorite.value.indexOf(id)
+    if (favorite.value.indexOf(id) > -1) {
+      favorite.value.splice(index, 1)
+      global.pushMessage(false, "已取消收藏")
+    }
+    else {
+      favorite.value.push(id)
+      global.pushMessage(true, "已加入收藏")
+    }
+  }
+
+  //購物車
+  async function addCart(id) {
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
+    const cart = {
+      data: {
+        "product_id": id,
+        "qty": 1
+      }
+    }
+    try {
+      const res = await axios.post(apiPath, cart)
+      global.pushMessage(res.data.success, res.data.message)
+    } catch (err) {
+      global.pushMessage(false, err.message)
+    }
+    finally {
+
+    }
+  }
+  //商品
+  onMounted(()=>{
+    getProduct()
+  })
+
+  const product = ref([])
+  
+  async function getProduct(page = 1) {
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
+    try {
+      const res = await axios.get(apiPath)
+      console.log(res.data)
+      product.value = res.data.products
+    } catch (err) {
+      console.error(err)
+    }
+    finally {
+
+    }
+  }
+
+  return {
+    favorite,
+    addFavorite,
+
+    addCart,
+
+    product,
+    getProduct
+  }
 })
