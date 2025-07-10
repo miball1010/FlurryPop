@@ -18,26 +18,31 @@ const router = createRouter({
           name: 'user-about',
           component: () => import('../views/user/About.vue')
         },
-         {
+        {
           path: 'product',
           name: 'user-product',
           component: () => import('../views/user/Product.vue')
         },
-           {
+        {
           path: 'product/:productId',
           component: () => import('../views/user/ProductPage.vue')
         },
-         {
+        {
           path: 'order',
           name: 'user-order',
           component: () => import('../views/user/Order.vue')
         },
-         {
+        {
           path: 'QA',
           name: 'user-QA',
           component: () => import('../views/user/QA.vue')
         },
-         {
+        {
+          path: 'favorite',
+          name: 'user-favorite',
+          component: () => import('../views/user/Favorite.vue')
+        },
+        {
           path: 'checkout',
           name: 'user-checkout',
           component: () => import('../views/user/Checkout.vue')
@@ -70,6 +75,11 @@ const router = createRouter({
           component: () => import('../views/admin/Coupons.vue')
         }
       ]
+    },
+    {
+    //重新導向
+     path: '/:pathMatch(.*)*',
+     redirect: '/'
     },
     {
       path: '/test',

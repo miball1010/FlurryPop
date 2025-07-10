@@ -33,31 +33,36 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   //購物車
-  async function addCart(id) {
-    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
-    const cart = {
-      data: {
-        "product_id": id,
-        "qty": 1
+  const addLoading = ref(false)
+  async function addCart(id, num) {
+    if (!addLoading.value) {
+      addLoading.value = true
+      let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
+      const cart = {
+        data: {
+          "product_id": id,
+          "qty": num
+        }
       }
-    }
-    try {
-      const res = await axios.post(apiPath, cart)
-      global.pushMessage(res.data.success, res.data.message)
-    } catch (err) {
-      global.pushMessage(false, err.message)
-    }
-    finally {
-
+      try {
+        const res = await axios.post(apiPath, cart)
+        global.pushMessage(res.data.success, res.data.message)
+      } catch (err) {
+        global.pushMessage(false, err.message)
+      }
+      finally {
+        addLoading.value = false
+      }
     }
   }
   //商品
-  onMounted(()=>{
+  onMounted(() => {
+    global.isInlineLoading = true
     getProduct()
   })
 
   const product = ref([])
-  
+
   async function getProduct(page = 1) {
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
     try {
@@ -68,7 +73,7 @@ export const useUserStore = defineStore('userStore', () => {
       console.error(err)
     }
     finally {
-
+      global.isInlineLoading = false
     }
   }
 
@@ -76,6 +81,7 @@ export const useUserStore = defineStore('userStore', () => {
     favorite,
     addFavorite,
 
+    addLoading,
     addCart,
 
     product,

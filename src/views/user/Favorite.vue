@@ -23,10 +23,8 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
 </script>
 
 <template>
-    <BaseLayout :title="'ORDER'">
+    <BaseLayout :title="'FAVORITES'">
     </BaseLayout>
 
 
 </template>
-
-

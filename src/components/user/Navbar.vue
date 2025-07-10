@@ -83,8 +83,9 @@ onMounted(() => {
                 <RouterLink :to="{ name: 'user-order' }" class="navbtn">訂單查詢</RouterLink>
                 <RouterLink :to="{ name: 'user-QA' }" class="navbtn">常見問題</RouterLink>
                 <div class="flex item-center justify-center gap-5">
-                    <button @click="favoritePopup" class=" cursor-pointer flex items-center justify-center py-3"><img
-                            src="/images/heart-solid-white-icon.svg" alt="" class="h-4.5"></button>
+                    <RouterLink :to="{ name: 'user-favorite' }"
+                        class=" cursor-pointer flex items-center justify-center py-3"><img
+                            src="/images/heart-solid-white-icon.svg" alt="" class="h-4.5"></RouterLink>
                     <RouterLink :to="{ name: 'user-checkout' }" class="flex items-center justify-center py-3"><img
                             src="/images/cart-solid-white-icon.svg" alt="" class="h-4.5"></RouterLink>
                 </div>
@@ -117,8 +118,9 @@ onMounted(() => {
                 <RouterLink :to="{ name: 'user-order' }" class="navbtn">訂單查詢</RouterLink>
                 <RouterLink :to="{ name: 'user-QA' }" class="navbtn">常見問題</RouterLink>
                 <div class="flex item-center justify-center gap-5">
-                    <button @click="favoritePopup" class=" cursor-pointer flex items-center justify-center py-3"><img
-                            src="/images/heart-solid-dark-icon.svg" alt="" class="h-4.5"></button>
+                    <RouterLink :to="{ name: 'user-favorite' }"
+                        class=" cursor-pointer flex items-center justify-center py-3"><img
+                            src="/images/heart-solid-dark-icon.svg" alt="" class="h-4.5"></RouterLink>
                     <RouterLink :to="{ name: 'user-checkout' }" class="flex items-center justify-center py-3"><img
                             src="/images/cart-solid-dark-icon.svg" alt="" class="h-4.5"></RouterLink>
                 </div>

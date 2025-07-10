@@ -16,11 +16,11 @@ function moreProduct(id) {
 
 </script>
 <template>
-    <div :class="page" class="bg-white p-5 " v-for="item in product">
+    <div :class="page" class="bg-white p-5" v-for="item in product">
         <div @click="moreProduct(item.id)" class="w-full pt-[100%] relative overflow-hidden">
             <img :src="item.imageUrl" alt="" class="ice-img ">
         </div>
-        <div class="text-lg font-bold mt-3 mb-5">
+        <div class="font-bold mt-3 mb-5 text-lg">
             {{ item.title }}
         </div>
         <div class="flex justify-between">
@@ -30,7 +30,7 @@ function moreProduct(id) {
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
                         :src="`${favorite.indexOf(item.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
                         alt="" class="h-5.5"></button>
-                <button @click="addCart(item.id)" class="cursor-pointer transition duration-300 hover:scale-110"><img
+                <button @click="addCart(item.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
                         src="/images/cart-hollow-icon.svg" alt="" class="h-6"></button>
             </div>
         </div>
@@ -45,8 +45,9 @@ function moreProduct(id) {
 }
 
 .product {
-    border: 1px solid #D1D5DB;
-    width: 300px;
+    border: 1px solid #D9D9D9;
+    width: calc((100% - 20px*2)/3);
+    max-width: 300px;
 }
 
 .ice-img {
@@ -62,5 +63,17 @@ function moreProduct(id) {
 
 .ice-img:hover {
     transform: translateX(-50%) scale(1.1);
+}
+
+@media screen and (max-width:1170px) {
+    .product {
+        width: calc((100% - 20px)/2);
+    }
+}
+
+@media screen and (max-width:570px) {
+    .product {
+        width: 100%;
+    }
 }
 </style>

@@ -1,13 +1,34 @@
 <script setup>
-// import Login from '@/views/admin/Login.vue'
-import Navbar from '@/components/user/Navbar.vue'
+import BaseLayout from '@/components/user/BaseLayout.vue'
+import { ref,onMounted } from 'vue'
+import axios from 'axios'
+
+const cart=ref([])
+onMounted(() => {
+    getProduct()
+})
+async function getProduct() {
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
+    try {
+        const res = await axios.get(apiPath)
+        console.log(res.data.data)
+        cart.value = res.data.data.carts
+    } catch (err) {
+        console.error(err)
+    }
+    finally {
+        //   global.isInlineLoading = false
+    }
+}
 </script>
 
 <template>
-<Navbar />
-<div class="w-full h-screen bg-gray-500"></div>
-<!-- <router-view></router-view> -->
+    <BaseLayout :title="'CHECKOUT'">
+        <div v-for="item in cart">
+            {{ item.product.title }}有
+            {{ item.qty }}個
+        </div>
+    </BaseLayout>
 
 
 </template>
-

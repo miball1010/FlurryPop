@@ -1,69 +1,97 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import BaseLayout from '@/components/user/BaseLayout.vue'
+import InlineLoading from '@/components/InlineLoading.vue'
+import { ref, watch, computed, onMounted } from 'vue';
 import axios from 'axios';
 import ProductCard from '@/components/user/ProductCard.vue'
 
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
-const { isFullLoading } = storeToRefs(globalStore)
-const { pushMessage } = globalStore
+const { isInlineLoading } = storeToRefs(globalStore)
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { product } = storeToRefs(userStore)
 const { getProduct } = userStore
 
-// onMounted(()=>{
-//     getProduct()
+onMounted(()=>{
+       filterProducts.value = product.value
+})
 
-// })
+const searchText = ref('')
+const filterProducts = ref([])
+
+watch(product, (newVal) => {
+    if (newVal.length > 0)
+        filterProducts.value = product.value
+})
+
 const filterType = ref('all')
-const productFilter = computed(() => {
-    if (filterType.value == 'all') {
-        return product.value
+function applyFilter(type) {
+    filterType.value = type
+    if (type == 'all') {
+        filterProducts.value = product.value
+    }
+    else if (type == 'search') {
+        filterProducts.value = product.value.filter(item => item.title.match(searchText.value))
     }
     else {
-        return product.value.filter(item => item.category == filterType.value)
+        filterProducts.value = product.value.filter(item => item.category == type)
     }
-})
+}
 </script>
 
 <template>
-    <div class="bg-gray-100 min-h-screen w-full relative pb-60 sm:pb-100">
-        <div
-            class="w-full bg-[url('images/bg-2.jpg')] h-60 bg-cover bg-[position:center_40%] absolute flex items-center justify-center sm:h-100">
-            <!-- 會改變的內容 -->
-            <div class="title itali text-[40px] text-white sm:text-[80px]">PRODUCT</div>
+    <BaseLayout :title="'PRODUCT'">
+        <div class="flex justify-end">
+            <input type="text" placeholder="搜尋" class="border-b border-b-gray-200 focus:outline-none"
+                @keyup.enter="applyFilter('search')" v-model="searchText">
+            <button @click="applyFilter('search')" class="cursor-pointer transition hover:scale-110 "><img
+                    src="/images/search-icon.svg" alt="" class="h-5"></button>
         </div>
-
-        <div
-            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg px-5 py-10 shadow-md sm:px-15 sm:py-28  sm:top-80">
-            <!-- 會改變的內容 -->
-            <div class="flex justify-end"><input type="text" placeholder="搜尋" class="border border-b-gray-200 focus:outline-none"> <img
-                    src="/images/search-icon.svg" alt="" class="h-5"></div>
-            <div class="flex flex-col lg:flex-row gap-5">
-                <div class="flex flex-col max-w-[160px]">
-                    <button class="border border-gray-300 p-2 cursor-pointer" @click="filterType = 'all'">所有商品
-                        ALL</button>
-                    <button class="border border-gray-300 p-2 mt-[-1px] cursor-pointer" @click="filterType = 'ice'">冰淇淋
-                        icecream</button>
-                    <button class="border border-gray-300 p-2 mt-[-1px] cursor-pointer" @click="filterType = 'bar'">雪糕
-                        ice cream bar</button>
-                    <button class="border border-gray-300 p-2 mt-[-1px] cursor-pointer"
-                        @click="filterType = 'store'">門市限定 In-store only</button>
+        <div class="flex flex-col lg:flex-row gap-5 mt-5">
+            <div class="w-45 flex flex-row  lg:flex-col">
+                <button :class="{ active: filterType == 'all' }" class="filter-btn "
+                    @click="applyFilter('all')">所有商品</button>
+                <button :class="{ active: filterType == 'ice' }" class="filter-btn"
+                    @click="applyFilter('ice')">冰淇淋</button>
+                <button :class="{ active: filterType == 'bar' }" class="filter-btn"
+                    @click="applyFilter('bar')">雪糕</button>
+                <button :class="{ active: filterType == 'store' }" class="filter-btn"
+                    @click="applyFilter('store')">門市限定</button>
+            </div>
+            <div class="flex-1 flex flex-wrap gap-5 justify-center sm:justify-start">
+                <div class="w-full p-10 text-center" v-if="isInlineLoading">
+                    <InlineLoading />
                 </div>
-                <div class="flex gap-5 flex-wrap">
-                    <ProductCard :product="productFilter" :page="'product'" />
+                <div class="w-full p-10 text-center" v-if="filterProducts.length == 0 && !isInlineLoading">
+                    <div>目前尚未有此產品</div>
                 </div>
+                <ProductCard :product="filterProducts" :page="'product'" />
             </div>
         </div>
-    </div>
+    </BaseLayout>
 </template>
 
 <style scoped>
-.aa {
-    justify-content: end;
-    flex-wrap: wrap;
+.filter-btn {
+    border: 1px solid #D9D9D9;
+    padding: 8px 20px;
+    text-align: left;
+}
+
+.filter-btn:not(:first-child) {
+    border-top: none;
+}
+
+.filter-btn.active {
+    background-color: #85B1CA;
+    border: 1px solid #85B1CA;
+    color: white;
+}
+
+.filter-btn:not(.active):hover {
+    color: #3F88B4;
     cursor: pointer;
 }
 </style>
