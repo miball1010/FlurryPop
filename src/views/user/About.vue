@@ -4,7 +4,7 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
 
 <template>
     <BaseLayout :title="'ABOUT'">
-        <div class="max-w-[700px] mx-auto flex flex-col gap-10 sm:gap-15">
+        <div class="ani-fade max-w-[700px] mx-auto flex flex-col gap-10 sm:gap-15">
             <div>
                 不是每一種冰，都值得慢慢融化。<br>Flurry Pop，誕生於對溫度與情感的執著。<br><br>
                 我們相信，味道不只取悅味蕾，更能喚醒記憶、安靜片刻、照亮某段模糊的心情。<br><br>

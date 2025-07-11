@@ -19,15 +19,15 @@ export const useUserStore = defineStore('userStore', () => {
   //   }
 
   // 我的最愛
-  const favorite = ref([])
+  const favoriteId = ref([])
   function addFavorite(id) {
-    const index = favorite.value.indexOf(id)
-    if (favorite.value.indexOf(id) > -1) {
-      favorite.value.splice(index, 1)
+    const index = favoriteId.value.indexOf(id)
+    if (favoriteId.value.indexOf(id) > -1) {
+      favoriteId.value.splice(index, 1)
       global.pushMessage(false, "已取消收藏")
     }
     else {
-      favorite.value.push(id)
+      favoriteId.value.push(id)
       global.pushMessage(true, "已加入收藏")
     }
   }
@@ -35,7 +35,6 @@ export const useUserStore = defineStore('userStore', () => {
   //購物車
   const addLoading = ref(false)
   async function addCart(id, num) {
-    if (!addLoading.value) {
       addLoading.value = true
       let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
       const cart = {
@@ -53,7 +52,6 @@ export const useUserStore = defineStore('userStore', () => {
       finally {
         addLoading.value = false
       }
-    }
   }
   //商品
   onMounted(() => {
@@ -78,7 +76,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   return {
-    favorite,
+    favoriteId,
     addFavorite,
 
     addLoading,

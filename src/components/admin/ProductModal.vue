@@ -1,4 +1,5 @@
 <script setup>
+import BaseInput from '@/components/BaseInput.vue'
 import { storeToRefs } from 'pinia';
 
 import { useGlobalStore } from '@/stores/globalStore.js'
@@ -29,8 +30,9 @@ async function uploadFile(isMain) {
     const formData = new FormData()
     formData.append('file-to-upload', uploadfiel)
     let api = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/upload`
-    let res = await axios.post(api, formData)
+
     try {
+        const res = await axios.post(api, formData)
         if (res.data.success) {
             if (isMain) {
                 NowProduct.value.imageUrl = res.data.imageUrl
@@ -61,70 +63,86 @@ function delImage(id) {
 
 <template>
     <div class="w-full h-screen fixed top-0 left-0 bg-black/45" :class="{ active: productIsOpen }">
-        <div class="bg-white max-w-[1200px] w-[90%] mx-auto mt-20">
+        <div
+            class="bg-white max-w-[1200px] w-[90%] max-h-[90%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
             <div class="bg-neutral-700 text-white py-5 px-10 text-lg font-semibold">{{ isNew ? "新增產品" : "編輯產品" }}</div>
 
-            <div class="flex p-10 mx-auto gap-8">
+            <div class="flex p-5 gap-8 flex-col sm:flex-row sm:p-10">
                 <div class="flex-1 flex flex-col gap-4">
-                    <div class="relative">
-                        <input type="text" v-model="NowProduct.title" id="title"
-                            class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
-                            placeholder="產品名稱" />
-                        <label for="title"
-                            class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
-                            產品名稱
-                        </label>
-                    </div>
-                    <div class="relative">
-                        <input type="number" v-model="NowProduct.price" id="price"
-                            class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
-                            placeholder="價格" />
-                        <label for="price"
-                            class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
-                            價格
-                        </label>
-                    </div>
-                    <div class="relative">
-                        <textarea name="description" id="description" placeholder="產品描述"
-                            v-model="NowProduct.description"
-                            class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
-                        <label for="description"
-                            class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
-                            產品描述
-                        </label>
-                    </div>
-                    <div class="relative">
-                        <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
-                            class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
-                        <label for="content"
-                            class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
-                            主成分
-                        </label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
-                            :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>
-                    </div>
-                    <div>
-                        <div> 類別</div>
-                         <div class="flex items-center gap-2">
+                    <BaseInput :inputType="'text'" v-model="NowProduct.title" :placeholder="'產品名稱'"
+                        :description="'產品名稱'"/>
 
-                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
-                            value="ice"><label for="category">冰淇淋</label>
-                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
-                            value="bar"><label for="category">雪糕</label>
-                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
-                            value="store"><label for="category">門市限定</label>
-                        <input type="radio" id="category" v-model="NowProduct.category" class="w-4 h-4 cursor-pointer"
-                            value="other"><label for="category">其他</label>
-                    </div>
-                    </div>
+                        <div class="relative">
+                            <input type="text" v-model="NowProduct.title" id="title"
+                                class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
+                                placeholder="產品名稱" />
+                            <label for="title"
+                                class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
+                                產品名稱
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input type="number" v-model="NowProduct.price" id="price"
+                                class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
+                                placeholder="價格" />
+                            <label for="price"
+                                class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
+                                價格
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <textarea name="description" id="description" placeholder="產品描述"
+                                v-model="NowProduct.description"
+                                class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
+                            <label for="description"
+                                class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
+                                產品描述
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
+                                class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
+                            <label for="content"
+                                class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
+                                主成分
+                            </label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
+                                :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>
+                        </div>
+                        <div>
+                            <div> 類別</div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="category" v-model="NowProduct.category" value="ice"
+                                        class="w-4 h-4">
+                                    <span>冰淇淋</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="category" v-model="NowProduct.category" value="bar"
+                                        class="w-4 h-4">
+                                    <span>雪糕</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="category" v-model="NowProduct.category" value="store"
+                                        class="w-4 h-4">
+                                    <span>門市限定</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="category" v-model="NowProduct.category" value="other"
+                                        class="w-4 h-4">
+                                    <span>其他</span>
+                                </label>
+                            </div>
+                        </div>
                 </div>
 
                 <div class="flex-1 flex flex-col justify-between">
                     <div>
-                        <div>產品圖片</div>
-                        <div class="flex gap-2 mt-1 flex-wrap">
+                        <div class="mb-2">產品圖片</div>
+                        <div class="mb-3">
+                            <div class="text-sm text-gray-500 mb-1">主要圖片</div>
                             <div v-if="NowProduct.imageUrl" class="w-25 h-25 border border-gray-500 relative">
                                 <img :src="NowProduct.imageUrl" alt="" class="w-full h-full object-contain ">
                                 <div @click="delImage('main')"
@@ -134,34 +152,38 @@ function delImage(id) {
                             </div>
 
                             <div v-else class="relative w-25 h-25 border border-gray-500">
-                                <input type="file" ref="fileInput1"
+                                <input type="file" ref="fileInput1" accept="image/*"
                                     class="w-full h-full relative z-10 opacity-0 cursor-pointer"
                                     @change="uploadFile(true)" />
                                 <div class="absolute z-[1] top-0 left-0 w-25 h-25 flex justify-center items-center">
                                     +
                                 </div>
                             </div>
-
-                            <div v-for="(item, index) in NowProduct.imagesUrl" :key="index"
-                                class="w-25 h-25 border border-gray-300 relative">
-                                <img :src="item" alt="" class="w-full h-full object-contain ">
-                                <div @click="delImage(index)"
-                                    class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center text-white opacity-0 hover:opacity-100 cursor-pointer">
-                                    <img src="/images/trash-white-icon.svg" alt="" class="w-5">
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">其他圖片</div>
+                            <div class="flex gap-2 mt-1 flex-wrap">
+                                <div v-for="(item, index) in NowProduct.imagesUrl" :key="index"
+                                    class="w-25 h-25 border border-gray-300 relative">
+                                    <img :src="item" alt="" class="w-full h-full object-contain ">
+                                    <div @click="delImage(index)"
+                                        class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center text-white opacity-0 hover:opacity-100 cursor-pointer">
+                                        <img src="/images/trash-white-icon.svg" alt="" class="w-5">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="relative w-25 h-25 border border-gray-300">
-                                <input type="file" ref="fileInput2"
-                                    class="w-full h-full relative z-10 opacity-0 cursor-pointer"
-                                    @change="uploadFile(false)" />
-                                <div class="absolute z-[1] top-0 left-0 w-25 h-25 flex justify-center items-center">
-                                    +
+                                <div class="relative w-25 h-25 border border-gray-300">
+                                    <input type="file" ref="fileInput2" accept="image/*"
+                                        class="w-full h-full relative z-10 opacity-0 cursor-pointer"
+                                        @change="uploadFile(false)" />
+                                    <div class="absolute z-[1] top-0 left-0 w-25 h-25 flex justify-center items-center">
+                                        +
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-end gap-5">
+                    <div class="flex justify-end gap-5 mt-5">
                         <button @click="closeProductModal" class="btn-white">取消</button>
                         <button @click="updateProduct" class="btn-dark">確認</button>
                     </div>
@@ -174,5 +196,9 @@ function delImage(id) {
 <style scoped>
 .active {
     z-index: 50;
+}
+
+.a {
+    position: absolute;
 }
 </style>

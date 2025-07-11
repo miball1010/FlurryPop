@@ -5,7 +5,7 @@ const router = useRouter()
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
-const { favorite } = storeToRefs(userStore)
+const { favoriteId } = storeToRefs(userStore)
 const { addFavorite, addCart } = userStore
 
 const props = defineProps(['product', 'page'])
@@ -28,7 +28,7 @@ function moreProduct(id) {
             <div class="flex gap-3 items-center">
                 <button @click="addFavorite(item.id)"
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
-                        :src="`${favorite.indexOf(item.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
+                        :src="`${favoriteId.indexOf(item.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
                         alt="" class="h-5.5"></button>
                 <button @click="addCart(item.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
                         src="/images/cart-hollow-icon.svg" alt="" class="h-6"></button>
@@ -47,6 +47,12 @@ function moreProduct(id) {
 .product {
     border: 1px solid #D9D9D9;
     width: calc((100% - 20px*2)/3);
+    max-width: 300px;
+}
+
+.favorite {
+    border: 1px solid #D9D9D9;
+    width: calc((100% - 20px*3)/4);
     max-width: 300px;
 }
 

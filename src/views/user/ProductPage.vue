@@ -10,13 +10,16 @@ import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isInlineLoading } = storeToRefs(globalStore)
+const { pushMessage } = globalStore
+
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
-const { favorite, addLoading } = storeToRefs(userStore)
+const { favoriteId, addLoading } = storeToRefs(userStore)
 const { addFavorite, addCart } = userStore
 
 const productId = route.params.productId
-const product = ref([])
+const product = ref({})
+const notice = ref(1)
 
 onMounted(() => {
     isInlineLoading.value = true
@@ -55,10 +58,23 @@ watch(number, () => {
         number.value = 150
 })
 
-const notice = ref(1)
-function noticeClick(x) {
-    notice.value = x
-
+async function share() {
+    const url = window.location.href
+    try {
+        await navigator.clipboard.writeText(url)
+        pushMessage(true, '網址已複製到剪貼簿')
+    }
+    catch (err) {
+        pushMessage(false, '複製失敗：' + err)
+    }
+}
+async function handleAddCart() {
+    try {
+        await addCart(product.value.id, number.value)
+        number.value = 1
+    }
+    catch {
+    }
 }
 </script>
 
@@ -69,8 +85,9 @@ function noticeClick(x) {
         </div>
         <div v-else>
             <!-- 麵包屑 -->
-            <div class="text-[#85B1CA]">
-                <RouterLink :to="{ name: 'user-product' }" class="hover:underline">所有商品</RouterLink> / {{ product.title }}
+            <div class="text-[#85B1CA] text-sm">
+                <RouterLink :to="{ name: 'user-product' }" class="hover:underline">所有商品</RouterLink> / {{ product.title
+                }}
             </div>
 
             <!-- 商品 -->
@@ -84,16 +101,16 @@ function noticeClick(x) {
                         <div class="absolute top-1 right-0 flex gap-3">
                             <button @click="addFavorite(product.id)"
                                 class="cursor-pointer transition duration-300 hover:scale-110"><img
-                                    :src="`${favorite.indexOf(product.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
+                                    :src="`${favoriteId.indexOf(product.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
                                     alt="" class="h-5.5"></button>
-                            <button class="cursor-pointer transition duration-300 hover:scale-110"><img
+                            <button @click="share" class="cursor-pointer transition duration-300 hover:scale-110"><img
                                     src="/images/share-icon.svg" alt="" class="h-5.5"></button>
                         </div>
                         <div class="text-2xl font-bold">{{ product.title }}</div>
                         <div class="text-xl font-bold text-[#3F88B4] mt-5">NT$ {{ product.price }}</div>
                         <div class="text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-5 text-justify mt-7">{{
                             product.description
-                            }}
+                        }}
                         </div>
                         <div class="mt-5 font-bold">主成分</div>
                         <div>{{ product.content }}</div>
@@ -108,10 +125,11 @@ function noticeClick(x) {
                                 class="w-10 aspect-square border border-gray-200 text-center">+</button>
                         </div>
 
-                        <div @click="addCart(product.id, number)"
-                            :class="addLoading ? 'bg-gray-400' : 'cursor-pointer bg-[#85B1CA] hover:scale-103'"
-                            class="  text-white p-2 text-center mt-3 transition duration-300">加入購物車
-                        </div>
+                        <button @click="handleAddCart" :disabled="addLoading"
+                            :class="addLoading ? 'bg-gray-400' : 'cursor-pointer bg-[#3F88B4] hover:opacity-90'"
+                            class="w-full text-white p-2 text-center mt-3 transition">加入購物車
+                        </button>
+                        <!-- text-white bg-[#3F88B4] hover:text-[#3F88B4] hover:bg-white -->
                     </div>
 
                 </div>
@@ -119,18 +137,21 @@ function noticeClick(x) {
 
             <!-- 注意事項 -->
             <div class="mt-10">
-                <div class="mb-[-1px]">
-                    <button @click="noticeClick(1)"
-                        :class="notice == 1 ? 'text-[#3F88B4] border-gray-200 border-b-white' : 'cursor-pointer border-white  border-b-gray-200'"
-                        class="border px-4 py-2 ">購買須知</button>
-                    <button @click="noticeClick(2)"
-                        :class="notice == 2 ? 'text-[#3F88B4] border-gray-200 border-b-white' : 'cursor-pointer border-white  border-b-gray-200'"
-                        class="border px-4 py-2">退換貨須知</button>
+                <div class="border-b border-b-gray-200 mb-5 flex space-x-1">
+                    <button @click="notice = 1"
+                        :class="notice == 1 ? 'text-[#3F88B4] border-b-2 border-b-[#3F88B4] ' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
+                        class="px-4 py-2 transition mb-[-1px]">
+                        購買須知
+                    </button>
+                    <button @click="notice = 2"
+                        :class="notice == 2 ? 'text-[#3F88B4] border-b-2 border-b-[#3F88B4]' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
+                        class="px-4 py-2 transition mb-[-1px]">
+                        退換貨須知
+                    </button>
                 </div>
-                <div class="border-b border-b-gray-200 mb-5"></div>
 
-                <div  :class="{active:notice == 1,active2:notice == 1}" class="aaa ">
-                    <ul  class="text-sm list-disc pl-5 space-y-2">
+                <div :class="notice == 1 ? 'block ani-fade' : 'hidden opacity-0'">
+                    <ul class="text-sm list-disc pl-5 space-y-2">
                         <li>可於 Flurry Pop 官方網站選購冰品，提供<strong>宅配</strong>與<strong>門市自取</strong>兩種方式。建議提前下單以保留心儀風味。</li>
                         <li>我們採用<strong>黑貓冷凍宅配</strong>，全程低溫出貨，僅限<strong>台灣本島</strong>配送。出貨時間為付款後<strong>3–5
                                 個工作天</strong>，特殊節日另行公告。</li>
@@ -140,8 +161,8 @@ function noticeClick(x) {
                         <li>所有商品為冷凍保存之食品，因拍攝及顯示器差異，顏色與實品可能略有不同。產品外觀與裝飾可能因批次略有差異，敬請見諒。</li>
                     </ul>
                 </div>
-                <div :class="{active:notice == 2,active2:notice == 2}" class="aaa ">
-                    <ul  class="text-sm list-disc pl-5 space-y-2">
+                <div :class="notice == 2 ? 'block ani-fade' : 'hidden opacity-0'">
+                    <ul class="text-sm list-disc pl-5 space-y-2">
                         <li>因本商品為食品類冷凍商品，依《消費者保護法》第19條及《通訊交易解除權合理例外情事適用準則》，<strong>不適用 7 日鑑賞期規範</strong>。</li>
                         <li>商品經拆封、退冰、食用或因消費者保存不當導致變質，<strong>恕不接受退換貨</strong>。</li>
                         <li>若您收到商品時發現有誤、缺件或瑕疵，請於<strong>到貨後 24 小時內</strong>，透過官方聯絡管道與我們聯繫，並提供相關照片與訂單資訊，我們將盡快為您處理。</li>
@@ -154,13 +175,6 @@ function noticeClick(x) {
     </BaseLayout>
 </template>
 <style scoped>
-.aaa {
-    display: none;
-    opacity: 0;
-    transition: 0.3s;
-
-}
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -170,9 +184,5 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
-}
-.active{
-    display: block;
-    animation: fade 0.5s ease-in;
 }
 </style>

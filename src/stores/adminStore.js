@@ -15,7 +15,7 @@ export const useAdminStore = defineStore('adminStore', () => {
   //      console.error(err)
   //   }
   //   finally{
-      
+
   //   }
 
 
@@ -47,7 +47,7 @@ export const useAdminStore = defineStore('adminStore', () => {
   const products = ref([])
   const NowProduct = ref({
     title: '',
-    category: '無',
+    category: 'ice',
     origin_price: 0,
     price: null,
     unit: "個",
@@ -66,7 +66,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     else {
       NowProduct.value = {
         title: '',
-        category: '無',
+        category: 'ice',
         origin_price: 0,
         price: null,
         unit: "個",
@@ -99,25 +99,53 @@ export const useAdminStore = defineStore('adminStore', () => {
   }
 
   async function updateProduct() {
-    global.isFullLoading = true
-    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
-    let method = 'post'
-    if (!isNew.value) {
-      apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${NowProduct.value.id}`
-      method = 'put'
+    let msg = []
+    if (NowProduct.value.title == '') {
+      msg.push("產品名稱不得為空")
     }
-    try {
-      const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
-      if (res.data.success) {
-        productIsOpen.value = false
-        getProduct()
+    if (NowProduct.value.price == '') {
+      msg.push("價格不得為0")
+    }
+    if (NowProduct.value.description == '') {
+      msg.push("產品描述不得為空")
+    }
+    if (NowProduct.value.content == '') {
+      msg.push("主成分不得為空")
+    }
+    if (NowProduct.value.imageUrl == '') {
+      msg.push("需上傳一張主要圖片")
+    }
+    if (msg.length > 0) {
+      if (Array.isArray(msg)) {
+        msg = msg.join('、')
       }
-      global.pushMessage(res.data.success, res.data.message)
-    } catch (err) {
-      global.pushMessage(false, err.message)
+      global.pushMessage(false, msg)
     }
-    finally {
-      global.isFullLoading = false
+    else {
+      global.isFullLoading = true
+      let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
+      let method = 'post'
+      if (!isNew.value) {
+        apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${NowProduct.value.id}`
+        method = 'put'
+      }
+      try {
+        const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
+        if (res.data.success) {
+          productIsOpen.value = false
+          getProduct()
+        }
+        msg = res.data.message
+        if (Array.isArray(msg)) {
+          msg = msg.join('、')
+        }
+        global.pushMessage(res.data.success, msg)
+      } catch (err) {
+        global.pushMessage(false, err.message)
+      }
+      finally {
+        global.isFullLoading = false
+      }
     }
   }
 

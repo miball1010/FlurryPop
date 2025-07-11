@@ -44,7 +44,7 @@ function applyFilter(type) {
 <template>
     <BaseLayout :title="'PRODUCT'">
         <div class="flex justify-end">
-            <input type="text" placeholder="搜尋" class="border-b border-b-gray-200 focus:outline-none"
+            <input type="text" placeholder="搜尋" class="p-1 border-b border-b-gray-200 focus:outline-none"
                 @keyup.enter="applyFilter('search')" v-model="searchText">
             <button @click="applyFilter('search')" class="cursor-pointer transition hover:scale-110 "><img
                     src="/images/search-icon.svg" alt="" class="h-5"></button>
