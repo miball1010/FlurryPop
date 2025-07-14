@@ -9,10 +9,11 @@ const props = defineProps(['title'])
             <div class="title itali text-[40px] text-white sm:text-[80px]">{{ props.title }}</div>
         </div>
 
-        <div
-            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg px-5 py-10 shadow-md sm:px-15 sm:py-28  sm:top-80">
+        <div :class="title=='CHECKOUT'?'py-5 sm:py-15':'py-10 sm:py-28'"
+            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg px-5 shadow-md sm:px-15  sm:top-80">
             <slot></slot>
         </div>
+        <slot name="checkout"></slot>
     </div>
 </template>
 
@@ -20,4 +21,5 @@ const props = defineProps(['title'])
 .bg-img{
     background-position: right top;
     background-size: 110%;
-}</style>
+}
+</style>

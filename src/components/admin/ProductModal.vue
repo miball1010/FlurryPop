@@ -67,75 +67,60 @@ function delImage(id) {
             class="bg-white max-w-[1200px] w-[90%] max-h-[90%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
             <div class="bg-neutral-700 text-white py-5 px-10 text-lg font-semibold">{{ isNew ? "新增產品" : "編輯產品" }}</div>
 
-            <div class="flex p-5 gap-8 flex-col sm:flex-row sm:p-10">
+            <div class="flex p-5 space-x-8 space-y-4 flex-col sm:flex-row sm:p-10">
                 <div class="flex-1 flex flex-col gap-4">
-                    <BaseInput :inputType="'text'" v-model="NowProduct.title" :placeholder="'產品名稱'"
-                        :description="'產品名稱'"/>
+                    <BaseInput :inputType="'text'" v-model="NowProduct.title" :id="'title'" :placeholder="'產品名稱'"
+                        :description="'產品名稱'" />
 
-                        <div class="relative">
-                            <input type="text" v-model="NowProduct.title" id="title"
-                                class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
-                                placeholder="產品名稱" />
-                            <label for="title"
-                                class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
-                                產品名稱
+                    <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="'價格'"
+                        :description="'價格'" />
+
+                    <div class="relative">
+                        <textarea name="description" id="description" placeholder="產品描述"
+                            v-model="NowProduct.description"
+                            class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
+                        <label for="description"
+                            class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
+                            產品描述
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
+                            class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
+                        <label for="content"
+                            class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
+                            主成分
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
+                            :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>
+                    </div>
+                    <div>
+                        <div> 類別</div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="category" v-model="NowProduct.category" value="ice"
+                                    class="w-4 h-4">
+                                <span>冰淇淋</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="category" v-model="NowProduct.category" value="bar"
+                                    class="w-4 h-4">
+                                <span>雪糕</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="category" v-model="NowProduct.category" value="store"
+                                    class="w-4 h-4">
+                                <span>門市限定</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="category" v-model="NowProduct.category" value="other"
+                                    class="w-4 h-4">
+                                <span>其他</span>
                             </label>
                         </div>
-                        <div class="relative">
-                            <input type="number" v-model="NowProduct.price" id="price"
-                                class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
-                                placeholder="價格" />
-                            <label for="price"
-                                class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
-                                價格
-                            </label>
-                        </div>
-                        <div class="relative">
-                            <textarea name="description" id="description" placeholder="產品描述"
-                                v-model="NowProduct.description"
-                                class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
-                            <label for="description"
-                                class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
-                                產品描述
-                            </label>
-                        </div>
-                        <div class="relative">
-                            <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
-                                class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
-                            <label for="content"
-                                class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
-                                主成分
-                            </label>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
-                                :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>
-                        </div>
-                        <div>
-                            <div> 類別</div>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="category" v-model="NowProduct.category" value="ice"
-                                        class="w-4 h-4">
-                                    <span>冰淇淋</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="category" v-model="NowProduct.category" value="bar"
-                                        class="w-4 h-4">
-                                    <span>雪糕</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="category" v-model="NowProduct.category" value="store"
-                                        class="w-4 h-4">
-                                    <span>門市限定</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="category" v-model="NowProduct.category" value="other"
-                                        class="w-4 h-4">
-                                    <span>其他</span>
-                                </label>
-                            </div>
-                        </div>
+                    </div>
                 </div>
 
                 <div class="flex-1 flex flex-col justify-between">

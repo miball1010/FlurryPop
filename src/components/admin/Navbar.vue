@@ -11,6 +11,7 @@ const { isFullLoading } = storeToRefs(globalStore)
 const { pushMessage } = globalStore
 
 async function logout() {
+    CloseMenu()
     isFullLoading.value = true
     let apiPath = `${import.meta.env.VITE_API}logout`
     try {
@@ -61,9 +62,9 @@ function CloseMenu() {
 
                 <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden"> <img
                         src="/images/cross.svg" alt="" class="h-5"></button>
-                <RouterLink :to="{ name: 'admin-product' }" class="navbtn">產品</RouterLink>
-                <RouterLink :to="{ name: 'admin-order' }" class="navbtn">訂單</RouterLink>
-                <RouterLink :to="{ name: 'admin-coupon' }" class="navbtn">優惠券</RouterLink>
+                <RouterLink :to="{ name: 'admin-product' }" @click="CloseMenu" class="navbtn">產品</RouterLink>
+                <RouterLink :to="{ name: 'admin-order' }" @click="CloseMenu" class="navbtn">訂單</RouterLink>
+                <RouterLink :to="{ name: 'admin-coupon' }" @click="CloseMenu" class="navbtn">優惠券</RouterLink>
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
             <!-- menu-btn -->

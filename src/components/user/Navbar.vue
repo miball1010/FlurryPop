@@ -86,7 +86,7 @@ onMounted(() => {
                     <RouterLink :to="{ name: 'user-favorite' }"
                         class=" cursor-pointer flex items-center justify-center py-3"><img
                             src="/images/heart-solid-white-icon.svg" alt="" class="h-4.5"></RouterLink>
-                    <RouterLink :to="{ name: 'user-checkout' }" class="flex items-center justify-center py-3"><img
+                    <RouterLink :to="{ name: 'user-checkout-step1' }" class="flex items-center justify-center py-3"><img
                             src="/images/cart-solid-white-icon.svg" alt="" class="h-4.5"></RouterLink>
                 </div>
             </div>
@@ -121,7 +121,7 @@ onMounted(() => {
                     <RouterLink :to="{ name: 'user-favorite' }"
                         class=" cursor-pointer flex items-center justify-center py-3"><img
                             src="/images/heart-solid-dark-icon.svg" alt="" class="h-4.5"></RouterLink>
-                    <RouterLink :to="{ name: 'user-checkout' }" class="flex items-center justify-center py-3"><img
+                    <RouterLink :to="{ name: 'user-checkout-step1' }" class="flex items-center justify-center py-3"><img
                             src="/images/cart-solid-dark-icon.svg" alt="" class="h-4.5"></RouterLink>
                 </div>
             </div>

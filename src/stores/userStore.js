@@ -65,7 +65,6 @@ export const useUserStore = defineStore('userStore', () => {
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
     try {
       const res = await axios.get(apiPath)
-      console.log(res.data)
       product.value = res.data.products
     } catch (err) {
       console.error(err)
@@ -74,6 +73,8 @@ export const useUserStore = defineStore('userStore', () => {
       global.isInlineLoading = false
     }
   }
+  //結帳
+  const step = ref(1)
 
   return {
     favoriteId,
@@ -83,6 +84,8 @@ export const useUserStore = defineStore('userStore', () => {
     addCart,
 
     product,
-    getProduct
+    getProduct,
+
+    step,
   }
 })

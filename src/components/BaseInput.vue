@@ -3,18 +3,19 @@ const model = defineModel()
 const props=defineProps({
     inputType:String,
     placeholder:String,
+    id:String,
     description:String,
 })
 </script>
 
 <template>
     <div class="relative">
-        <input :type="inputType" v-model="model" id="price"
+        <input :type="inputType" v-model="model" :id="id"
             class="peer w-full border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"
             :placeholder="placeholder" />
-        <label for="price"
+        <label :for="id"
             class="absolute  left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
-            {{description}}
+            {{description}} <span class=" text-[#3F88B4]">*</span>
         </label>
     </div>
 </template>

@@ -88,7 +88,7 @@ const question = ref([
 
 <template>
     <BaseLayout :title="'Q&A'">
-        <div class="flex flex-col gap-15 sm:gap-20">
+        <div class="ani-fade flex flex-col gap-15 sm:gap-20">
             <div v-for="(item, index) in question" :key="index">
                 <!-- 問題 -->
                 <div class="flex items-center gap-2 justify-center mb-7 sm:mb-10">
@@ -103,8 +103,8 @@ const question = ref([
                         <div @click="x.isOpen = !x.isOpen"
                             :class="x.isOpen ? 'bg-[#3F88B4] text-white border-[#3F88B4]' : 'bg-white border-gray-300 hover:border-[#3F88B4] hover:bg-[#3F88B4] hover:text-white'"
                             class="cursor-pointer transition duration-300 relative px-5 py-3 border">
-                            <div class="absolute top-[50%] translate-y-[-50%] right-3 text-lg">
-                                {{ x.isOpen ? "-" : "+" }}
+                            <div class="serif absolute top-[50%] translate-y-[-50%] right-3 text-lg">
+                                {{ x.isOpen ? "–" : "+" }}
                             </div>
                             <div>{{ x.Q }}</div>
                         </div>

@@ -45,7 +45,29 @@ const router = createRouter({
         {
           path: 'checkout',
           name: 'user-checkout',
-          component: () => import('../views/user/Checkout.vue')
+          component: () => import('../views/user/Checkout.vue'),
+          children: [
+            {
+              path: '',
+              name: 'user-checkout-step1',
+              component: () => import('../views/user/Step1.vue'),
+            },
+            {
+              path: 'step1',
+              name: 'user-checkout-step1',
+              component: () => import('../views/user/Step1.vue'),
+            },
+            {
+              path: 'step2',
+              name: 'user-checkout-step2',
+              component: () => import('../views/user/Step2.vue'),
+            },
+            {
+              path: 'step3',
+              name: 'user-checkout-step3',
+              component: () => import('../views/user/Step3.vue'),
+            }
+          ]
         },
       ]
     },
@@ -77,9 +99,9 @@ const router = createRouter({
       ]
     },
     {
-    //重新導向
-     path: '/:pathMatch(.*)*',
-     redirect: '/'
+      //重新導向
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     },
     {
       path: '/test',

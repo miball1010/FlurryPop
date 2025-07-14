@@ -71,14 +71,32 @@ function moreProduct(id) {
     transform: translateX(-50%) scale(1.1);
 }
 
+@media screen and (max-width:1260px) {
+
+    .favorite {
+        width: calc((100% - 20px*2)/3);
+    }
+}
+
 @media screen and (max-width:1170px) {
     .product {
         width: calc((100% - 20px)/2);
     }
 }
 
-@media screen and (max-width:570px) {
+@media screen and (max-width:900px) {
+
+    .favorite {
+        width: calc((100% - 20px)/2);
+    }
+}
+
+@media screen and (max-width:640px) {
     .product {
+        width: 100%;
+    }
+
+    .favorite {
         width: 100%;
     }
 }

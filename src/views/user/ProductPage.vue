@@ -54,8 +54,6 @@ function decrease() {
 watch(number, () => {
     if (number.value < 1)
         number.value = 1
-    if (number.value > 150)
-        number.value = 150
 })
 
 async function share() {
@@ -121,8 +119,7 @@ async function handleAddCart() {
                             <input type="number" v-model.number.lazy="number"
                                 class="flex-1 border-t border-b border-gray-200 text-center outline-none" />
                             <button @click="increase"
-                                :class="number < 150 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
-                                class="w-10 aspect-square border border-gray-200 text-center">+</button>
+                                class="cursor-pointer hover:bg-gray-100 w-10 aspect-square border border-gray-200 text-center">+</button>
                         </div>
 
                         <button @click="handleAddCart" :disabled="addLoading"
