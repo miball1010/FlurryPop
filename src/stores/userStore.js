@@ -35,23 +35,23 @@ export const useUserStore = defineStore('userStore', () => {
   //購物車
   const addLoading = ref(false)
   async function addCart(id, num) {
-      addLoading.value = true
-      let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
-      const cart = {
-        data: {
-          "product_id": id,
-          "qty": num
-        }
+    addLoading.value = true
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
+    const cart = {
+      data: {
+        "product_id": id,
+        "qty": num
       }
-      try {
-        const res = await axios.post(apiPath, cart)
-        global.pushMessage(res.data.success, res.data.message)
-      } catch (err) {
-        global.pushMessage(false, err.message)
-      }
-      finally {
-        addLoading.value = false
-      }
+    }
+    try {
+      const res = await axios.post(apiPath, cart)
+      global.pushMessage(res.data.success, res.data.message)
+    } catch (err) {
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      addLoading.value = false
+    }
   }
   //商品
   onMounted(() => {
@@ -60,12 +60,14 @@ export const useUserStore = defineStore('userStore', () => {
   })
 
   const product = ref([])
+  const freight=ref({})
 
   async function getProduct(page = 1) {
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
     try {
       const res = await axios.get(apiPath)
       product.value = res.data.products
+      freight.value=product.value.find(i=>i.title=='運費')
     } catch (err) {
       console.error(err)
     }
@@ -76,6 +78,23 @@ export const useUserStore = defineStore('userStore', () => {
   //結帳
   const step = ref(1)
 
+  const cart = ref([])
+  const total = ref(0)
+  async function getCheckProduct() {
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
+    try {
+      const res = await axios.get(apiPath)
+      // console.log(res.data.data)
+      cart.value = res.data.data.carts
+      total.value = res.data.data.total
+    } catch (err) {
+      console.error(err)
+    }
+    finally {
+       global.isInlineLoading = false
+    }
+  }
+
   return {
     favoriteId,
     addFavorite,
@@ -83,9 +102,10 @@ export const useUserStore = defineStore('userStore', () => {
     addLoading,
     addCart,
 
-    product,
+    product,freight,
     getProduct,
 
-    step,
+    step,cart,total,
+    getCheckProduct
   }
 })
