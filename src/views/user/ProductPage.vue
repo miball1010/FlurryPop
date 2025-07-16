@@ -15,7 +15,7 @@ const { pushMessage } = globalStore
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { favoriteId, addLoading } = storeToRefs(userStore)
-const { addFavorite, addCart } = userStore
+const { addFavorite, addCart,share } = userStore
 
 const productId = route.params.productId
 const product = ref({})
@@ -56,16 +56,6 @@ watch(number, () => {
         number.value = 1
 })
 
-async function share() {
-    const url = window.location.href
-    try {
-        await navigator.clipboard.writeText(url)
-        pushMessage(true, '網址已複製到剪貼簿')
-    }
-    catch (err) {
-        pushMessage(false, '複製失敗：' + err)
-    }
-}
 async function handleAddCart() {
     try {
         await addCart(product.value.id, number.value)

@@ -25,7 +25,7 @@ function moreProduct(id) {
         </div>
         <div class="flex justify-between">
             <div class="font-bold text-[#3F88B4]">NT$ {{ item.price }}</div>
-            <div class="flex gap-3 items-center">
+            <div v-if="item.category!='store'" class="flex gap-3 items-center">
                 <button @click="addFavorite(item.id)"
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
                         :src="`${favoriteId.indexOf(item.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"

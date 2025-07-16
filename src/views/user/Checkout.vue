@@ -38,9 +38,8 @@ const { } = userStore
         </div>
 
         <template #checkout>
-            <div class="relative py-5 top-55 w-[90%] max-w-[1050px] mx-auto sm:py-0 sm:top-90">
+           
                 <router-view></router-view>
-            </div>
         </template>
     </BaseLayout>
 
