@@ -10,7 +10,7 @@ const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { } = storeToRefs(adminStore)
-const { delProduct } = adminStore
+const { delProduct,delOrder } = adminStore
 </script>
 
 <template>
@@ -22,7 +22,10 @@ const { delProduct } = adminStore
 
             <div class="flex justify-end gap-5">
                 <button class="font-semibold btn-white" @click="confirm.show = false">取消</button>
-                <button class="font-semibold btn-white" @click="delProduct(confirm.item)">刪除</button>
+                <button v-if="confirm.type == 'product'" class="font-semibold btn-white"
+                    @click="delProduct(confirm.item)">刪除</button>
+                <button v-if="confirm.type == 'order'" class="font-semibold btn-white"
+                    @click="delOrder(confirm.item)">刪除</button>
             </div>
         </div>
     </div>

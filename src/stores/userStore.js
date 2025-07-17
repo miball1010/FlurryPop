@@ -88,8 +88,8 @@ export const useUserStore = defineStore('userStore', () => {
       const res = await axios.get(apiPath)
       product.value = res.data.products
       freight.value = product.value.find(i => i.title == '運費')
-      product.value = product.value.filter(i => i.title != '運費')
-      console.log(product.value)
+      product.value = product.value.filter(i => i.category != 'internal')
+      // console.log(product.value)
     } catch (err) {
       console.error(err)
     }
@@ -198,7 +198,7 @@ export const useUserStore = defineStore('userStore', () => {
       global.isFullLoading = true
 
       let address = "實體店取貨"
-      console.log("address" + address)
+      // console.log("address" + address)
       if (information.delivery == '宅配') {
         await addFreight(freight.value.id, 1)
         address = information.city + " " + information.area + " " + information.address

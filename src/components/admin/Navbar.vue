@@ -40,6 +40,11 @@ function CloseMenu() {
     menuIsOpen.value = false
     document.body.style.overflow = ''
 }
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768)
+        CloseMenu()
+})
 </script>
 
 <template>
@@ -56,9 +61,8 @@ function CloseMenu() {
                 <div class="text-xl font-bold">後臺系統</div>
             </div>
             <!-- menu -->
-            <div class="fixed flex gap-8 items-center bg-white pt-25 px-25 pb-7 flex-col top-0  shadow-lg h-screen right-0 transition-transform duration-0
-            md:relative md:bg-transparent md:pt-0 md:px-0 md:pb-0 md:flex-row md:shadow-none md:h-auto md:translate-x-0 md:transition-none"
-                :class="menuIsOpen ? 'translate-x-0 duration-300' : 'translate-x-full md:translate-x-0'">
+            <div class="menu flex gap-8 pt-25 px-25 pb-7  top-0 shadow-lg
+           md:pt-0 md:px-0 md:pb-0  md:shadow-none" :class="{ open: menuIsOpen }">
 
                 <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden"> <img
                         src="/images/cross.svg" alt="" class="h-5"></button>
@@ -75,6 +79,32 @@ function CloseMenu() {
 </template>
 
 <style scoped>
+.navbtn {
+    color: #404040;
+    transition: 0.3s;
+}
+
+.navbtn:hover {
+    color: #3F88B4;
+}
+
+@media screen and (max-width:768px) {
+    .menu {
+        flex-direction: column;
+        position: fixed;
+        transition: right 0.5s;
+        right: -100%;
+        background-color: white;
+        height: 100vh;
+        top: 0;
+        align-items: center;
+    }
+
+    .open.menu {
+        right: 0;
+    }
+}
+
 @media screen and (max-width:375px) {
     .title {
         display: none;

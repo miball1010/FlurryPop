@@ -69,10 +69,10 @@ function delImage(id) {
 
             <div class="flex p-5 space-x-8 space-y-4 flex-col sm:flex-row sm:p-10">
                 <div class="flex-1 flex flex-col gap-4">
-                    <BaseInput :inputType="'text'" v-model="NowProduct.title" :id="'title'" :placeholder="'產品名稱'"
+                    <BaseInput :inputType="'text'" v-model="NowProduct.title" :id="'title'" :placeholder="''"
                         :description="'產品名稱'" />
 
-                    <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="'價格'"
+                    <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="''"
                         :description="'價格'" />
 
                     <div class="relative">
@@ -118,6 +118,11 @@ function delImage(id) {
                                 <input type="radio" name="category" v-model="NowProduct.category" value="other"
                                     class="w-4 h-4">
                                 <span>其他</span>
+                            </label>
+                             <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="category" v-model="NowProduct.category" value="internal"
+                                    class="w-4 h-4">
+                                <span>內部用途</span>
                             </label>
                         </div>
                     </div>

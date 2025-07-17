@@ -29,18 +29,17 @@ body {
   @apply text-xl font-bold leading-7;
 } */
 
-.navbtn {
+/* .navbtn {
   @apply hover:text-[#3F88B4] transition duration-300;
-}
+} */
 
 .btn-white {
-  @apply border px-6 py-2 w-fit cursor-pointer transition-all hover:text-white hover:bg-neutral-700;
+  @apply border border-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:text-[#3F88B4] hover:border-[#3F88B4];
 }
 
 .btn-dark {
-  @apply border text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:bg-white hover:text-neutral-700;
+  @apply border border-neutral-700 text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:border-[#3F88B4] hover:bg-[#3F88B4];
 }
-
 
 .pop-swiper {
     width: 100%;

@@ -1,7 +1,6 @@
 <script setup>
 import InlineLoading from '@/components/InlineLoading.vue'
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
@@ -61,7 +60,7 @@ onMounted(() => {
         </div>
         <div class="w-auto flex justify-end gap-5 items-center lg:w-46">
           <button class="font-semibold btn-white" @click="openProductModal(false, item)">編輯</button>
-          <button class="font-semibold btn-white" @click="doubleCheck(item)">刪除</button>
+          <button class="font-semibold btn-white" @click="doubleCheck(item,'product')">刪除</button>
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ export const useAdminStore = defineStore('adminStore', () => {
 
   //登入
   async function checkLogin() {
+    global.isFullLoading = true
     const token = getCookie('token')
     if (!token) {
       return false
@@ -33,6 +34,9 @@ export const useAdminStore = defineStore('adminStore', () => {
     }
     catch (err) {
       return false
+    }
+    finally {
+      global.isFullLoading = false
     }
   }
 
@@ -168,10 +172,123 @@ export const useAdminStore = defineStore('adminStore', () => {
     }
   }
 
+  //訂單管理
+  const orders = ref([])
+
+  // /api/:api_path/admin/orders?page=:page
+  async function getOrder(page = 1) {
+    global.isInlineLoading = true
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/orders/?page=${page}`
+    try {
+      const res = await axios.get(apiPath)
+      orders.value = res.data.orders
+    } catch (err) {
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      global.isInlineLoading = false
+    }
+  }
+
+  const NowOrder = ref({
+    products:{},
+    user:{
+      address:'home',
+    }
+  })
+
+  const orderIsOpen = ref(false)
+
+  function openOrderModal(order) {
+    NowOrder.value = JSON.parse(JSON.stringify(order))
+    orderIsOpen.value = true
+    console.log( NowOrder.value)
+  }
+
+  function closeOrderModal() {
+    orderIsOpen.value = false
+  }
+
+
+  async function updateOrder() {
+    // let msg = []
+    // if (NowProduct.value.title == '') {
+    //   msg.push("產品名稱不得為空")
+    // }
+    // if (NowProduct.value.price == '') {
+    //   msg.push("價格不得為0")
+    // }
+    // if (NowProduct.value.description == '') {
+    //   msg.push("產品描述不得為空")
+    // }
+    // if (NowProduct.value.content == '') {
+    //   msg.push("主成分不得為空")
+    // }
+    // if (NowProduct.value.imageUrl == '') {
+    //   msg.push("需上傳一張主要圖片")
+    // }
+    // if (msg.length > 0) {
+    //   if (Array.isArray(msg)) {
+    //     msg = msg.join('、')
+    //   }
+    //   global.pushMessage(false, msg)
+    // }
+    // else {
+    //   global.isFullLoading = true
+    //   let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
+    //   let method = 'post'
+    //   if (!isNew.value) {
+    //     apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${NowProduct.value.id}`
+    //     method = 'put'
+    //   }
+    //   try {
+    //     const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
+    //     if (res.data.success) {
+    //       productIsOpen.value = false
+    //       getProduct()
+    //     }
+    //     msg = res.data.message
+    //     if (Array.isArray(msg)) {
+    //       msg = msg.join('、')
+    //     }
+    //     global.pushMessage(res.data.success, msg)
+    //   } catch (err) {
+    //     global.pushMessage(false, err.message)
+    //   }
+    //   finally {
+    //     global.isFullLoading = false
+    //   }
+    // }
+  }
+
+  async function delOrder(item) {
+    global.isFullLoading = true
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/order/${item.id}`
+    try {
+      const res = await axios.delete(apiPath)
+      if (res.data.success) {
+        global.confirm.show = false
+        closeOrderModal()
+        getOrder()
+      }
+      global.pushMessage(res.data.success, res.data.message)
+    } catch (err) {
+      console.error(err)
+      global.pushMessage(false, err.message)
+    }
+    finally {
+      global.isFullLoading = false
+    }
+  }
+
+
   return {
     checkLogin,
 
     products, productIsOpen, NowProduct, isNew,
-    openProductModal, closeProductModal, getProduct, updateProduct, delProduct
+    openProductModal, closeProductModal, getProduct, updateProduct, delProduct,
+
+    orders, orderIsOpen,NowOrder,
+    getOrder, openOrderModal, closeOrderModal, updateOrder, delOrder
   }
 })

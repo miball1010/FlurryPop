@@ -43,13 +43,8 @@ async function login() {
 
 onMounted(async () => {
   const isLoggedIn = await checkLogin()
-  if (!isLoggedIn) {
-    console.log("未登入")
-    router.push({ path: "/login" })
-  } else {
-    console.log("已登入")
+  if (isLoggedIn) 
     router.push('/dashboard/product')
-  }
 })
 </script>
 
