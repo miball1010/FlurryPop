@@ -14,8 +14,8 @@ const userStore = useUserStore()
 const { product } = storeToRefs(userStore)
 const { getProduct } = userStore
 
-onMounted(()=>{
-       filterProducts.value = product.value
+onMounted(() => {
+    filterProducts.value = product.value
 })
 
 const searchText = ref('')
@@ -44,23 +44,23 @@ function applyFilter(type) {
 <template>
     <BaseLayout :title="'PRODUCT'">
         <div class="flex justify-end">
-            <input type="text" placeholder="搜尋" class="p-1 border-b border-b-gray-200 focus:outline-none"
+            <input type="text" placeholder="搜尋" class="w-full p-1 border-b border-b-gray-200 focus:outline-none sm:w-auto"
                 @keyup.enter="applyFilter('search')" v-model="searchText">
             <button @click="applyFilter('search')" class="cursor-pointer transition hover:scale-110 "><img
                     src="/images/search-icon.svg" alt="" class="h-5"></button>
         </div>
-        <div class="flex flex-col lg:flex-row gap-5 mt-5">
-            <div class="w-45 flex flex-row  lg:flex-col">
-                <button :class="{ active: filterType == 'all' }" class="filter-btn "
+        <div class="flex flex-col space-x-5 space-y-5 mt-2 lg:flex-row sm:mt-5">
+            <div class="w-full flex flex-row overflow-x-auto lg:flex-col lg:w-45">
+                <button :class="{ active: filterType == 'all' }" class="filter-btn text-sm lg:text-base"
                     @click="applyFilter('all')">所有商品</button>
-                <button :class="{ active: filterType == 'ice' }" class="filter-btn"
+                <button :class="{ active: filterType == 'ice' }" class="filter-btn text-sm lg:text-base"
                     @click="applyFilter('ice')">冰淇淋</button>
-                <button :class="{ active: filterType == 'bar' }" class="filter-btn"
+                <button :class="{ active: filterType == 'bar' }" class="filter-btn text-sm lg:text-base"
                     @click="applyFilter('bar')">雪糕</button>
-                <button :class="{ active: filterType == 'store' }" class="filter-btn"
+                <button :class="{ active: filterType == 'store' }" class="filter-btn text-sm lg:text-base"
                     @click="applyFilter('store')">門市限定</button>
             </div>
-            <div class="flex-1 flex flex-wrap gap-5 justify-center sm:justify-start">
+            <div class="flex-1 flex flex-wrap gap-2 sm:gap-5 justify-start">
                 <div class="w-full p-10 text-center" v-if="isInlineLoading">
                     <InlineLoading />
                 </div>
@@ -75,9 +75,11 @@ function applyFilter(type) {
 
 <style scoped>
 .filter-btn {
+  
     border: 1px solid #D9D9D9;
     padding: 8px 20px;
     text-align: left;
+    min-width: fit-content;
 }
 
 .filter-btn:not(:first-child) {
@@ -94,4 +96,16 @@ function applyFilter(type) {
     color: #3F88B4;
     cursor: pointer;
 }
+
+@media screen and (max-width:1024px) {
+    .filter-btn{
+        text-align: center;
+          flex: 1;
+    }
+    .filter-btn:not(:first-child) {
+        border-top: 1px solid #D9D9D9;
+        border-left: none !important;
+    }
+}
+
 </style>

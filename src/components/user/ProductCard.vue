@@ -7,6 +7,8 @@ import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { favoriteId } = storeToRefs(userStore)
 const { addFavorite, addCart } = userStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, imgPath } = useUtils()
 
 const props = defineProps(['product', 'page'])
 
@@ -16,20 +18,28 @@ function moreProduct(id) {
 
 </script>
 <template>
-    <div :class="page" class="bg-white p-5" v-for="item in product">
+    <div :class="page" class="bg-white p-2 sm:p-5" v-for="item in product">
+        <!-- 圖片 -->
         <div @click="moreProduct(item.id)" class="w-full pt-[100%] relative overflow-hidden">
-            <img :src="item.imageUrl" alt="" class="ice-img ">
+            <img :src="item.imageUrl" alt="" class="ice-img">
         </div>
-        <div class="font-bold mt-3 mb-5 text-lg">
+
+        <!-- 標題 -->
+        <div class="font-bold mt-2 sm:mt-3 mb-1 sm:mb-5 text-sm sm:text-lg">
             {{ item.title }}
         </div>
         <div class="flex justify-between">
-            <div class="font-bold text-[#3F88B4]">NT$ {{ item.price }}</div>
-            <div v-if="item.category!='store'" class="flex gap-3 items-center">
+            <!-- 價錢 -->
+            <div class="font-bold text-[#3F88B4]">{{ currency(item.price) }}$</div>
+
+            <div v-if="item.category != 'store'" class="gap-3 items-center hidden sm:flex">
+                <!-- 我的最愛 -->
                 <button @click="addFavorite(item.id)"
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
-                        :src="`${favoriteId.indexOf(item.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
+                        :src="`${favoriteId.indexOf(item.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
                         alt="" class="h-5.5"></button>
+
+                <!-- 加入購物車 -->
                 <button @click="addCart(item.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
                         src="/images/cart-hollow-icon.svg" alt="" class="h-6"></button>
             </div>
@@ -47,13 +57,11 @@ function moreProduct(id) {
 .product {
     border: 1px solid #D9D9D9;
     width: calc((100% - 20px*2)/3);
-    max-width: 300px;
 }
 
 .favorite {
     border: 1px solid #D9D9D9;
     width: calc((100% - 20px*3)/4);
-    max-width: 300px;
 }
 
 .ice-img {
@@ -62,7 +70,8 @@ function moreProduct(id) {
     bottom: 0;
     left: 50%;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     transform: translateX(-50%);
     transition: transform 0.3s ease;
 }
@@ -81,6 +90,7 @@ function moreProduct(id) {
 @media screen and (max-width:1170px) {
     .product {
         width: calc((100% - 20px)/2);
+        /* width: 50%; */
     }
 }
 
@@ -93,11 +103,14 @@ function moreProduct(id) {
 
 @media screen and (max-width:640px) {
     .product {
-        width: 100%;
+        width: calc((100% - 8px)/2);
+        /* width: 100%; */
+        max-width: 300px;
     }
 
     .favorite {
         width: 100%;
+        max-width: 300px;
     }
 }
 </style>

@@ -35,5 +35,3 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
         </div>
     </BaseLayout>
 </template>
-
-<style scoped></style>

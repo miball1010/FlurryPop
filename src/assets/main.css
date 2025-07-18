@@ -40,50 +40,93 @@ body {
 .btn-dark {
   @apply border border-neutral-700 text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:border-[#3F88B4] hover:bg-[#3F88B4];
 }
+ /* ::-webkit-scrollbar {
+  width: 7px;
+}
+
+ ::-webkit-scrollbar-button {
+  background: transparent;
+  border-radius: 4px;
+}
+
+ ::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+ ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #313b443f;
+}
+
+ ::-webkit-scrollbar-track {
+  box-shadow: transparent;
+} */
 
 .pop-swiper {
-    width: 100%;
-    padding: 100px 0 10px !important;
+  width: 100%;
+  padding: 100px 0 10px !important;
 }
 
 .pop-swiper .swiper-button-next:after,
 .pop-swiper .swiper-button-prev:after {
-    content: '';
+  content: '';
 }
 
 .pop-swiper .swiper-button-prev,
 .pop-swiper .swiper-button-next {
-    background-image: url(../images/arrow.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    top: 30px;
+  background-image: url(../images/arrow.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  top: 30px;
 }
 
 
 .pop-swiper .swiper-button-prev {
-   right: calc(12vw + 70px);
-   left: auto;
-    transform: scale(-1.5);
-    transition: 0.3s;
+  right: calc(12vw + 70px);
+  left: auto;
+  transform: scale(-1.5);
+  transition: 0.3s;
 }
 
 .pop-swiper .swiper-button-next {
-    right: 12vw;
-    transform: scale(1.5);
-    transition: 0.3s;
+  right: 12vw;
+  transform: scale(1.5);
+  transition: 0.3s;
 }
 
 .ani-fade {
-    animation: fade 0.5s ease-in forwards;
+  animation: fade 0.5s ease-in forwards;
 }
 
 @keyframes fade {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
+}
+
+.mySwiper1 {
+  background-color: rgba(0, 0, 0, 0.03);
+  margin-bottom: 10px;
+}
+
+.mySwiper1 .swiper-wrapper {
+  align-items: center;
+}
+
+.mySwiper2 .swiper-slide {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  opacity: 0.4;
+}
+
+.mySwiper2 .swiper-slide-thumb-active {
+
+  opacity: 1;
 }

@@ -90,11 +90,6 @@ const router = createRouter({
           path: 'order',
           name: 'admin-order',
           component: () => import('../views/admin/Orders.vue')
-        },
-        {
-          path: 'coupon',
-          name: 'admin-coupon',
-          component: () => import('../views/admin/Coupons.vue')
         }
       ]
     },
@@ -102,11 +97,6 @@ const router = createRouter({
       //重新導向
       path: '/:pathMatch(.*)*',
       redirect: '/'
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('../views/Test.vue'),
     }
   ]
 })

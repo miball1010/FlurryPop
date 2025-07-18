@@ -5,18 +5,20 @@ import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isInlineLoading } = storeToRefs(globalStore)
-const { currency, date } = globalStore
+const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { orders } = storeToRefs(adminStore)
 const { getOrder, openOrderModal } = adminStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 onMounted(() => {
     orders.value = []
     isInlineLoading.value = true
     setTimeout(async () => {
         await getOrder()
-        console.log(orders.value)
+        // console.log(orders.value)
     }, 100)
 
 })
@@ -31,14 +33,7 @@ const filterOrder = computed(() => {
     if (status.value == 'shop') {
         return orders.value.filter(i => i.user.address == '實體店取貨')
     }
-
 })
-
-// function toLocaleDateString(date) {
-//   return new Date(date).toLocaleDateString('zh-TW')
-// }
-
-
 </script>
 
 <template>

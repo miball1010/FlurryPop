@@ -4,6 +4,8 @@ const router = useRouter()
 import InlineLoading from '@/components/InlineLoading.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
@@ -111,7 +113,7 @@ function moreProduct(id) {
                                 </div>
                                 <div class="flex flex-col flex-1 min-w-0">
                                     <div class="font-bold">{{ item.product.title }}</div>
-                                    <div class="font-bold text-[#3F88B4]">NT$ {{ item.product.price }}</div>
+                                    <div class="font-bold text-[#3F88B4]">NT$ {{ currency(item.product.price) }}</div>
                                     <!-- 數量 -->
                                     <div class="flex w-full max-w-[300px] mt-3">
                                         <button @click="decrease(item)"
@@ -139,11 +141,11 @@ function moreProduct(id) {
                         <div class="w-full border-b border-gray-200">
                             <div class="flex justify-between mb-2" v-for="item in cart">
                                 <div>{{ item.product.title }}</div>
-                                <div class="font-bold">NT$ {{ item.total }}</div>
+                                <div class="font-bold">NT$ {{ currency(item.total) }}</div>
                             </div>
                         </div>
                         <div><span class="font-bold">總計</span><span class="ml-1 font-bold  text-[#3F88B4] text-xl">NT$
-                                {{ total }}</span></div>
+                                {{ currency(total) }}</span></div>
                         <RouterLink :to="{ name: 'user-checkout-step2' }"
                             class="bg-[#85B1CA] text-white px-6 py-2 w-fit transition hover:opacity-90">下一步
                         </RouterLink>

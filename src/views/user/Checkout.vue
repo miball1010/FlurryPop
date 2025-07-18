@@ -4,12 +4,10 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { step } = storeToRefs(userStore)
-const { } = userStore
 </script>
 
 <template>
     <BaseLayout :title="'CHECKOUT'">
-
         <div class="flex max-w-[900px] mx-auto flex-col gap-3 sm:flex-row sm:gap-0">
             <div class="flex-1 flex flex-row items-center gap-2 min-w-[100px] sm:flex-col">
                 <div :class="step == 1 ? 'bg-[#3F88B4]' : 'bg-gray-300'"
@@ -37,12 +35,8 @@ const { } = userStore
             </div>
         </div>
 
-        <template #checkout>
-           
+        <template #bottom>
                 <router-view></router-view>
         </template>
     </BaseLayout>
-
 </template>
-
-<style scoped></style>

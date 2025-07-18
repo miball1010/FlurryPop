@@ -10,6 +10,8 @@ import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { products } = storeToRefs(adminStore)
 const { getProduct, openProductModal } = adminStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 onMounted(() => {
   products.value = []
@@ -50,7 +52,7 @@ onMounted(() => {
               <div class="font-semibold break-words">{{ item.title }}</div>
               <div class="text-sm text-gray-400 hidden md:block">ID:{{ item.id }}</div>
             </div>
-            <div class=" flex-1 text-[#3F88B4] font-semibold">${{ item.price }}</div>
+            <div class=" flex-1 text-[#3F88B4] font-semibold">${{ currency(item.price) }}</div>
             <div class=" flex-1 font-semibold" :class="item.is_enabled ? 'text-lime-600' : 'text-neutral-400'">{{
               item.is_enabled ?
                 "上架中"
@@ -60,7 +62,7 @@ onMounted(() => {
         </div>
         <div class="w-auto flex justify-end gap-5 items-center lg:w-46">
           <button class="font-semibold btn-white" @click="openProductModal(false, item)">編輯</button>
-          <button class="font-semibold btn-white" @click="doubleCheck(item,'product')">刪除</button>
+          <button class="font-semibold btn-white" @click="doubleCheck(item, 'product')">刪除</button>
         </div>
       </div>
     </div>

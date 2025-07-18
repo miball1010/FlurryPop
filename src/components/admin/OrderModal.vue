@@ -5,45 +5,27 @@ import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isFullLoading } = storeToRefs(globalStore)
-const { doubleCheck, pushMessage, currency, date } = globalStore
+const { doubleCheck, pushMessage } = globalStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
-const { NowOrder, orderIsOpen } = storeToRefs(adminStore)
+const { NowOrder, orderIsOpen, deliveryType, address } = storeToRefs(adminStore)
 const { updateOrder, closeOrderModal } = adminStore
 
 import { onMounted, ref, watch } from 'vue'
 import axios from 'axios';
 
-const fileInput1 = ref(null)
-const fileInput2 = ref(null)
-
-onMounted(() => {
-    // if (NowOrder.value.user.address === '實體店取貨') {
-    //     deliveryType.value = 'store'
-    //     NowOrder.value.user.address = '實體店取貨'
-    // } else {
-    //     deliveryType.value = 'home'
-    //     NowOrder.value.user.address = NowOrder.value.user.address
-    // }
-})
-
-
-const deliveryType = ref('home') // 預設是宅配
-
-watch(() => NowOrder.value.user.address, (newVal) => {
-    console.log(123)
-    deliveryType.value = newVal == '實體店取貨' ? 'store' : 'home'
-})
-
-watch(deliveryType, (newVal) => {
-    if (newVal == 'store') {
-        NowOrder.value.user.address = '實體店取貨'
-    }
-    else {
-        NowOrder.value.user.address = ""
-    }
-})
+// watch(NowOrder, () => {
+//     if (NowOrder.value.user.address == '實體店取貨') {
+//         deliveryType.value = 'store'
+//     }
+//     else {
+//         address.value = NowOrder.value.user.address
+//         deliveryType.value = 'home'
+//     }
+// })
 </script>
 
 <template>
@@ -62,7 +44,7 @@ watch(deliveryType, (newVal) => {
                     <div class="flex-2 flex flex-col gap-4">
 
                         <div class="flex mb-4">
-                            <div class="font-bold w-20">購買時間</div>
+                            <div class="font-bold w-20">訂購日期</div>
                             <div class="flex-1">{{ date(NowOrder.create_at) }}</div>
                         </div>
                         <div class="flex mb-4">
@@ -71,19 +53,22 @@ watch(deliveryType, (newVal) => {
                         </div>
                         <div class="flex mb-4">
                             <div class="font-bold w-20">姓名</div>
-                            <div class="flex-1"><input type="text" v-model="NowOrder.user.name" class="px-2 py-1 border border-gray-300 outline-none"></div>
+                            <div class="flex-1"><input type="text" v-model="NowOrder.user.name"
+                                    class="px-2 py-1 border border-gray-300 outline-none"></div>
                         </div>
                         <div class="flex mb-4">
                             <div class="font-bold w-20">電話</div>
-                            <div class="flex-1"><input type="text" v-model="NowOrder.user.tel" class="px-2 py-1 border border-gray-300 outline-none"></div>
+                            <div class="flex-1"><input type="text" v-model="NowOrder.user.tel"
+                                    class="px-2 py-1 border border-gray-300 outline-none"></div>
                         </div>
                         <div class="flex mb-4">
                             <div class="font-bold w-20">Email</div>
-                            <div class="flex-1"><input type="text" v-model="NowOrder.user.email" class="px-2 py-1 border border-gray-300 outline-none"></div>
+                            <div class="flex-1"><input type="text" v-model="NowOrder.user.email"
+                                    class="px-2 py-1 border border-gray-300 outline-none"></div>
                         </div>
                         <div class="flex mb-4">
                             <div class="font-bold w-20">應付金額</div>
-                            <div class="flex-1">{{ NowOrder.total }}$</div>
+                            <div class="flex-1">{{ currency(NowOrder.total) }}$</div>
                         </div>
                         <div class="flex mb-4">
                             <div class="font-bold w-20">付款狀況</div>
@@ -96,18 +81,12 @@ watch(deliveryType, (newVal) => {
                         <div class="flex mb-4">
                             <div class="font-bold w-20">寄送方式</div>
                             <div>
-                                <label class="flex flex-wrap items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="delivery" v-model="deliveryType" value="home"
-                                        class="w-4 h-4">
-                                    <span>宅配</span>
-                                    <input v-if="deliveryType == 'home'" type="text" v-model="NowOrder.user.address" class="px-2 py-1 border border-gray-300 outline-none">
-                                </label>
-
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="delivery" v-model="deliveryType" value="store"
-                                        class="w-4 h-4">
-                                    <span>店取</span>
-                                </label>
+                                <div v-if="NowOrder.user.address == '實體店取貨'">店取</div>
+                                <div v-else class="flex flex-wrap items-center gap-2 cursor-pointer">
+                                    <div>宅配</div>
+                                    <input type="text" v-model="NowOrder.user.address"
+                                        class="px-2 py-1 border border-gray-300 outline-none">
+                                </div>
                             </div>
                         </div>
                         <div class="flex mb-4">
@@ -126,7 +105,7 @@ watch(deliveryType, (newVal) => {
 
                 <div class="flex justify-end gap-5 mt-5">
                     <button @click="closeOrderModal" class="btn-white">取消</button>
-                    <button @click="updateOrder" class="btn-dark">確認</button>
+                    <button @click="updateOrder(address)" class="btn-dark">確認</button>
                 </div>
             </div>
         </div>

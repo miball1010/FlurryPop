@@ -9,11 +9,11 @@ const props = defineProps(['title'])
             <div class="title itali text-[40px] text-white sm:text-[80px]">{{ props.title }}</div>
         </div>
 
-        <div :class="title=='CHECKOUT'?'px-15 py-5 sm:py-15':'px-5 py-10 sm:px-15 sm:py-28'"
-            class="bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg shadow-md sm:top-80">
+        <div :class="title=='CHECKOUT'?'px-15 py-5 sm:py-15':'px-5 sm:px-10 lg:px-15 py-5 sm:py-15 lg:py-28'"
+            class=" bg-white w-[90%] max-w-[1330px] relative z-[2] top-50 mx-auto rounded-lg shadow-md sm:top-80">
             <slot></slot>
         </div>
-        <slot name="checkout"></slot>
+        <slot name="bottom"></slot>
     </div>
 </template>
 
@@ -21,5 +21,18 @@ const props = defineProps(['title'])
 .bg-img{
     background-position: right top;
     background-size: 110%;
+}
+.clear-glass {
+    background: rgba(255, 255, 255, 0.03);
+    /* 幾乎透明 */
+    backdrop-filter: blur(2px);
+    /* 非常輕微模糊 */
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* 更清晰邊框 */
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    /* 假反光 */
+    border-radius: 16px;
 }
 </style>

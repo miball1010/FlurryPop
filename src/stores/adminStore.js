@@ -22,6 +22,8 @@ export const useAdminStore = defineStore('adminStore', () => {
   //登入
   async function checkLogin() {
     global.isFullLoading = true
+    closeProductModal()
+    closeOrderModal()
     const token = getCookie('token')
     if (!token) {
       return false
@@ -191,9 +193,9 @@ export const useAdminStore = defineStore('adminStore', () => {
   }
 
   const NowOrder = ref({
-    products:{},
-    user:{
-      address:'home',
+    products: {},
+    user: {
+      address: '',
     }
   })
 
@@ -201,64 +203,72 @@ export const useAdminStore = defineStore('adminStore', () => {
 
   function openOrderModal(order) {
     NowOrder.value = JSON.parse(JSON.stringify(order))
+    console.log(NowOrder.value)
     orderIsOpen.value = true
-    console.log( NowOrder.value)
   }
 
   function closeOrderModal() {
     orderIsOpen.value = false
   }
 
+  let nameRegex = /^(?!\s*$)[\u4e00-\u9fa5A-Za-z\s]+$/
+  let mobileRegex = /^09\d{8}$/
+  let emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 
   async function updateOrder() {
-    // let msg = []
-    // if (NowProduct.value.title == '') {
-    //   msg.push("產品名稱不得為空")
-    // }
-    // if (NowProduct.value.price == '') {
-    //   msg.push("價格不得為0")
-    // }
-    // if (NowProduct.value.description == '') {
-    //   msg.push("產品描述不得為空")
-    // }
-    // if (NowProduct.value.content == '') {
-    //   msg.push("主成分不得為空")
-    // }
-    // if (NowProduct.value.imageUrl == '') {
-    //   msg.push("需上傳一張主要圖片")
-    // }
-    // if (msg.length > 0) {
-    //   if (Array.isArray(msg)) {
-    //     msg = msg.join('、')
-    //   }
-    //   global.pushMessage(false, msg)
-    // }
-    // else {
-    //   global.isFullLoading = true
-    //   let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
-    //   let method = 'post'
-    //   if (!isNew.value) {
-    //     apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product/${NowProduct.value.id}`
-    //     method = 'put'
-    //   }
-    //   try {
-    //     const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
-    //     if (res.data.success) {
-    //       productIsOpen.value = false
-    //       getProduct()
-    //     }
-    //     msg = res.data.message
-    //     if (Array.isArray(msg)) {
-    //       msg = msg.join('、')
-    //     }
-    //     global.pushMessage(res.data.success, msg)
-    //   } catch (err) {
-    //     global.pushMessage(false, err.message)
-    //   }
-    //   finally {
-    //     global.isFullLoading = false
-    //   }
-    // }
+    let msg1 = []
+    let msg2 = []
+    if (NowOrder.value.user.name == '') {
+      msg1.push("姓名")
+    }
+    else if (!nameRegex.test(NowOrder.value.user.name)) {
+      msg2.push("姓名")
+    }
+
+    if (NowOrder.value.user.tel == '') {
+      msg1.push("手機號碼")
+    }
+    else if (!mobileRegex.test(NowOrder.value.user.tel)) {
+      msg2.push("手機號碼")
+    }
+
+    if (NowOrder.value.user.email == '') {
+      msg1.push("Email")
+    }
+    else if (!emailRegex.test(NowOrder.value.user.email)) {
+      msg2.push("Email")
+    }
+
+    if (NowOrder.value.user.address == '') {
+      msg1.push("地址")
+    }
+
+    if (msg1.length > 0 || msg2.length > 0) {
+      if (Array.isArray(msg1))
+        msg1 = msg1.join('、')
+      if (Array.isArray(msg2))
+        msg2 = msg2.join('、')
+      let msg = `${msg1 == '' ? '' : '請填寫'}${msg1}${msg1 != '' && msg2 != '' ? '，' : ''}${msg2}${msg2 == '' ? '' : '為錯誤格式'}`
+      global.pushMessage(false, msg)
+    }
+    else {
+      global.isFullLoading = true
+      let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/order/${NowOrder.value.id}`
+
+      try {
+        const res = await axios.put(apiPath, { data: { ...NowOrder.value } })
+        if (res.data.success) {
+          orderIsOpen.value = false
+          getOrder()
+        }
+        global.pushMessage(res.data.success, res.data.message)
+      } catch (err) {
+        global.pushMessage(false, err.message)
+      }
+      finally {
+        global.isFullLoading = false
+      }
+    }
   }
 
   async function delOrder(item) {
@@ -288,7 +298,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     products, productIsOpen, NowProduct, isNew,
     openProductModal, closeProductModal, getProduct, updateProduct, delProduct,
 
-    orders, orderIsOpen,NowOrder,
+    orders, orderIsOpen, NowOrder,
     getOrder, openOrderModal, closeOrderModal, updateOrder, delOrder
   }
 })

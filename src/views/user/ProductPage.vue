@@ -1,4 +1,21 @@
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/effect-fade';
+import 'swiper/css/pagination';
+import "swiper/css/thumbs";
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import { Autoplay, EffectFade, Pagination, Thumbs, Navigation, FreeMode } from 'swiper/modules';
+const modules = [FreeMode, Navigation, Thumbs, Autoplay]
+
+const thumbsSwiper = ref(null);
+
+const setThumbsSwiper = (swiper) => {
+    thumbsSwiper.value = swiper
+}
+
+
 import BaseLayout from '@/components/user/BaseLayout.vue'
 import InlineLoading from '@/components/InlineLoading.vue'
 import { useRoute } from 'vue-router';
@@ -15,7 +32,9 @@ const { pushMessage } = globalStore
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { favoriteId, addLoading } = storeToRefs(userStore)
-const { addFavorite, addCart,share } = userStore
+const { addFavorite, addCart, share } = userStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 const productId = route.params.productId
 const product = ref({})
@@ -81,21 +100,48 @@ async function handleAddCart() {
             <!-- 商品 -->
             <div class="flex gap-8 mt-2 flex-col md:flex-row lg:gap-12">
                 <div class="flex-1">
-                    <img :src="product.imageUrl" alt="">
-                    <img :src="item" alt="" v-for="item in product.imagesUrl">
+                    <div class="hidden md:block">
+                        <img :src="product.imageUrl" alt="">
+                        <img :src="item" alt="" v-for="item in product.imagesUrl">
+                    </div>
+                    
+                    <div class="block md:hidden" v-if="product.imagesUrl?.length">
+                        <!-- 主要圖片 -->
+                        <swiper :loop="false" :spaceBetween="10" :thumbs="{ swiper: thumbsSwiper }" :modules="modules"
+                            class="mySwiper1">
+                            <swiper-slide>
+                                <img :src="product.imageUrl" loading="lazy">
+                            </swiper-slide>
+                            <swiper-slide v-for="item in product.imagesUrl">
+                                <img :src="item" loading="lazy" />
+                            </swiper-slide>
+                        </swiper>
+
+                        <!-- 下面的按鈕 -->
+                        <swiper @swiper="setThumbsSwiper" :loop="false" :spaceBetween="10" :slidesPerView="4"
+                            :direction="'horizontal'" :freeMode="true" :watchSlidesProgress="true" :modules="modules"
+                            class="mySwiper2">
+                            <swiper-slide>
+                                <img :src="product.imageUrl" loading="lazy" class="slider-img"/>
+                            </swiper-slide>
+                            <swiper-slide v-for="item in product.imagesUrl">
+                                <img :src="item" loading="lazy" class="slider-img" />
+                            </swiper-slide>
+                        </swiper>
+                    </div>
                 </div>
                 <div class="flex-1  relative">
                     <div class="sticky top-27">
                         <div class="absolute top-1 right-0 flex gap-3">
                             <button @click="addFavorite(product.id)"
                                 class="cursor-pointer transition duration-300 hover:scale-110"><img
-                                    :src="`${favoriteId.indexOf(product.id) != -1 ? '/images/heart-solid-red-icon.svg' : '/images/heart-hollow-red-icon.svg'}`"
+                                    :src="`${favoriteId.indexOf(product.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
                                     alt="" class="h-5.5"></button>
                             <button @click="share" class="cursor-pointer transition duration-300 hover:scale-110"><img
                                     src="/images/share-icon.svg" alt="" class="h-5.5"></button>
                         </div>
                         <div class="text-2xl font-bold">{{ product.title }}</div>
-                        <div class="text-xl font-bold text-[#3F88B4] mt-5">NT$ {{ product.price }}</div>
+                        <div class="text-xl font-bold text-[#3F88B4] mt-5">NT$ {{ currency(product.price) }}</div>
                         <div class="text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-5 text-justify mt-7">{{
                             product.description
                         }}
@@ -162,6 +208,20 @@ async function handleAddCart() {
     </BaseLayout>
 </template>
 <style scoped>
+.slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.slider-img:hover{
+    transform: scale(1.1);
+}
+
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

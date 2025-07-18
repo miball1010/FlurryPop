@@ -61,14 +61,13 @@ window.addEventListener('resize', () => {
                 <div class="text-xl font-bold">後臺系統</div>
             </div>
             <!-- menu -->
-            <div class="menu flex gap-8 pt-25 px-25 pb-7  top-0 shadow-lg
+            <div class="menu flex gap-8 pt-25 px-25 pb-7  top-0 shadow-lg items-center
            md:pt-0 md:px-0 md:pb-0  md:shadow-none" :class="{ open: menuIsOpen }">
 
                 <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden"> <img
                         src="/images/cross.svg" alt="" class="h-5"></button>
                 <RouterLink :to="{ name: 'admin-product' }" @click="CloseMenu" class="navbtn">產品</RouterLink>
                 <RouterLink :to="{ name: 'admin-order' }" @click="CloseMenu" class="navbtn">訂單</RouterLink>
-                <RouterLink :to="{ name: 'admin-coupon' }" @click="CloseMenu" class="navbtn">優惠券</RouterLink>
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
             <!-- menu-btn -->
@@ -97,7 +96,7 @@ window.addEventListener('resize', () => {
         background-color: white;
         height: 100vh;
         top: 0;
-        align-items: center;
+        
     }
 
     .open.menu {

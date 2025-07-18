@@ -9,6 +9,8 @@ import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { step, total, freight } = storeToRefs(userStore)
 const { getCheckProduct, checkOrder } = userStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, date, imgPath } = useUtils()
 
 onMounted(async () => {
     step.value = 2
@@ -132,7 +134,7 @@ function test(){
                         <div class="w-full border-b border-gray-200">
                             <div class="flex justify-between my-2">
                                 <div>總金額</div>
-                                <div class="font-bold">NT$ {{ total }}</div>
+                                <div class="font-bold">NT$ {{ currency(total) }}</div>
                             </div>
                             <div v-if="information.delivery == '宅配'" class="flex justify-between my-2">
                                 <div>宅配運費</div>
@@ -141,7 +143,7 @@ function test(){
                         </div>
 
                         <div><span class="font-bold">總計</span><span class="ml-1 font-bold text-xl text-[#3F88B4]">NT$
-                                {{ finalTotal }}</span>
+                                {{ currency(finalTotal) }}</span>
                         </div>
                         <div class="flex gap-5">
                             <RouterLink :to="{ name: 'user-checkout-step1' }"

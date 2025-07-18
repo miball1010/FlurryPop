@@ -16,7 +16,8 @@ const props=defineProps({
             focus:placeholder-gray-400 focus:outline-none sm:pt-5 sm:pb-2 sm:px-3"
             :placeholder="placeholder" />
         <label :for="id"
-            class="absolute left-2 sm:left-2.5 top-0 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 peer-focus:text-sm peer-focus:text-gray-500">
+            class="absolute left-2 sm:left-2.5 top-0 sm:top-1 text-sm text-gray-500 transition-all 
+            peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0 sm:peer-focus:top-1 peer-focus:text-sm peer-focus:text-gray-500">
             {{description}}
         </label>
     </div>

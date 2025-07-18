@@ -201,7 +201,7 @@ export const useUserStore = defineStore('userStore', () => {
       // console.log("address" + address)
       if (information.delivery == '宅配') {
         await addFreight(freight.value.id, 1)
-        address = information.city + " " + information.area + " " + information.address
+        address = information.city + information.area + information.address
       }
 
       let pay = false
