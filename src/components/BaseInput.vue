@@ -22,5 +22,3 @@ const props=defineProps({
         </label>
     </div>
 </template>
-
-<style scoped></style>

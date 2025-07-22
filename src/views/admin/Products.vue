@@ -11,7 +11,7 @@ const adminStore = useAdminStore()
 const { products } = storeToRefs(adminStore)
 const { getProduct, openProductModal } = adminStore
 import { useUtils } from '@/composables/useUtils.js'
-const { currency, date, imgPath } = useUtils()
+const { currency } = useUtils()
 
 onMounted(() => {
   products.value = []
@@ -20,7 +20,6 @@ onMounted(() => {
     getProduct()
   }, 100)
 })
-
 </script>
 
 <template>
@@ -32,8 +31,8 @@ onMounted(() => {
       <div class="w-28">商品</div>
       <div class="flex flex-1 gap-2">
         <div class="w-[250px]"></div>
-        <div class=" flex-1">售價</div>
-        <div class=" flex-1">狀態</div>
+        <div class="flex-1">售價</div>
+        <div class="flex-1">狀態</div>
       </div>
       <div class="w-46"></div>
     </div>
@@ -43,11 +42,11 @@ onMounted(() => {
     </div>
 
     <div class="flex flex-wrap gap-4" v-else>
-      <div class="border-b border-gray-300 flex flex-wrap  gap-8  px-0 py-4 w-full flex-col lg:gap-0 md:flex-row"
+      <div class="border-b border-gray-300 flex flex-wrap  gap-8 lg:gap-0  px-0 py-4 w-full flex-col md:flex-row"
         v-for="item in products" :key="item.id">
         <div class="flex flex-1">
           <div class=" w-28"> <img :src="item.imageUrl" alt="" class="w-20 h-20 object-cover" /></div>
-          <div class="flex flex-1 gap-2 flex-col items-start lg:flex-row lg:items-center">
+          <div class="flex flex-1 gap-2 flex-col lg:flex-row items-start lg:items-center">
             <div class="w-auto lg:w-[250px]">
               <div class="font-semibold break-words">{{ item.title }}</div>
               <div class="text-sm text-gray-400 hidden md:block">ID:{{ item.id }}</div>
@@ -60,7 +59,7 @@ onMounted(() => {
                 "未上架" }}</div>
           </div>
         </div>
-        <div class="w-auto flex justify-end gap-5 items-center lg:w-46">
+        <div class="w-auto lg:w-46 flex justify-end gap-5 items-center">
           <button class="font-semibold btn-white" @click="openProductModal(false, item)">編輯</button>
           <button class="font-semibold btn-white" @click="doubleCheck(item, 'product')">刪除</button>
         </div>
@@ -68,5 +67,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style scoped></style>

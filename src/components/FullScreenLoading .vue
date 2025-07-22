@@ -6,14 +6,13 @@ const {isFullLoading } = storeToRefs(globalStore)
 </script>
 
 <template>
-  <div v-if="isFullLoading" class="fixed top-0 left-0 w-full h-screen bg-white/50 flex justify-center items-center z-70">
+  <div v-show="isFullLoading" class="fixed top-0 left-0 w-full h-screen bg-white/70 flex justify-center items-center z-70">
    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
   </div>
 </template>
 
 <style scoped>
 .lds-ellipsis {
-  /* change color here */
   color: #404040
 }
 .lds-ellipsis,

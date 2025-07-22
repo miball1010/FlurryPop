@@ -5,19 +5,6 @@ import axios from 'axios'
 
 export const useAdminStore = defineStore('adminStore', () => {
   const global = useGlobalStore()
-  // let api="https://vue3-course-api.hexschool.io/"
-  // let path="flurrypop-api"
-  // let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
-  //   try {
-  //     const res = await axios.post(apiPath)
-  //     console.log(res.data)
-  //   } catch (err) {
-  //      console.error(err)
-  //   }
-  //   finally{
-
-  //   }
-
 
   //登入
   async function checkLogin() {
@@ -84,10 +71,12 @@ export const useAdminStore = defineStore('adminStore', () => {
       }
     }
     productIsOpen.value = true
+    document.body.style.overflow = 'hidden'
   }
 
   function closeProductModal() {
     productIsOpen.value = false
+    document.body.style.overflow = ''
   }
 
   async function getProduct() {
@@ -138,7 +127,7 @@ export const useAdminStore = defineStore('adminStore', () => {
       try {
         const res = await axios[method](apiPath, { data: { ...NowProduct.value } })
         if (res.data.success) {
-          productIsOpen.value = false
+          closeProductModal()
           getProduct()
         }
         msg = res.data.message
@@ -176,14 +165,16 @@ export const useAdminStore = defineStore('adminStore', () => {
 
   //訂單管理
   const orders = ref([])
+  const pagination = ref({})
 
-  // /api/:api_path/admin/orders?page=:page
   async function getOrder(page = 1) {
     global.isInlineLoading = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/orders/?page=${page}`
     try {
       const res = await axios.get(apiPath)
       orders.value = res.data.orders
+      pagination.value=res.data.pagination
+      console.log(pagination.value)
     } catch (err) {
       global.pushMessage(false, err.message)
     }
@@ -203,11 +194,12 @@ export const useAdminStore = defineStore('adminStore', () => {
 
   function openOrderModal(order) {
     NowOrder.value = JSON.parse(JSON.stringify(order))
-    console.log(NowOrder.value)
+    document.body.style.overflow = 'hidden'
     orderIsOpen.value = true
   }
 
   function closeOrderModal() {
+    document.body.style.overflow = ''
     orderIsOpen.value = false
   }
 
@@ -258,7 +250,7 @@ export const useAdminStore = defineStore('adminStore', () => {
       try {
         const res = await axios.put(apiPath, { data: { ...NowOrder.value } })
         if (res.data.success) {
-          orderIsOpen.value = false
+          closeOrderModal()
           getOrder()
         }
         global.pushMessage(res.data.success, res.data.message)
@@ -298,7 +290,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     products, productIsOpen, NowProduct, isNew,
     openProductModal, closeProductModal, getProduct, updateProduct, delProduct,
 
-    orders, orderIsOpen, NowOrder,
+    orders, orderIsOpen, NowOrder,pagination,
     getOrder, openOrderModal, closeOrderModal, updateOrder, delOrder
   }
 })

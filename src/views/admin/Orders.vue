@@ -8,22 +8,21 @@ const { isInlineLoading } = storeToRefs(globalStore)
 const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
-const { orders } = storeToRefs(adminStore)
-const { getOrder, openOrderModal } = adminStore
+const { orders, pagination } = storeToRefs(adminStore)
+const { getOrder, openOrderModal, loadMore } = adminStore
 import { useUtils } from '@/composables/useUtils.js'
 const { currency, date, imgPath } = useUtils()
 
 onMounted(() => {
-    orders.value = []
     isInlineLoading.value = true
     setTimeout(async () => {
         await getOrder()
-        // console.log(orders.value)
     }, 100)
 
 })
 
 const status = ref('all')
+const fade = ref(true)
 const filterOrder = computed(() => {
     if (status.value == 'all')
         return orders.value
@@ -34,52 +33,95 @@ const filterOrder = computed(() => {
         return orders.value.filter(i => i.user.address == '實體店取貨')
     }
 })
+
+function changeStatus(s) {
+    fade.value = false
+    status.value = s
+    setTimeout(() => {
+        fade.value = true
+    }, 1)
+}
+async function Page(page) {
+    console.log(page)
+    // await getOrder(pagination.value.current_page++)
+}
+async function prePage() {
+    console.log(123)
+    await getOrder(pagination.value.current_page--)
+}
+async function nextPage() {
+    await getOrder(pagination.value.current_page++)
+}
+
 </script>
 
 <template>
-    <div class="flex gap-5 mb-5">
-        <button @click="status = 'all'" :class="status == 'all' ? 'btn-dark' : 'btn-white'">ALL</button>
-        <button @click="status = 'home'" :class="status == 'home' ? 'btn-dark' : 'btn-white'">宅配</button>
-        <button @click="status = 'shop'" :class="status == 'shop' ? 'btn-dark' : 'btn-white'">店取</button>
+    <div class="flex gap-3 sm:gap-5 mb-5">
+        <button @click="changeStatus('all')" :class="status == 'all' ? 'btn-dark' : 'btn-white'">ALL</button>
+        <button @click="changeStatus('home')" :class="status == 'home' ? 'btn-dark' : 'btn-white'">宅配</button>
+        <button @click="changeStatus('shop')" :class="status == 'shop' ? 'btn-dark' : 'btn-white'">店取</button>
     </div>
     <div class="w-full text-left">
-        <div class="font-bold border-b hidden gap-4 lg:flex">
-            <div class="basis-1/6">購買時間</div>
-            <div class="basis-1/6">Email</div>
-            <div class="basis-1/6 min-w-40">購買款項</div>
-            <div class="basis-1/12">應付</div>
-            <div class="basis-1/12">付款</div>
-            <div class="basis-1/12">寄送</div>
-            <div class="basis-1/12">出貨</div>
-            <div class="w-21"></div>
-        </div>
-
         <div class="w-full p-10 text-center" v-if="isInlineLoading">
             <InlineLoading />
         </div>
 
-        <div class="flex flex-wrap gap-4" v-else>
-            <div class="border-b border-gray-300 flex flex-wrap lg:flex-nowrap gap-4 py-4 w-full"
-                v-for="item in filterOrder" :key="item.id">
-
-                <div class="basis-1/6">{{ date(item.create_at) }}</div>
-                <div class="basis-1/6">{{ item.user.email }}</div>
-                <div class="basis-1/6 min-w-40">
-                    <div v-for="i in item.products" :key="i.id">
-                        {{ i.product.title }} x{{ i.qty }}
+        <div v-else>
+            <div :class="{ 'ani-fade': fade }" class="flex flex-wrap gap-4 opacity-0">
+                <div v-for="item in filterOrder" :key="item.id"
+                    class=" w-[100%] lg:w-[calc((100%-16px)/2)] border border-gray-200">
+                    <div class="border border-[#3F88B4] bg-[#3F88B4] flex justify-between p-3 items-center">
+                        <div class="text-sm text-white">{{ date(item.create_at) }}</div>
+                        <div class="text-xs sm:text-sm text-white">{{ item.id }}</div>
+                    </div>
+                    <div class="p-3">
+                        <div class="flex mb-4 items-center">
+                            <div class="w-25 text-sm sm:text-base">Email</div>
+                            <div class="flex-1 font-bold">{{ item.user.email }}</div>
+                        </div>
+                        <div class="flex mb-4 items-center">
+                            <div class="w-25 text-sm sm:text-base">購買款項</div>
+                            <div class="flex-1">
+                                <div v-for="i in item.products" :key="i.id">
+                                    {{ i.product.title }} x{{ i.qty }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex mb-4 items-center">
+                            <div class="w-25 text-sm sm:text-base">付款狀況</div>
+                            <div class="flex-1 font-bold" :class="item.is_paid ? 'text-[#7DB14A]' : 'text-[#D8473A]'">
+                                {{ item.is_paid ? '已付款' : '未付款' }}
+                            </div>
+                        </div>
+                        <div class="flex mb-4 items-center">
+                            <div class="w-25 text-sm sm:text-base">寄送方式</div>
+                            <div class="flex-1"> {{ item.user.address == '實體店取貨' ? '店取' : '宅配' }}</div>
+                        </div>
+                        <div class="flex mb-4 items-center">
+                            <div class="w-25 text-sm sm:text-base">出貨狀態</div>
+                            <div class="flex-1">未出貨</div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="font-semibold btn-white" @click="openOrderModal(item)">詳細</button>
+                        </div>
                     </div>
                 </div>
-                <div class="basis-1/12">{{ currency(item.total) }}$</div>
-                <div class="basis-1/12">{{ item.is_paid ? '已付款' : '未付款' }}</div>
-                <div class="basis-1/12">
-                    {{ item.user.address == '實體店取貨' ? '店取' : '宅配' }}
-                </div>
-                <div class="basis-1/12">未出貨</div>
-                <div class="min-w-21">
-                    <button class="font-semibold btn-white" @click="openOrderModal(item)">詳細</button>
-                </div>
             </div>
+            <div class="mt-5 flex gap-2 justify-center items-center">
+                <button @click="prePage" :disabled="!pagination.has_pre"
+                    :class="pagination.has_pre ? 'cursor-pointer hover:scale-110' : 'opacity-20'"
+                    class="p-1  transition duration-3"><img src="/images/arrow-small.svg" alt=""
+                        class="h-5 scale-[-1]"></button>
 
+                <button @click="Page(i)" :disabled="pagination.current_page == i"
+                    v-for="(i, index) in pagination.total_pages" :key="index"
+                    :class="pagination.current_page == i ? 'text-[#3F88B4] underline' : 'cursor-pointer hover:underline'"
+                    class="p-1 text-sm sm:text-base">{{ i }}</button>
+
+                <button @click="nextPage" :disabled="!pagination.has_next"
+                    :class="pagination.has_next ? 'cursor-pointer hover:scale-110' : 'opacity-20'"
+                    class="p-1  transition duration-3"><img src="/images/arrow-small.svg" alt="" class="h-5"></button>
+            </div>
         </div>
     </div>
 </template>

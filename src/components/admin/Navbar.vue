@@ -1,10 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 const router = useRouter()
-
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isFullLoading } = storeToRefs(globalStore)
@@ -36,6 +35,7 @@ function OpenMenu() {
     menuIsOpen.value = true
     document.body.style.overflow = 'hidden'
 }
+
 function CloseMenu() {
     menuIsOpen.value = false
     document.body.style.overflow = ''
@@ -52,13 +52,13 @@ window.addEventListener('resize', () => {
         <div class="w-full max-w-[1400px] mx-auto flex justify-between items-center">
             <!-- 背景 -->
             <div @click="CloseMenu"
-                class="w-full h-screen fixed top-0 left-0 bg-black/45 transition duration-300 md:transition-none"
+                class="w-full h-screen fixed top-0 left-0 bg-black/45 transition md:transition-none duration-300"
                 :class="menuIsOpen ? 'pointer-events-all opacity-100 md:pointer-events-none md:opacity-0' : 'pointer-events-none opacity-0'">
             </div>
             <!-- logo -->
             <div class="flex items-center gap-4">
                 <img src="/images/logo-black.svg" alt="" class="h-8">
-                <div class="text-xl font-bold">後臺系統</div>
+                <div class="title text-xl font-bold">後臺系統</div>
             </div>
             <!-- menu -->
             <div class="menu flex gap-8 pt-25 px-25 pb-7  top-0 shadow-lg items-center

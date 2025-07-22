@@ -4,13 +4,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap');
 @import "tailwindcss";
 
-
-/* 基本元素設定 */
 * {
   box-sizing: border-box;
 }
 
-/* 全站 body 預設字體與樣式 */
 body {
   font-family: 'Noto Sans TC', sans-serif;
   min-width: 300px;
@@ -25,20 +22,12 @@ body {
   font-family: 'Noto Serif TC';
 }
 
-/* .title {
-  @apply text-xl font-bold leading-7;
-} */
-
-/* .navbtn {
-  @apply hover:text-[#3F88B4] transition duration-300;
-} */
-
 .btn-white {
-  @apply border border-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:text-[#3F88B4] hover:border-[#3F88B4];
+  @apply text-sm sm:text-base border border-neutral-700 px-4 sm:px-6 py-1.5 sm:py-2 w-fit cursor-pointer transition-all hover:text-[#3F88B4] hover:border-[#3F88B4];
 }
 
 .btn-dark {
-  @apply border border-neutral-700 text-white bg-neutral-700 px-6 py-2 w-fit cursor-pointer transition-all hover:border-[#3F88B4] hover:bg-[#3F88B4];
+  @apply text-sm sm:text-base border border-neutral-700 text-white bg-neutral-700 px-4 sm:px-6 py-1.5 sm:py-2 w-fit cursor-pointer transition-all hover:border-[#3F88B4] hover:bg-[#3F88B4];
 }
  /* ::-webkit-scrollbar {
   width: 7px;
@@ -62,6 +51,7 @@ body {
   box-shadow: transparent;
 } */
 
+/* swiper */
 .pop-swiper {
   width: 100%;
   padding: 100px 0 10px !important;
@@ -81,7 +71,6 @@ body {
   top: 30px;
 }
 
-
 .pop-swiper .swiper-button-prev {
   right: calc(12vw + 70px);
   left: auto;
@@ -93,20 +82,6 @@ body {
   right: 12vw;
   transform: scale(1.5);
   transition: 0.3s;
-}
-
-.ani-fade {
-  animation: fade 0.5s ease-in forwards;
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 .mySwiper1 {
@@ -129,4 +104,30 @@ body {
 .mySwiper2 .swiper-slide-thumb-active {
 
   opacity: 1;
+}
+
+/* 動畫 */
+.ani-fade {
+  animation: fade 0.5s ease-in forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeup-enter-active,
+.fadeup-leave-active {
+    transition: all 0.4s ease;
+}
+
+.fadeup-enter-from,
+.fadeup-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
 }

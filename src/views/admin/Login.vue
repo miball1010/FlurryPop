@@ -1,9 +1,8 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-import { ref, onMounted } from 'vue'
-
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
@@ -24,7 +23,6 @@ async function login() {
 
   try {
     const res = await axios.post(apiPath, admin.value)
-    console.log(res)
     if (res.data.success) {
       const { token, expired } = res.data
       document.cookie = `token=${token};expires=${new Date(expired)}`
@@ -34,7 +32,7 @@ async function login() {
       pushMessage(res.data.success, res.data.message)
     }
   } catch (err) {
-    global.pushMessage(false, err.message)
+    pushMessage(false, err.message)
   }
   finally {
     isFullLoading.value = false
@@ -43,7 +41,7 @@ async function login() {
 
 onMounted(async () => {
   const isLoggedIn = await checkLogin()
-  if (isLoggedIn) 
+  if (isLoggedIn)
     router.push('/dashboard/product')
 })
 </script>
@@ -84,5 +82,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped></style>
