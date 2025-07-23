@@ -49,12 +49,12 @@ onMounted(async () => {
 <template>
   <div class="bg-[url('images/bg-2.jpg')] bg-cover bg-center h-screen w-full flex justify-center items-center">
     <div class="w-[90%] max-w-lg bg-white rounded-lg p-10">
-      <div class="flex items-center justify-center gap-3 flex-col sm:flex-row">
-        <img src="/images/logo-black.svg" alt="">
-        <div class="text-xl font-bold">後臺系統</div>
+      <div class="flex items-center justify-center gap-2 sm:gap-3">
+        <img src="/images/logo-black.svg" alt="" class="h-8 sm:h-11">
+        <div class="text-lg sm:text-xl font-bold">後臺系統</div>
       </div>
 
-      <form action="" class="max-w-[350px] mx-auto mt-10">
+      <form action="" class="max-w-[350px] mx-auto mt-10 sm:mt-15">
         <div class="relative">
           <input type="text" v-model="admin.username" id="username" autocomplete="username"
             class="peer w-full border-b pt-7 pb-3 placeholder-transparent focus:outline-none" placeholder="帳號" />
@@ -72,9 +72,10 @@ onMounted(async () => {
             密碼
           </label>
         </div>
-        <div class="mt-15 flex justify-between items-end ">
-          <router-link class="underline text-[#3F88B4] hover:opacity-80" to="/">回到前台</router-link>
-          <button @click.prevent="login" class="btn-white">
+
+        <div class="mt-10 sm:mt-15 flex justify-between items-end ">
+          <router-link class="text-sm sm:text-base underline text-[#3F88B4] hover:opacity-80" to="/">回到前台</router-link>
+          <button @click.prevent="login" class="btn-white font-semibold">
             登入
           </button>
         </div>

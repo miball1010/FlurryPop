@@ -50,29 +50,29 @@ window.addEventListener('resize', () => {
 <template>
     <div class="px-5 py-4 fixed top-0 left-0 bg-white w-full z-10 shadow-sm">
         <div class="w-full max-w-[1400px] mx-auto flex justify-between items-center">
-            <!-- 背景 -->
+
             <div @click="CloseMenu"
                 class="w-full h-screen fixed top-0 left-0 bg-black/45 transition md:transition-none duration-300"
                 :class="menuIsOpen ? 'pointer-events-all opacity-100 md:pointer-events-none md:opacity-0' : 'pointer-events-none opacity-0'">
             </div>
-            <!-- logo -->
+
             <div class="flex items-center gap-4">
-                <img src="/images/logo-black.svg" alt="" class="h-8">
+                <img src="/images/logo-black.svg" alt="" class="h-6 sm:h-8">
                 <div class="title text-xl font-bold">後臺系統</div>
             </div>
-            <!-- menu -->
-            <div class="menu flex gap-8 pt-25 px-25 pb-7  top-0 shadow-lg items-center
-           md:pt-0 md:px-0 md:pb-0  md:shadow-none" :class="{ open: menuIsOpen }">
 
-                <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden"> <img
-                        src="/images/cross.svg" alt="" class="h-5"></button>
+            <div class="menu text-sm sm:text-base flex gap-8 top-0 shadow-lg md:shadow-none items-center"
+                :class="{ open: menuIsOpen }">
+
+                <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden">
+                    <img src="/images/cross.svg" alt="" class="h-4 sm:h-5"></button>
                 <RouterLink :to="{ name: 'admin-product' }" @click="CloseMenu" class="navbtn">產品</RouterLink>
                 <RouterLink :to="{ name: 'admin-order' }" @click="CloseMenu" class="navbtn">訂單</RouterLink>
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
-            <!-- menu-btn -->
+
             <button @click="OpenMenu" class="cursor-pointer md:hidden"> <img src="/images/menu.svg" alt=""
-                    class="h-5"></button>
+                    class="h-4 sm:h-5"></button>
         </div>
     </div>
 </template>
@@ -96,7 +96,9 @@ window.addEventListener('resize', () => {
         background-color: white;
         height: 100vh;
         top: 0;
-        
+        width: 70%;
+        max-width: 300px;
+        padding: 100px 30px 30px;
     }
 
     .open.menu {

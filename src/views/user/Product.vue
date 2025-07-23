@@ -15,6 +15,8 @@ const { product } = storeToRefs(userStore)
 const { getProduct } = userStore
 
 onMounted(() => {
+    isInlineLoading.value=true
+    getProduct()
     filterProducts.value = product.value
 })
 
@@ -97,7 +99,7 @@ function applyFilter(type) {
     cursor: pointer;
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width:1023px) {
     .filter-btn{
         text-align: center;
           flex: 1;

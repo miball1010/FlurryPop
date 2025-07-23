@@ -8,7 +8,7 @@ const { isInlineLoading } = storeToRefs(globalStore)
 const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
-const { orders, pagination } = storeToRefs(adminStore)
+const { orders, pagination,productCount } = storeToRefs(adminStore)
 const { getOrder, openOrderModal, loadMore } = adminStore
 import { useUtils } from '@/composables/useUtils.js'
 const { currency, date, imgPath } = useUtils()
@@ -56,7 +56,7 @@ async function nextPage() {
 </script>
 
 <template>
-    <div class="flex gap-3 sm:gap-5 mb-5">
+    <div class="flex gap-3 sm:gap-5 mb-7 sm:mb-5">
         <button @click="changeStatus('all')" :class="status == 'all' ? 'btn-dark' : 'btn-white'">ALL</button>
         <button @click="changeStatus('home')" :class="status == 'home' ? 'btn-dark' : 'btn-white'">宅配</button>
         <button @click="changeStatus('shop')" :class="status == 'shop' ? 'btn-dark' : 'btn-white'">店取</button>
@@ -68,19 +68,18 @@ async function nextPage() {
 
         <div v-else>
             <div :class="{ 'ani-fade': fade }" class="flex flex-wrap gap-4 opacity-0">
-                <div v-for="item in filterOrder" :key="item.id"
-                    class=" w-[100%] lg:w-[calc((100%-16px)/2)] border border-gray-200">
+                <div v-for="item in filterOrder" :key="item.id" class=" w-[100%] lg:w-[calc((100%-16px)/2)] ">
                     <div class="border border-[#3F88B4] bg-[#3F88B4] flex justify-between p-3 items-center">
                         <div class="text-sm text-white">{{ date(item.create_at) }}</div>
                         <div class="text-xs sm:text-sm text-white">{{ item.id }}</div>
                     </div>
-                    <div class="p-3">
+                    <div class="p-3 border border-gray-200 overflow-x-auto">
                         <div class="flex mb-4 items-center">
-                            <div class="w-25 text-sm sm:text-base">Email</div>
-                            <div class="flex-1 font-bold">{{ item.user.email }}</div>
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">Email</div>
+                            <div class="w-[calc(100%-100px)] font-bold">{{ item.user.email }}</div>
                         </div>
-                        <div class="flex mb-4 items-center">
-                            <div class="w-25 text-sm sm:text-base">購買款項</div>
+                        <div class="flex mb-4" :class="{ 'items-center': productCount < 2 }">
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">購買款項{{ productCount }}</div>
                             <div class="flex-1">
                                 <div v-for="i in item.products" :key="i.id">
                                     {{ i.product.title }} x{{ i.qty }}
@@ -88,18 +87,18 @@ async function nextPage() {
                             </div>
                         </div>
                         <div class="flex mb-4 items-center">
-                            <div class="w-25 text-sm sm:text-base">付款狀況</div>
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">付款狀況</div>
                             <div class="flex-1 font-bold" :class="item.is_paid ? 'text-[#7DB14A]' : 'text-[#D8473A]'">
                                 {{ item.is_paid ? '已付款' : '未付款' }}
                             </div>
                         </div>
                         <div class="flex mb-4 items-center">
-                            <div class="w-25 text-sm sm:text-base">寄送方式</div>
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">寄送方式</div>
                             <div class="flex-1"> {{ item.user.address == '實體店取貨' ? '店取' : '宅配' }}</div>
                         </div>
                         <div class="flex mb-4 items-center">
-                            <div class="w-25 text-sm sm:text-base">出貨狀態</div>
-                            <div class="flex-1">未出貨</div>
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">出貨狀態</div>
+                            <div class="flex-1 font-bold text-[#D8473A]">未出貨</div>
                         </div>
                         <div class="flex justify-end">
                             <button class="font-semibold btn-white" @click="openOrderModal(item)">詳細</button>
@@ -109,21 +108,23 @@ async function nextPage() {
             </div>
             <div class="mt-5 flex gap-2 justify-center items-center">
                 <button @click="prePage" :disabled="!pagination.has_pre"
-                    :class="pagination.has_pre ? 'cursor-pointer hover:scale-110' : 'opacity-20'"
-                    class="p-1  transition duration-3"><img src="/images/arrow-small.svg" alt=""
-                        class="h-5 scale-[-1]"></button>
+                    :class="pagination.has_pre ? 'cursor-pointer hover:scale-110 opacity-60' : 'opacity-20'"
+                    class="p-2 transition duration-3">
+                    <img src="/images/arrow-small.svg" alt="" class="h-3 scale-[-1]">
+                </button>
 
                 <button @click="Page(i)" :disabled="pagination.current_page == i"
                     v-for="(i, index) in pagination.total_pages" :key="index"
-                    :class="pagination.current_page == i ? 'text-[#3F88B4] underline' : 'cursor-pointer hover:underline'"
-                    class="p-1 text-sm sm:text-base">{{ i }}</button>
+                    :class="pagination.current_page == i ? 'text-[#3F88B4]' : 'cursor-pointer hover:underline'"
+                    class="p-1 text-sm sm:text-base">{{ i }}
+                </button>
 
                 <button @click="nextPage" :disabled="!pagination.has_next"
-                    :class="pagination.has_next ? 'cursor-pointer hover:scale-110' : 'opacity-20'"
-                    class="p-1  transition duration-3"><img src="/images/arrow-small.svg" alt="" class="h-5"></button>
+                    :class="pagination.has_next ? 'cursor-pointer hover:scale-110 opacity-60' : 'opacity-20'"
+                    class="p-2 transition duration-3">
+                    <img src="/images/arrow-small.svg" alt="" class="h-3">
+                </button>
             </div>
         </div>
     </div>
 </template>
-
-<style scoped></style>

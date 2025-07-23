@@ -1,4 +1,4 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { defineStore } from 'pinia'
 import { useGlobalStore } from './globalStore.js'
 import axios from 'axios'
@@ -33,12 +33,12 @@ export const useUserStore = defineStore('userStore', () => {
   // 我的最愛
   const favoriteId = ref([])
 
-  onMounted(() => {
+  function getFavorite() {
     const saved = localStorage.getItem('favorites')
     if (saved) {
       favoriteId.value = JSON.parse(saved)
     }
-  })
+  }
 
   function addFavorite(id) {
     if (favoriteId.value.includes(id)) {
@@ -74,10 +74,6 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
   //商品
-  onMounted(() => {
-    global.isInlineLoading = true
-    getProduct()
-  })
 
   const product = ref([])
   const freight = ref({})
@@ -277,7 +273,7 @@ export const useUserStore = defineStore('userStore', () => {
     share,
 
     favoriteId,
-    addFavorite,
+    addFavorite, getFavorite,
 
     addLoading,
     addCart,

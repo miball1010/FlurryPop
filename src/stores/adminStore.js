@@ -1,7 +1,7 @@
+import { ref } from 'vue'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useGlobalStore } from './globalStore.js'
-import { ref, computed } from 'vue'
-import axios from 'axios'
 
 export const useAdminStore = defineStore('adminStore', () => {
   const global = useGlobalStore()
@@ -30,7 +30,7 @@ export const useAdminStore = defineStore('adminStore', () => {
   }
 
   function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'))//尋找有沒有符合name的cookie
+    const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'))
     return match ? match.pop() : ''
   }
 
@@ -38,18 +38,7 @@ export const useAdminStore = defineStore('adminStore', () => {
   const isNew = ref(false)
   const productIsOpen = ref(false)
   const products = ref([])
-  const NowProduct = ref({
-    title: '',
-    category: 'ice',
-    origin_price: 0,
-    price: null,
-    unit: "個",
-    description: '',
-    content: '',
-    is_enabled: 0,
-    imageUrl: '',
-    imagesUrl: []
-  })
+  const NowProduct = ref({})
 
   function openProductModal(New, product) {
     isNew.value = New
@@ -173,8 +162,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     try {
       const res = await axios.get(apiPath)
       orders.value = res.data.orders
-      pagination.value=res.data.pagination
-      console.log(pagination.value)
+      pagination.value = res.data.pagination
     } catch (err) {
       global.pushMessage(false, err.message)
     }
@@ -191,9 +179,10 @@ export const useAdminStore = defineStore('adminStore', () => {
   })
 
   const orderIsOpen = ref(false)
-
+  const productCount = ref(0)
   function openOrderModal(order) {
     NowOrder.value = JSON.parse(JSON.stringify(order))
+    productCount.value = Object.keys(NowOrder.value.products).filter(key => key.startsWith('-')).length
     document.body.style.overflow = 'hidden'
     orderIsOpen.value = true
   }
@@ -283,14 +272,13 @@ export const useAdminStore = defineStore('adminStore', () => {
     }
   }
 
-
   return {
     checkLogin,
 
     products, productIsOpen, NowProduct, isNew,
     openProductModal, closeProductModal, getProduct, updateProduct, delProduct,
 
-    orders, orderIsOpen, NowOrder,pagination,
+    orders, orderIsOpen, NowOrder, pagination, productCount,
     getOrder, openOrderModal, closeOrderModal, updateOrder, delOrder
   }
 })

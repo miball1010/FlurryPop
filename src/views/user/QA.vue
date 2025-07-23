@@ -88,17 +88,16 @@ const question = ref([
 
 <template>
     <BaseLayout :title="'Q&A'">
-        <div class="ani-fade flex flex-col gap-15 sm:gap-20">
+        <div class="ani-fade flex flex-col gap-10 sm:gap-20 mt-5 lg:mt-0">
             <div v-for="(item, index) in question" :key="index">
-                <!-- 問題 -->
-                <div class="flex items-center gap-2 justify-center mb-7 sm:mb-10">
-                    <img src="/images/snow-icon.svg" alt="" class="h-5">
-                    <span class="serif text-2xl font-bold text-[#3F88B4]">{{ item.title }}</span>
-                    <img src="/images/snow-icon.svg" alt="" class="h-5 scale-x-[-1]">
+               
+                <div class="flex items-center gap-2 justify-center mb-5 sm:mb-10">
+                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5">
+                    <div class="serif text-lg sm:text-2xl font-bold text-[#3F88B4]">{{ item.title }}</div>
+                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5 scale-x-[-1]">
                 </div>
 
-                <!-- 答案 -->
-                <div class="flex flex-col gap-6 sm:gap-8">
+                <div class="text-sm sm:text-base flex flex-col gap-4 sm:gap-8">
                     <div v-for="(x, i) in item.data" :key="i">
                         <div @click="x.isOpen = !x.isOpen"
                             :class="x.isOpen ? 'bg-[#3F88B4] text-white border-[#3F88B4]' : 'bg-white border-gray-300 hover:border-[#3F88B4] hover:bg-[#3F88B4] hover:text-white'"
