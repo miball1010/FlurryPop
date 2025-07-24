@@ -22,6 +22,10 @@ body {
   font-family: 'Noto Serif TC';
 }
 
+.btn {
+  @apply text-sm sm:text-base px-4 sm:px-6 py-2 w-fit cursor-pointer;
+}
+
 .btn-white {
   @apply text-sm sm:text-base border border-neutral-700 px-4 sm:px-6 py-1.5 sm:py-2 w-fit cursor-pointer transition-all hover:text-[#3F88B4] hover:border-[#3F88B4];
 }
@@ -29,7 +33,34 @@ body {
 .btn-dark {
   @apply text-sm sm:text-base border border-neutral-700 text-white bg-neutral-700 px-4 sm:px-6 py-1.5 sm:py-2 w-fit cursor-pointer transition-all hover:border-[#3F88B4] hover:bg-[#3F88B4];
 }
- /* ::-webkit-scrollbar {
+
+/* 動畫 */
+.ani-fade {
+  animation: fade 0.5s ease-in forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeup-enter-active,
+.fadeup-leave-active {
+  transition: all 0.4s ease;
+}
+
+.fadeup-enter-from,
+.fadeup-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ::-webkit-scrollbar {
   width: 7px;
 }
 
@@ -104,30 +135,4 @@ body {
 .mySwiper2 .swiper-slide-thumb-active {
 
   opacity: 1;
-}
-
-/* 動畫 */
-.ani-fade {
-  animation: fade 0.5s ease-in forwards;
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadeup-enter-active,
-.fadeup-leave-active {
-    transition: all 0.4s ease;
-}
-
-.fadeup-enter-from,
-.fadeup-leave-to {
-    opacity: 0;
-    transform: translateY(20px);
 }

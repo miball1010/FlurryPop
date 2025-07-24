@@ -60,7 +60,7 @@ const { updateOrder, closeOrderModal } = adminStore
                             </div>
                             <div class="flex items-center">
                                 <div class="text-sm sm:text-base w-20 sm:w-25">應付金額</div>
-                                <div class="flex-1">{{ currency(NowOrder.total) }}$</div>
+                                <div class="flex-1">NT$ {{ currency(NowOrder.total) }}</div>
                             </div>
                             <div class="flex items-center">
                                 <div class="text-sm sm:text-base w-20 sm:w-25">付款狀況</div>

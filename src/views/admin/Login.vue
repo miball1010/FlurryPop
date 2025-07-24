@@ -74,7 +74,7 @@ onMounted(async () => {
         </div>
 
         <div class="mt-10 sm:mt-15 flex justify-between items-end ">
-          <router-link class="text-sm sm:text-base underline text-[#3F88B4] hover:opacity-80" to="/">回到前台</router-link>
+          <RouterLink class="text-sm sm:text-base underline text-[#3F88B4] hover:opacity-80" to="/">回到前台</RouterLink>
           <button @click.prevent="login" class="btn-white font-semibold">
             登入
           </button>

@@ -107,7 +107,7 @@ const question = ref([
                             </div>
                             <div>{{ x.Q }}</div>
                         </div>
-                        <div :class="x.isOpen ? 'ani-fade active block' : 'hidden'">
+                        <div :class="x.isOpen ? 'ani-fade block' : 'hidden'">
                             <div class="px-5 py-3 border border-gray-300">{{ x.A }}</div>
                         </div>
                     </div>

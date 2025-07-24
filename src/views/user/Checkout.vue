@@ -1,6 +1,6 @@
 <script setup>
 import BaseLayout from '@/components/user/BaseLayout.vue'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { step } = storeToRefs(userStore)
@@ -8,7 +8,7 @@ const { step } = storeToRefs(userStore)
 
 <template>
     <BaseLayout :title="'CHECKOUT'">
-        <div class="flex max-w-[900px] mx-auto flex-col gap-3 sm:flex-row sm:gap-0">
+        <div class="flex max-w-[900px] mx-auto flex-col sm:flex-row gap-3 sm:gap-0">
             <div class="flex-1 flex flex-row items-center gap-2 min-w-[100px] sm:flex-col">
                 <div :class="step == 1 ? 'bg-[#3F88B4]' : 'bg-gray-300'"
                     class="serif text-white flex justify-center items-center rounded-full font-bold w-7 h-7 text-sm md:w-14 md:h-14 md:text-2xl sm:text-lg sm:w-10 sm:h-10">

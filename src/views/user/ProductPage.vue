@@ -90,22 +90,22 @@ async function handleAddCart() {
         <div class="w-full p-10 text-center" v-if="isInlineLoading">
             <InlineLoading />
         </div>
-        <div v-else>
+        <div v-else class="ani-fade">
             <!-- 麵包屑 -->
-            <div class="text-[#85B1CA] text-sm">
+            <div class="hidden sm:block text-[#85B1CA] text-xs sm:text-sm">
                 <RouterLink :to="{ name: 'user-product' }" class="hover:underline">所有商品</RouterLink> / {{ product.title
                 }}
             </div>
 
             <!-- 商品 -->
-            <div class="flex gap-8 mt-2 flex-col md:flex-row lg:gap-12">
+            <div class="flex gap-8 mt-0 sm:mt-2 flex-col md:flex-row lg:gap-12">
                 <div class="flex-1">
                     <div class="hidden md:block">
                         <img :src="product.imageUrl" alt="">
                         <img :src="item" alt="" v-for="item in product.imagesUrl">
                     </div>
-                    
-                    <div class="block md:hidden" v-if="product.imagesUrl?.length">
+
+                    <div class="block md:hidden" v-if="product.imagesUrl">
                         <!-- 主要圖片 -->
                         <swiper :loop="false" :spaceBetween="10" :thumbs="{ swiper: thumbsSwiper }" :modules="modules"
                             class="mySwiper1">
@@ -129,6 +129,9 @@ async function handleAddCart() {
                             </swiper-slide>
                         </swiper>
                     </div>
+                    <div class="block md:hidden" v-else>
+                         <img :src="product.imageUrl" alt="">
+                    </div>
                 </div>
                 <div class="flex-1  relative">
                     <div class="sticky top-27">
@@ -140,14 +143,14 @@ async function handleAddCart() {
                             <button @click="share" class="cursor-pointer transition duration-300 hover:scale-110"><img
                                     src="/images/share-icon.svg" alt="" class="h-5.5"></button>
                         </div>
-                        <div class="text-2xl font-bold">{{ product.title }}</div>
-                        <div class="text-xl font-bold text-[#3F88B4] mt-5">NT$ {{ currency(product.price) }}</div>
-                        <div class="text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-5 text-justify mt-7">{{
+                        <div class="text-base sm:text-2xl font-bold">{{ product.title }}</div>
+                        <div class="text-lg sm:text-xl font-bold text-[#3F88B4] mt-1 sm:mt-5">NT$ {{ currency(product.price) }}</div>
+                        <div class="text-xs sm:text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-4 sm:p-5 text-justify mt-5 sm:mt-7">{{
                             product.description
                         }}
                         </div>
-                        <div class="mt-5 font-bold">主成分</div>
-                        <div>{{ product.content }}</div>
+                        <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
+                        <div class="text-sm sm:text-base">{{ product.content }}</div>
                         <div class="flex w-full mt-7">
                             <button @click="decrease"
                                 :class="number > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
@@ -160,7 +163,7 @@ async function handleAddCart() {
 
                         <button @click="handleAddCart" :disabled="addLoading"
                             :class="addLoading ? 'bg-gray-400' : 'cursor-pointer bg-[#3F88B4] hover:opacity-90'"
-                            class="w-full text-white p-2 text-center mt-3 transition">加入購物車
+                            class="text-sm sm:text-base w-full text-white p-2 text-center mt-3 transition">加入購物車
                         </button>
                         <!-- text-white bg-[#3F88B4] hover:text-[#3F88B4] hover:bg-white -->
                     </div>
@@ -172,19 +175,19 @@ async function handleAddCart() {
             <div class="mt-10">
                 <div class="border-b border-b-gray-200 mb-5 flex space-x-1">
                     <button @click="notice = 1"
-                        :class="notice == 1 ? 'text-[#3F88B4] border-b-2 border-b-[#3F88B4] ' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
-                        class="px-4 py-2 transition mb-[-1px]">
+                        :class="notice == 1 ? 'text-[#3F88B4] border-b-4 border-b-[#3F88B4] ' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
+                        class="text-sm sm:text-base px-4 py-2 transition mb-[-1px]">
                         購買須知
                     </button>
                     <button @click="notice = 2"
-                        :class="notice == 2 ? 'text-[#3F88B4] border-b-2 border-b-[#3F88B4]' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
-                        class="px-4 py-2 transition mb-[-1px]">
+                        :class="notice == 2 ? 'text-[#3F88B4] border-b-4 border-b-[#3F88B4]' : 'cursor-pointer border-b-2 border-b-transparent hover:opacity-80'"
+                        class="text-sm sm:text-base px-4 py-2 transition mb-[-1px]">
                         退換貨須知
                     </button>
                 </div>
 
                 <div :class="notice == 1 ? 'block ani-fade' : 'hidden opacity-0'">
-                    <ul class="text-sm list-disc pl-5 space-y-2">
+                    <ul class="text-xs sm:text-sm list-disc pl-5 space-y-2 text-justify">
                         <li>可於 Flurry Pop 官方網站選購冰品，提供<strong>宅配</strong>與<strong>門市自取</strong>兩種方式。建議提前下單以保留心儀風味。</li>
                         <li>我們採用<strong>黑貓冷凍宅配</strong>，全程低溫出貨，僅限<strong>台灣本島</strong>配送。出貨時間為付款後<strong>3–5
                                 個工作天</strong>，特殊節日另行公告。</li>
@@ -195,7 +198,7 @@ async function handleAddCart() {
                     </ul>
                 </div>
                 <div :class="notice == 2 ? 'block ani-fade' : 'hidden opacity-0'">
-                    <ul class="text-sm list-disc pl-5 space-y-2">
+                    <ul class="text-xs sm:text-sm list-disc pl-5 space-y-2 text-justify">
                         <li>因本商品為食品類冷凍商品，依《消費者保護法》第19條及《通訊交易解除權合理例外情事適用準則》，<strong>不適用 7 日鑑賞期規範</strong>。</li>
                         <li>商品經拆封、退冰、食用或因消費者保存不當導致變質，<strong>恕不接受退換貨</strong>。</li>
                         <li>若您收到商品時發現有誤、缺件或瑕疵，請於<strong>到貨後 24 小時內</strong>，透過官方聯絡管道與我們聯繫，並提供相關照片與訂單資訊，我們將盡快為您處理。</li>

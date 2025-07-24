@@ -24,7 +24,7 @@ export const useUserStore = defineStore('userStore', () => {
     console.log(url)
     try {
       await navigator.clipboard.writeText(url)
-      global.pushMessage(true, '網址已複製到剪貼簿！')
+      global.pushMessage(true, '已複製網址！')
     } catch (err) {
       global.pushMessage(false, '複製失敗：' + err)
     }

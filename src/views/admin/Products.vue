@@ -51,7 +51,7 @@ onMounted(() => {
               <div class="text-sm sm:text-base font-bold break-words">{{ item.title }}</div>
               <div class="text-sm text-gray-400 hidden md:block">ID:{{ item.id }}</div>
             </div>
-            <div class=" flex-1 text-[#3F88B4] font-bold">${{ currency(item.price) }}</div>
+            <div class=" flex-1 text-[#3F88B4] font-bold">NT$ {{ currency(item.price) }}</div>
             <div class=" flex-1 text-sm sm:text-base font-bold" :class="item.is_enabled ? 'text-lime-600' : 'text-neutral-400'">{{
               item.is_enabled ?
                 "上架中"

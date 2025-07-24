@@ -28,13 +28,13 @@ const favoriteProduct = computed(() => product.value.filter(item => favoriteId.v
         </div>
         <div v-else>
             <div v-if="favoriteProduct.length > 0"
-                class="ani-fade flex flex-wrap gap-2 sm:gap-5 justify-center sm:justify-start">
+                class="ani-fade flex flex-wrap gap-2 sm:gap-5 justify-start">
                 <ProductCard :product="favoriteProduct" :page="'favorite'" />
             </div>
-            <div v-else class="flex flex-col gap-7 justify-center items-center ani-fade">
-                <div class="text-[#85B1CA]">目前沒有任何商品</div>
+            <div v-else class="flex flex-col gap-4 sm:gap-7 justify-center items-center ani-fade">
+                <div class="text-[#85B1CA] text-sm sm:text-base">目前沒有任何商品</div>
                 <RouterLink :to="{ name: 'user-product' }"
-                    class="w-fit  border border-[#3F88B4] px-6 py-2 transition text-white bg-[#3F88B4] hover:text-[#3F88B4] hover:bg-white">
+                    class="btn transition text-white bg-[#3F88B4] hover:opacity-90">
                     購物去</RouterLink>
             </div>
         </div>

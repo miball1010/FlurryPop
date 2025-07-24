@@ -19,8 +19,11 @@ function moreProduct(id) {
 <template>
     <div :class="page" class="bg-white p-2 sm:p-5" v-for="item in product">
 
-        <div @click="moreProduct(item.id)" class="w-full pt-[100%] relative overflow-hidden">
+        <div @click="moreProduct(item.id)" class="ice-box">
             <img :src="item.imageUrl" alt="" class="ice-img">
+            <div class="ice-ifo">
+                <div class="ice-ifo-text">詳細資訊</div>
+            </div>
         </div>
 
         <div class="sm:font-bold mt-2 sm:mt-3 mb-1 sm:mb-5 text-sm sm:text-lg">
@@ -28,7 +31,7 @@ function moreProduct(id) {
         </div>
         <div class="flex justify-between">
 
-            <div class="font-bold text-[#3F88B4]">{{ currency(item.price) }}$</div>
+            <div class="font-bold text-[#3F88B4]">NT$ {{ currency(item.price) }}</div>
 
             <div v-if="item.category != 'store'" class="gap-3 items-center hidden sm:flex">
 
@@ -61,8 +64,15 @@ function moreProduct(id) {
     width: calc((100% - 20px*3)/4);
 }
 
-.ice-img {
+.ice-box {
+    position: relative;
+    padding-top: 100%;
+    width: 100%;
+    overflow: hidden;
     cursor: pointer;
+}
+
+.ice-img {
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -70,11 +80,50 @@ function moreProduct(id) {
     height: 100%;
     object-fit: cover;
     transform: translateX(-50%);
-    transition: transform 0.3s ease;
+    transition: 0.5s ease;
 }
 
-.ice-img:hover {
-    transform: translateX(-50%) scale(1.1);
+.ice-ifo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.ice-ifo-text {
+    color: white;
+    position: relative;
+    transform: translateY(50%);
+    transition: 0;
+    transition: 0.3s;
+    transition-delay: 0.1s;
+    opacity: 0;
+    border: 1px solid white;
+    padding: 10px 15px;
+}
+
+@media(hover:hover) {
+    .ice-box:hover .ice-img {
+        transform: translateX(-50%) scale(1.1);
+    }
+
+    .ice-box:hover .ice-ifo {
+        opacity: 1;
+    }
+
+    .ice-box:hover .ice-ifo-text {
+        transform: translateY(0);
+        transition: 0.5s ease;
+        transition-delay: 0.3s;
+        opacity: 1;
+    }
 }
 
 @media screen and (max-width:1260px) {
@@ -116,7 +165,7 @@ function moreProduct(id) {
     }
 
     .favorite {
-          width: calc((100% - 8px)/2);
+        width: calc((100% - 8px)/2);
         max-width: 300px;
     }
 }

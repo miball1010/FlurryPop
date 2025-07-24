@@ -8,7 +8,7 @@ const { isInlineLoading } = storeToRefs(globalStore)
 const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
-const { orders, pagination,productCount } = storeToRefs(adminStore)
+const { orders, pagination, productCount } = storeToRefs(adminStore)
 const { getOrder, openOrderModal, loadMore } = adminStore
 import { useUtils } from '@/composables/useUtils.js'
 const { currency, date, imgPath } = useUtils()
@@ -79,11 +79,17 @@ async function nextPage() {
                             <div class="w-[calc(100%-100px)] font-bold">{{ item.user.email }}</div>
                         </div>
                         <div class="flex mb-4" :class="{ 'items-center': productCount < 2 }">
-                            <div class="w-20 sm:w-25 text-sm sm:text-base">購買款項{{ productCount }}</div>
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">購買款項</div>
                             <div class="flex-1">
                                 <div v-for="i in item.products" :key="i.id">
                                     {{ i.product.title }} x{{ i.qty }}
                                 </div>
+                            </div>
+                        </div>
+                        <div class="flex mb-4 items-center">
+                            <div class="w-20 sm:w-25 text-sm sm:text-base">應付金額</div>
+                            <div class="flex-1 font-bold">
+                                NT$ {{ item.total }}
                             </div>
                         </div>
                         <div class="flex mb-4 items-center">
