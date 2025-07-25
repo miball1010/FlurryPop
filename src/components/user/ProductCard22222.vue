@@ -17,30 +17,30 @@ function moreProduct(id) {
 
 </script>
 <template>
-    <div :class="page" class="bg-white p-2 sm:p-5">
+    <div :class="page" class="bg-white p-2 sm:p-5" v-for="item in product">
 
-        <div @click="moreProduct(product.id)" class="ice-box">
-            <img :src="product.imageUrl" alt="" class="ice-img">
+        <div @click="moreProduct(item.id)" class="ice-box">
+            <img :src="item.imageUrl" alt="" class="ice-img">
             <div class="ice-ifo">
                 <div class="ice-ifo-text">詳細資訊</div>
             </div>
         </div>
 
         <div class="sm:font-bold mt-2 sm:mt-3 mb-1 sm:mb-5 text-sm sm:text-lg">
-            {{ product.title }}
+            {{ item.title }}
         </div>
         <div class="flex justify-between">
 
-            <div class="font-bold text-[#3F88B4]">NT$ {{ currency(product.price) }}</div>
+            <div class="font-bold text-[#3F88B4]">NT$ {{ currency(item.price) }}</div>
 
-            <div v-if="product.category != 'store'" class="gap-3 products-center hidden sm:flex">
+            <div v-if="item.category != 'store'" class="gap-3 items-center hidden sm:flex">
 
-                <button @click="addFavorite(product.id)"
+                <button @click="addFavorite(item.id)"
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
-                        :src="`${favoriteId.indexOf(product.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
+                        :src="`${favoriteId.indexOf(item.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
                         alt="" class="h-5.5"></button>
 
-                <button @click="addCart(product.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
+                <button @click="addCart(item.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
                         src="/images/cart-hollow-icon.svg" alt="" class="h-6"></button>
             </div>
         </div>
@@ -50,8 +50,8 @@ function moreProduct(id) {
 <style scoped>
 .home {
     box-shadow: 0 0 10px #85b1ca34;
-    /* margin-right: 20px; */
-    /* min-width: 300px; */
+    margin-right: 20px;
+    min-width: 300px;
 }
 
 .product {

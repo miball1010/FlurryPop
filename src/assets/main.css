@@ -9,6 +9,7 @@
 }
 
 body {
+  overflow-x: hidden;
   font-family: 'Noto Sans TC', sans-serif;
   min-width: 300px;
   @apply text-base text-neutral-700 leading-relaxed;
@@ -85,7 +86,11 @@ body {
 /* swiper */
 .pop-swiper {
   width: 100%;
-  padding: 100px 0 10px !important;
+  padding: 100px 0 10px 10px !important;
+}
+
+.pop-swiper .swiper-wrapper {
+  align-items: center !important;
 }
 
 .pop-swiper .swiper-button-next:after,

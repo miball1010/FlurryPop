@@ -29,7 +29,7 @@ const favoriteProduct = computed(() => product.value.filter(item => favoriteId.v
         <div v-else>
             <div v-if="favoriteProduct.length > 0"
                 class="ani-fade flex flex-wrap gap-2 sm:gap-5 justify-start">
-                <ProductCard :product="favoriteProduct" :page="'favorite'" />
+                <ProductCard v-for="item in favoriteProduct" :key="item.id" :product="item" :page="'favorite'" />
             </div>
             <div v-else class="flex flex-col gap-4 sm:gap-7 justify-center items-center ani-fade">
                 <div class="text-[#85B1CA] text-sm sm:text-base">目前沒有任何商品</div>

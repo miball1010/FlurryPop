@@ -1,9 +1,9 @@
 <script setup>
 import BaseLayout from '@/components/user/BaseLayout.vue'
 import InlineLoading from '@/components/InlineLoading.vue'
-import { ref, watch, computed, onMounted } from 'vue';
-import axios from 'axios';
 import ProductCard from '@/components/user/ProductCard.vue'
+import { ref, watch, computed, onMounted } from 'vue';
+import axios from 'axios'
 import { useUtils } from '@/composables/useUtils.js'
 const { currency, date, imgPath } = useUtils()
 import { storeToRefs } from 'pinia';
@@ -91,7 +91,9 @@ function applyFilter(type) {
                 <div class="w-full p-10 text-center" v-if="filterProducts.length == 0 && !isInlineLoading">
                     <div>目前尚未有此產品</div>
                 </div>
-                <ProductCard :product="filterProducts" :page="'product'" />
+       
+                    <ProductCard :product="item" :page="'product'" v-for="item in filterProducts" :key="item.id"/>
+           
             </div>
         </div>
     </BaseLayout>
