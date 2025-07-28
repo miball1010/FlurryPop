@@ -1,5 +1,4 @@
 <script setup>
-
 import ProductCard from '@/components/user/ProductCard.vue'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -52,13 +51,13 @@ onMounted(() => {
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
 
-        <div class="title-box relative top-40 lg:top-55">
+        <div class="title-box relative top-40 lg:top-45">
             <div class="title text-[2rem] sm:text-[3rem] lg:text-[5rem] mb-3">Little flurries, big joy!</div>
             <RouterLink :to="{ name: 'user-product' }" class="btn">立即探索</RouterLink>
         </div>
         <img src="/images/bg-1.png" alt="" class="bg-img ice">
     </div>
-    <div class="py-10 sm:py-25 bg-white">
+    <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white">
         <div class="w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row">
             <div class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
@@ -93,7 +92,7 @@ onMounted(() => {
                 </div>
             </div>
             <div class="flex-1">
-                <div class="relative aa">
+                <div class="relative">
                     <img src="/images/home-2.jpg" alt=""
                         class="relative top-0 left-[0%] w-[70%] sm:top-[2vw] sm:left-[11vw] sm:w-[18vw] ">
                     <img src="/images/home-3.jpg" alt=""
@@ -104,39 +103,50 @@ onMounted(() => {
             </div>
         </div>
     </div>
-
-    <div class="bg-gradient-to-b from-[#E4F2FA] to-[#F8FCFF]">
-        <div class="relative top-[-20px] left-30 w-fit z-[2]">
-            <img src="/images/pop-title-1.svg" alt="" class="">
-            <img src="/images/pop-title-2.svg" alt="" class="absolute top-4 left-2 z-[-1]">
-            <div class="bg-[#FFEFA8] h-5 w-30 absolute top-[-5px] left-[-20px] z-[-1]"></div>
+    <div class="relative">
+        <div
+            class="absolute top-[-20px] left-[50%] lg:left-30 w-[55%] max-w-[300px] z-[2] translate-x-[-50%] lg:translate-x-0">
+            <img src="/images/pop-title-1.svg" alt="" class="w-full">
+            <img src="/images/pop-title-2.svg" alt="" class="w-full absolute top-4 left-2 z-[-1]">
+            <!-- <div class="bg-[#FFEFA8] h-5 w-30 absolute top-[-5px] left-[-20px] z-[-1]"></div> -->
         </div>
+        <div class="relative bg-gradient-to-b from-[#E4F2FA] to-[#F8FCFF] overflow-hidden">
 
-        <div class="w-[90%] ml-auto pt-12 pb-22">
-            <swiper class="pop-swiper" :navigation="true" :slides-per-view="6" :spaceBetween="30"
-                :autoplay="{ delay: 500, disableOnInteraction: false }" :modules="modules" :breakpoints="{
-                    '1': {
-                        slidesPerView: 1,
-                        centeredSlides: true,
-                        spaceBetween: 20
-                    },
-                    '640': {
-                        slidesPerView: 2.5,
-                    },
-                    '1024': {
-                        slidesPerView: 4,
-                    }
-                }">
+            <div class="absolute bottom-[-6vw] sm:bottom-[-4vw] left-0 flex gap-20">
+                <img src="/images/hollow-text.svg" alt="">
+                <img src="/images/hollow-text.svg" alt="">
+            </div>
 
-                <swiper-slide v-for="item in product" :key="item.id">
-                    <ProductCard :product="item" :page="'home'" />
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="card"><div class="text-[#85B1CA] font-bold">所有商品</div></div>
-                </swiper-slide>
-            </swiper>
+            <div class="w-[90%] mx-auto lg:ml-auto pt-12 pb-8 sm:pb-22">
+                <swiper class="pop-swiper" :navigation="true" :slides-per-view="6" :spaceBetween="30"
+                    :autoplay="{ delay: 500, disableOnInteraction: false }" :modules="modules" :breakpoints="{
+                        '1': {
+                            slidesPerView: 2,
+                            // centeredSlides: true,
+                            spaceBetween: 20
+                        },
+                        '640': {
+                            slidesPerView: 3,
+                        },
+                        '1024': {
+                            slidesPerView: 4,
+                        }
+                    }">
+
+                    <swiper-slide v-for="item in product" :key="item.id">
+                        <ProductCard :product="item" :page="'home'" />
+                    </swiper-slide>
+                    <swiper-slide>
+                        <RouterLink :to="{name:'user-product'}">
+                            <div class="card">
+                                <div class="text-[#85B1CA] font-bold">所有商品</div>
+                            </div>
+                        </RouterLink>
+                    </swiper-slide>
+                </swiper>
+            </div>
+
         </div>
-
     </div>
 </template>
 
@@ -150,11 +160,12 @@ onMounted(() => {
     box-shadow: 0 0 10px #85b1ca34;
     cursor: pointer;
     transition: 0.3s;
-    margin-right: 30px;
 }
 
 .card:hover {
-    /* transform: scale(1.05); */
+    /* box-shadow: 0 0 10px rgba(75, 124, 152, 0.204); */
+
+    transform: scale(1.05);
 }
 
 .bg {

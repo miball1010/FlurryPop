@@ -28,13 +28,13 @@ async function getOrder(id) {
         isFullLoading.value = false
     }
 }
-const orderId = ref('-OVQfn3K63mBOrDDx0bl')
+const orderId = ref('')
 </script>
 
 <template>
     <BaseLayout :title="'ORDER'">
         <div class="w-full max-w-[600px] mx-auto relative">
-            <BaseInput :inputType="'text'" v-model="orderId" :id="'orderId'" :placeholder="''"
+            <BaseInput :inputType="'text'" v-model="orderId" :id="'orderId'" :placeholder="'ex:-OVQfn3K63mBOrDDx0bl'"
                             :description="'訂單編號'" />
             <button @click="getOrder(orderId)"
                 class="absolute translate-y-[-50%] top-[50%] right-3 cursor-pointer transition hover:scale-110 "><img
