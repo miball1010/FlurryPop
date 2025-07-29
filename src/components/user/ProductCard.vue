@@ -6,7 +6,7 @@ const { currency, imgPath } = useUtils()
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
-const { favoriteId } = storeToRefs(userStore)
+const { favoriteId,addLoading } = storeToRefs(userStore)
 const { addFavorite, addCart } = userStore
 
 const props = defineProps(['product', 'page'])
@@ -50,8 +50,6 @@ function moreProduct(id) {
 <style scoped>
 .home {
     box-shadow: 0 0 10px #85b1ca34;
-    /* margin-right: 20px; */
-    /* min-width: 300px; */
 }
 
 .product {

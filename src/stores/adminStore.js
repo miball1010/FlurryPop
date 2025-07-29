@@ -12,7 +12,9 @@ export const useAdminStore = defineStore('adminStore', () => {
     closeProductModal()
     closeOrderModal()
     const token = getCookie('token')
+    
     if (!token) {
+       global.isFullLoading = false
       return false
     }
     axios.defaults.headers.common['Authorization'] = token

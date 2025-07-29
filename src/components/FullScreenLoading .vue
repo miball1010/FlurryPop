@@ -2,76 +2,75 @@
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
-const {isFullLoading } = storeToRefs(globalStore)
+const { isFullLoading } = storeToRefs(globalStore)
 </script>
 
 <template>
-  <div v-show="isFullLoading" class="fixed top-0 left-0 w-full h-screen bg-white/70 flex justify-center items-center z-70">
-   <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-  </div>
+  <transition name="fade">
+    <div v-if="isFullLoading"
+      class="fixed top-0 left-0 w-full h-screen bg-[#3F88B4] flex justify-center items-center z-70">
+      <div class="flex flex-col items-center">
+        <div class="relative w-15 h-15">
+          <img src="/images/cake.svg" alt="" class="cake">
+          <img src="/images/cake.svg" alt="" class="cake cake-second">
+        </div>
+        <div class="load-text text-white mt-2">Loading...</div>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
-.lds-ellipsis {
-  color: #404040
-}
-.lds-ellipsis,
-.lds-ellipsis div {
-  box-sizing: border-box;
-}
-.lds-ellipsis {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ellipsis div {
+.cake {
+  width: 100%;
+  animation: scale 1.2s ease-in-out infinite;
   position: absolute;
-  top: 33.33333px;
-  width: 13.33333px;
-  height: 13.33333px;
-  border-radius: 50%;
-  background: currentColor;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  top: 0;
+  left: 0;
 }
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  animation: lds-ellipsis1 0.6s infinite;
+
+.cake-second {
+  animation-delay: 0.6s;
 }
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
+
+@keyframes scale {
   0% {
     transform: scale(1);
+    opacity: 1;
   }
+
   100% {
-    transform: scale(0);
+    opacity: 0;
+    transform: scale(1.2);
   }
 }
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
+
+.fade-enter-active {
+  transition: none; /* 進場不要動畫 */
+}
+
+.fade-leave-active {
+  transition: opacity 0.3s ease; /* 退場才淡出 */
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+/* 123 */
+.fadeup-enter-active,
+.fadeup-leave-active {
+  transition: all 0.4s ease;
+}
+
+.fadeup-enter-from,
+.fadeup-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>

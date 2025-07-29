@@ -43,21 +43,21 @@ async function getOrder() {
         router.push('/checkout/step3')
 }
 
-function test() {
-    information.value = {
-        name: '測試A',
-        tel: '0912345678',
-        email: 'sample@gmail.com',
-        delivery: '宅配',
-        city: '台北市',
-        area: '大安區',
-        address: '信義路四段256號',
-        pay: '貨到付款',
-        cardNumber: '',
-        validDate: '',
-        securityCode: ''
-    }
-}
+// function test() {
+//     information.value = {
+//         name: '測試A',
+//         tel: '0912345678',
+//         email: 'sample@gmail.com',
+//         delivery: '宅配',
+//         city: '台北市',
+//         area: '大安區',
+//         address: '信義路四段256號',
+//         pay: '貨到付款',
+//         cardNumber: '',
+//         validDate: '',
+//         securityCode: ''
+//     }
+// }
 
 const formattedCardNumber= computed({
     get() {
@@ -86,7 +86,7 @@ const formattedValidDate = computed({
             <div class="flex-2 flex flex-col gap-7 sm:gap-10">
                 <div>
                     <div class="font-bold mb-2 text-base sm:text-lg">基本資料</div>
-                    <button @click="test">test</button>
+                    <!-- <button @click="test">test</button> -->
                     <div class="bg-white shadow-md p-4 sm:p-5 space-y-5 sm:p-10 sm:space-y-8">
 
                         <!-- <input :value="displayValue" @input="handleInput" class="border p-2 font-mono tracking-widest"

@@ -15,6 +15,14 @@ body {
   @apply text-base text-neutral-700 leading-relaxed;
 }
 
+#app {
+  overflow-x: hidden;
+}
+
+img {
+  user-select: none;
+}
+
 .itali {
   font-family: 'italiana';
 }
@@ -86,11 +94,12 @@ body {
 /* swiper */
 .pop-swiper {
   width: 100%;
-  padding: 100px 0 10px 10px !important;
+  padding: 100px 10px 10px !important;
 }
 
 .pop-swiper .swiper-wrapper {
-  align-items: center !important;
+  align-items: stretch !important;
+  height: 100% !important;
 }
 
 .pop-swiper .swiper-button-next:after,

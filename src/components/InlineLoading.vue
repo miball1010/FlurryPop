@@ -25,7 +25,7 @@
 }
 
 .lds-spinner {
-  color: rgb(0, 0, 0);
+  color: #404040;
   display: inline-block;
   position: relative;
   width: 80px;
@@ -46,7 +46,7 @@
   width: 6.4px;
   height: 17.6px;
   border-radius: 20%;
-  background: rgb(0, 0, 0);
+  background: #404040;
 }
 
 .lds-spinner div:nth-child(1) {
@@ -116,6 +116,12 @@
 
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (max-width:639px) {
+  .lds-spinner {
+    transform: scale(0.5);
   }
 }
 </style>

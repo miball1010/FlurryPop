@@ -1,29 +1,27 @@
 <script setup>
 import ProductCard from '@/components/user/ProductCard.vue'
-import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
+import { computed, onMounted } from 'vue'
+import { gsap } from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { product } = storeToRefs(userStore)
 const { getProduct } = userStore
-import { gsap } from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { Navigation } from 'swiper/modules'
 
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/virtual';
-
-import { Pagination, Navigation, Virtual } from 'swiper/modules';
-const modules = [Pagination, Navigation, Virtual]
-
+const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
-onMounted(() => {
-    getProduct()
+
+onMounted(async() => {
+    await getProduct()
     gsap.fromTo('.ice',
-        { y: 300, xPercent: -50 },
+        { y: 300,opacity:0},
         {
+            opacity:1,
             y: 0,
             duration: 2,
             ease: 'power2.out',
@@ -31,7 +29,7 @@ onMounted(() => {
                 gsap.to('.ice', {
                     y: 300,
                     scrollTrigger: {
-                        trigger: '.bg',
+                        trigger: '.home-bg',
                         start: 'top top',
                         end: 'bottom top',
                         scrub: 3,
@@ -43,10 +41,14 @@ onMounted(() => {
     )
 })
 
+const popProduct=computed(()=>{
+    return product.value.filter((i)=>i.category!='store').sort((a,b)=>b.price-a.price).slice(0,10)
+})
+
 </script>
 
 <template>
-    <div class="bg">
+    <div class="home-bg">
         <img src="/images/bg-1.jpg" alt="" class="bg-img">
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
@@ -59,7 +61,7 @@ onMounted(() => {
     </div>
     <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white">
         <div class="w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row">
-            <div class="flex-1">
+            <div data-aos="fade-right" class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
                     <img src="/images/sparkles-icon.svg" alt="" class="mt-0.5 h-5 sm:h-8">
                     <div class="serif text-[#85B1CA] text-lg sm:text-2xl font-bold">獨特風味</div>
@@ -73,13 +75,13 @@ onMounted(() => {
                     Flurry Pop，不只是冰淇淋，是能融化心情的存在。
                 </div>
             </div>
-            <div class="flex-1">
+            <div data-aos="flip-right" class="flex-1">
                 <img src="/images/home-1.jpg" alt="" class="w-full">
             </div>
         </div>
         <div
             class="mt-15 sm:mt-37 pt-[0] pb-6 w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row-reverse sm:pt-[7vw] sm:pb-[7vw]">
-            <div class="flex-1">
+            <div data-aos="fade-left" class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
                     <img src="/images/milk-icon.svg" alt="" class="h-5 sm:h-8">
                     <div class="serif text-[#85B1CA] text-lg sm:text-2xl font-bold">嚴選食材</div>
@@ -91,23 +93,20 @@ onMounted(() => {
                     不只涼甜，還要溫柔地照顧你的味蕾和心情。
                 </div>
             </div>
-            <div class="flex-1">
-                <div class="relative">
-                    <img src="/images/home-2.jpg" alt=""
-                        class="relative top-0 left-[0%] w-[70%] sm:top-[2vw] sm:left-[11vw] sm:w-[18vw] ">
-                    <img src="/images/home-3.jpg" alt=""
-                        class="relative top-3 left-[10%] w-[70%] sm:top-[-3vw] sm:left-[-8vw] sm:w-[18vw]">
-                    <img src="/images/home-4.jpg" alt=""
-                        class="relative top-6 left-[20%] w-[80%] sm:top-[-2vw] sm:left-[0vw] sm:w-[20vw]">
-                </div>
+            <div class="flex-1 flex sm:block overflow-x-auto sm:overflow-x-hidden overflow-y-hidden">
+                <img data-aos="flip-left" src="/images/home-2.jpg" alt="" class="object-cover w-[80%] sm:w-full">
+                <img data-aos="flip-left" data-aos-delay="100" src="/images/home-3.jpg" alt=""
+                    class="object-cover w-[80%] sm:w-full block">
+                <img data-aos="flip-left" data-aos-delay="200" src="/images/home-4.jpg" alt=""
+                    class="object-cover w-[80%] sm:w-full block">
             </div>
         </div>
     </div>
     <div class="relative">
         <div
             class="absolute top-[-20px] left-[50%] lg:left-30 w-[55%] max-w-[300px] z-[2] translate-x-[-50%] lg:translate-x-0">
-            <img src="/images/pop-title-1.svg" alt="" class="w-full">
-            <img src="/images/pop-title-2.svg" alt="" class="w-full absolute top-4 left-2 z-[-1]">
+            <img data-aos="fade-right" src="/images/pop-title-1.svg" alt="" class="w-full">
+            <img data-aos="fade-right" src="/images/pop-title-2.svg" alt="" class="w-full absolute top-4 left-2 z-[-1]">
             <!-- <div class="bg-[#FFEFA8] h-5 w-30 absolute top-[-5px] left-[-20px] z-[-1]"></div> -->
         </div>
         <div class="relative bg-gradient-to-b from-[#E4F2FA] to-[#F8FCFF] overflow-hidden">
@@ -118,11 +117,10 @@ onMounted(() => {
             </div>
 
             <div class="w-[90%] mx-auto lg:ml-auto pt-12 pb-8 sm:pb-22">
-                <swiper class="pop-swiper" :navigation="true" :slides-per-view="6" :spaceBetween="30"
-                    :autoplay="{ delay: 500, disableOnInteraction: false }" :modules="modules" :breakpoints="{
+                <swiper class="pop-swiper" :navigation="true" :autoHeight="true" :slides-per-view="6" :spaceBetween="30"
+                    :modules="modules" :breakpoints="{
                         '1': {
                             slidesPerView: 2,
-                            // centeredSlides: true,
                             spaceBetween: 20
                         },
                         '640': {
@@ -132,43 +130,25 @@ onMounted(() => {
                             slidesPerView: 4,
                         }
                     }">
-
-                    <swiper-slide v-for="item in product" :key="item.id">
+                    <swiper-slide v-for="item in popProduct" :key="item.id">
                         <ProductCard :product="item" :page="'home'" />
                     </swiper-slide>
+
                     <swiper-slide>
-                        <RouterLink :to="{name:'user-product'}">
+                        <RouterLink :to="{ name: 'user-product' }">
                             <div class="card">
-                                <div class="text-[#85B1CA] font-bold">所有商品</div>
+                                <div class="text-[#85B1CA] font-bold text-sm sm:text-base">所有商品</div>
                             </div>
                         </RouterLink>
                     </swiper-slide>
                 </swiper>
             </div>
-
         </div>
     </div>
 </template>
 
 <style scoped>
-.card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    aspect-ratio: 1/1;
-    box-shadow: 0 0 10px #85b1ca34;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.card:hover {
-    /* box-shadow: 0 0 10px rgba(75, 124, 152, 0.204); */
-
-    transform: scale(1.05);
-}
-
-.bg {
+.home-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -190,6 +170,7 @@ onMounted(() => {
 
 .ice {
     left: 50%;
+    transform: translateX(-50%);
 }
 
 @media screen and (max-width:1023px) {
@@ -274,5 +255,15 @@ onMounted(() => {
         0 0 10px #97C9E6;
     background-color: rgba(255, 255, 255, 0);
     backdrop-filter: blur(15px);
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 100%;
+    box-shadow: 0 0 10px #85b1ca34;
+    cursor: pointer;
 }
 </style>

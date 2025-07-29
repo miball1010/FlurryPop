@@ -1,27 +1,14 @@
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useGlobalStore } from './globalStore.js'
 import axios from 'axios'
 
 export const useUserStore = defineStore('userStore', () => {
   const global = useGlobalStore()
-  // let api="https://vue3-course-api.hexschool.io/"
-  // let path="flurrypop-api"
-  // let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/admin/product`
-  //   try {
-  //     const res = await axios.post(apiPath)
-  //     console.log(res.data)
-  //   } catch (err) {
-  //      console.error(err)
-  //   }
-  //   finally{
-
-  //   }
 
   //複製網址
   async function share() {
     const url = window.location.href
-    console.log(url)
     try {
       await navigator.clipboard.writeText(url)
       global.pushMessage(true, '已複製網址！')
@@ -55,6 +42,7 @@ export const useUserStore = defineStore('userStore', () => {
   //購物車
   const addLoading = ref(false)
   async function addCart(id, num) {
+     global.isFullLoading = true
     addLoading.value = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
     const cart = {
@@ -70,6 +58,7 @@ export const useUserStore = defineStore('userStore', () => {
       global.pushMessage(false, err.message)
     }
     finally {
+       global.isFullLoading = false
       addLoading.value = false
     }
   }
@@ -78,8 +67,8 @@ export const useUserStore = defineStore('userStore', () => {
   const product = ref([])
   const freight = ref({})
 
-  async function getProduct(page = 1) {
-    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products?page=${page}`
+  async function getProduct() {
+    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/products/all`
     try {
       const res = await axios.get(apiPath)
       product.value = res.data.products
@@ -104,7 +93,6 @@ export const useUserStore = defineStore('userStore', () => {
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
     try {
       const res = await axios.get(apiPath)
-      console.log(res.data.data)
       cart.value = res.data.data.carts
       total.value = res.data.data.total
     } catch (err) {
@@ -224,7 +212,6 @@ export const useUserStore = defineStore('userStore', () => {
             localStorage.removeItem('orderId')
           }
           localStorage.setItem('orderId', orderId.value)
-          console.log(orderId.value)
           if (pay)
             await cardPay(orderId.value)
           return true
@@ -251,7 +238,6 @@ export const useUserStore = defineStore('userStore', () => {
     }
     try {
       const res = await axios.post(apiPath, cart)
-      console.log("運費:", res.data)
     } catch (err) {
       console.error(err)
     }
@@ -263,7 +249,6 @@ export const useUserStore = defineStore('userStore', () => {
 
     try {
       const res = await axios.post(apiPath)
-      console.log("付款:", res.data)
     } catch (err) {
       console.error(err)
     }

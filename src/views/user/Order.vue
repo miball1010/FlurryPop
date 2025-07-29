@@ -14,19 +14,25 @@ const { pushMessage } = globalStore
 const order = ref(null)
 
 async function getOrder(id) {
-    isFullLoading.value = true
-    let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/order/${id}`
-    try {
-        const res = await axios.get(apiPath)
-        order.value = res.data.order
-        if (res.data.order == null)
-            pushMessage(false, "查無此訂單")
-    } catch (err) {
-        console.error(err)
+    if (id == '') {
+        pushMessage(false, "請輸入訂單編號")
     }
-    finally {
-        isFullLoading.value = false
+    else {
+        isFullLoading.value = true
+        let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/order/${id}`
+        try {
+            const res = await axios.get(apiPath)
+            order.value = res.data.order
+            if (res.data.order == null)
+                pushMessage(false, "查無此訂單")
+        } catch (err) {
+            console.error(err)
+        }
+        finally {
+            isFullLoading.value = false
+        }
     }
+
 }
 const orderId = ref('')
 </script>
@@ -35,7 +41,7 @@ const orderId = ref('')
     <BaseLayout :title="'ORDER'">
         <div class="w-full max-w-[600px] mx-auto relative">
             <BaseInput :inputType="'text'" v-model="orderId" :id="'orderId'" :placeholder="'ex:-OVQfn3K63mBOrDDx0bl'"
-                            :description="'訂單編號'" />
+                :description="'訂單編號'" />
             <button @click="getOrder(orderId)"
                 class="absolute translate-y-[-50%] top-[50%] right-3 cursor-pointer transition hover:scale-110 "><img
                     src="/images/search-icon.svg" alt="" class="h-4 sm:h-5"></button>
@@ -51,7 +57,8 @@ const orderId = ref('')
                     </div>
 
                     <div>
-                        <div class="flex mt-4 sm:mt-10 max-w-[500px] mx-auto gap-x-10 gap-y-4 flex-col sm:flex-row w-fit">
+                        <div
+                            class="flex mt-4 sm:mt-10 max-w-[500px] mx-auto gap-x-10 gap-y-4 flex-col sm:flex-row w-fit">
                             <div class="sm:flex-1">
                                 <div class="flex mb-4 items-center">
                                     <div class="text-sm sm:text-base font-bold text-[#3F88B4] w-20">訂購日期</div>
@@ -87,7 +94,8 @@ const orderId = ref('')
                                     <div class="text-sm sm:text-base font-bold text-[#3F88B4] w-20">付款狀態</div>
                                     <div class="flex gap-3">
                                         <div class="font-bold">NT$ {{ currency(order.total) }}</div>
-                                        <div :class="order.is_paid?'text-[#7DB14A]':'text-[#D8473A]'" class="font-bold ">{{ order.is_paid ? '已付款' : '未付款' }}</div>
+                                        <div :class="order.is_paid ? 'text-[#7DB14A]' : 'text-[#D8473A]'"
+                                            class="font-bold ">{{ order.is_paid ? '已付款' : '未付款' }}</div>
                                     </div>
                                 </div>
                             </div>

@@ -5,13 +5,12 @@ import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isInlineLoading } = storeToRefs(globalStore)
-const { } = globalStore
 import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { orders, pagination, productCount } = storeToRefs(adminStore)
 const { getOrder, openOrderModal, loadMore } = adminStore
 import { useUtils } from '@/composables/useUtils.js'
-const { currency, date, imgPath } = useUtils()
+const { currency, date } = useUtils()
 
 onMounted(() => {
     isInlineLoading.value = true
@@ -34,23 +33,22 @@ const filterOrder = computed(() => {
     }
 })
 
-function changeStatus(s) {
+async function changeStatus(s) {
     fade.value = false
     status.value = s
+    await getOrder(1)
     setTimeout(() => {
         fade.value = true
     }, 1)
 }
 async function Page(page) {
-    console.log(page)
-    // await getOrder(pagination.value.current_page++)
+    await getOrder(page)
 }
 async function prePage() {
-    console.log(123)
-    await getOrder(pagination.value.current_page--)
+    await getOrder(pagination.value.current_page - 1)
 }
 async function nextPage() {
-    await getOrder(pagination.value.current_page++)
+    await getOrder(pagination.value.current_page + 1)
 }
 
 </script>
@@ -89,7 +87,7 @@ async function nextPage() {
                         <div class="flex mb-4 items-center">
                             <div class="w-20 sm:w-25 text-sm sm:text-base">應付金額</div>
                             <div class="flex-1 font-bold">
-                                NT$ {{ item.total }}
+                                NT$ {{ currency(item.total) }}
                             </div>
                         </div>
                         <div class="flex mb-4 items-center">

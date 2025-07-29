@@ -1,46 +1,82 @@
 <template>
-  <button @click="showMessage">顯示訊息</button>
-  <transition name="fade">
-    <div v-if="visible" class="message-box">
-      Hello! 這是一段測試訊息！
-    </div>
-  </transition>
+<div class="h-100">
+    <swiper
+    :slidesPerView="'auto'"
+    :spaceBetween="30"
+    :pagination="{
+      clickable: true,
+    }"
+    :modules="modules"
+    class="mySwiper"
+  >
+    <swiper-slide>Slide 1br <br>123</swiper-slide>
+    <swiper-slide>Slide 2</swiper-slide><swiper-slide>Slide 3</swiper-slide>
+    <swiper-slide>Slide 4</swiper-slide><swiper-slide>Slide 5</swiper-slide>
+    <swiper-slide>Slide 6</swiper-slide><swiper-slide>Slide 7</swiper-slide>
+    <swiper-slide>Slide 8</swiper-slide><swiper-slide>Slide 9</swiper-slide>
+  </swiper>
+</div>
 </template>
+<script>
+  // Import Swiper Vue.js components
+  import { Swiper, SwiperSlide } from 'swiper/vue';
 
-<script setup>
-import { ref } from 'vue'
-const visible = ref(false)
+  // Import Swiper styles
+  import 'swiper/css';
 
-function showMessage() {
-  visible.value = true
-  setTimeout(() => {
-    visible.value = false
-  }, 2000)
-}
-showMessage()
+  import 'swiper/css/pagination';
+
+
+  // import required modules
+  import { Pagination } from 'swiper/modules';
+
+  export default {
+    components: {
+      Swiper,
+      SwiperSlide,
+    },
+    setup() {
+      return {
+        modules: [Pagination],
+      };
+    },
+  };
 </script>
+<style scoped>
 
-<style>
-.fade-enter-active, .fade-leave-active {
-  transition: all 0.5s ease;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.fade-enter-to, .fade-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+.swiper {
+  width: 100%;
+  height: 100%;
 }
 
-.message-box {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 9999;
-  will-change: transform, opacity;
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #c29e9e;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.swiper-slide img {
+  /* display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; */
+}
+
+.swiper-slide {
+  width: 80%;
+}
+
+.swiper-slide:nth-child(2n) {
+  width: 60%;
+}
+
+.swiper-slide:nth-child(3n) {
+  width: 40%;
+}
+
 </style>

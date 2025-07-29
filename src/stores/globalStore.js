@@ -16,17 +16,23 @@ export const useGlobalStore = defineStore('globalStore', () => {
   let time = null
   function pushMessage(success, newMessage) {
     if (newMessage) {
-      if (message.value.active)
+      if (message.value.active) {
+        message.value.active = false
         clearTimeout(time)
+      }
+      setTimeout(() => {
+        message.value.text = newMessage
+        message.value.status = success
+        message.value.active = true
+      }, 100)
 
-      message.value.text = newMessage
-      message.value.status = success
-      message.value.active = true
+
       time = setTimeout(() => {
         message.value.active = false
       }, 3000)
     }
   }
+
   //doubleCheck
   const confirm = ref({
     show: false,

@@ -13,7 +13,7 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
                 每一支冰品，都有自己的語言——冷，卻不疏離；甜，卻不喧嘩。
             </div>
             <div>
-                <img src="/images/about-1.jpg" alt="">
+                <img src="/images/about-1.jpg" alt="Flurry Pop店內裝潢" loading="lazy">
                 <div class="text-gray-400 text-xs sm:text-sm mt-1">Flurry Pop店內裝潢</div>
             </div>
             <div>
@@ -22,13 +22,13 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
                 Flurry Pop 不是為了討好所有人，只為了與理解它的人，相遇一次，就足夠深刻。
             </div>
             <div>
-                <img src="/images/about-2.jpg" alt="">
+                <img src="/images/about-2.jpg" alt="喜愛Flurry Pop的客人" loading="lazy">
                 <div class="text-gray-400 text-xs sm:text-sm mt-1">喜愛Flurry Pop的客人</div>
             </div>
         </div>
         <div class="mt-15 sm:mt-30 p-2 sm:p-5 border border-gray-300 flex gap-x-10 flex-col md:flex-row">
 
-            <div class="flex-1 flex flex-col items-center justify-center pt-5 pb-9 md:pt-0 md:pb-4">
+            <div  data-aos="fade-right" class="flex-1 flex flex-col items-center justify-center pt-5 pb-9 md:pt-0 md:pb-4">
                 <div class="itali text-xl sm:text-2xl lg:text-[40px] mb-2 sm:mb-4">Flurry Pop</div>
                 <div>
 
@@ -38,7 +38,7 @@ import BaseLayout from '@/components/user/BaseLayout.vue'
                 </div>
             </div>
 
-             <div class="flex-1">
+             <div  data-aos="fade-left" class="flex-1">
                 <iframe class="w-full aspect-[6/4]"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.5528853602673!2d121.4525602!3d25.0492433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a87c39a3cc4f%3A0xdac49eeee3b9d191!2zMjQy5paw5YyX5biC5paw6I6K5Y2A5bm456aP6LevMTIz6Jmf!5e0!3m2!1szh-TW!2stw!4v1753324691598!5m2!1szh-TW!2stw"
                     style="border:0;" allowfullscreen="" loading="lazy"

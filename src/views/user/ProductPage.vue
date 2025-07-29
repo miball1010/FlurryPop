@@ -1,13 +1,28 @@
 <script setup>
+import BaseLayout from '@/components/user/BaseLayout.vue'
+import InlineLoading from '@/components/InlineLoading.vue'
+import { ref, onMounted, watch } from 'vue'
+import axios from 'axios'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const {  isInlineLoading } = storeToRefs(globalStore)
+import { useUserStore } from '@/stores/userStore.js'
+const userStore = useUserStore()
+const { favoriteId, addLoading } = storeToRefs(userStore)
+const { addFavorite, addCart, share } = userStore
+import { useUtils } from '@/composables/useUtils.js'
+const { currency, imgPath } = useUtils()
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
-import 'swiper/css/effect-fade';
-import 'swiper/css/pagination';
-import "swiper/css/thumbs";
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import { Autoplay, EffectFade, Pagination, Thumbs, Navigation, FreeMode } from 'swiper/modules';
-const modules = [FreeMode, Navigation, Thumbs, Autoplay]
+import 'swiper/css/effect-fade'
+import "swiper/css/thumbs"
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import { Thumbs, Navigation, FreeMode } from 'swiper/modules'
+const modules = [FreeMode, Navigation, Thumbs]
 
 const thumbsSwiper = ref(null);
 
@@ -15,31 +30,9 @@ const setThumbsSwiper = (swiper) => {
     thumbsSwiper.value = swiper
 }
 
-
-import BaseLayout from '@/components/user/BaseLayout.vue'
-import InlineLoading from '@/components/InlineLoading.vue'
-import { useRoute } from 'vue-router';
-const route = useRoute()
-import { ref, onMounted, watch } from 'vue';
-import axios from 'axios';
-
-import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '@/stores/globalStore.js'
-const globalStore = useGlobalStore()
-const { isInlineLoading } = storeToRefs(globalStore)
-const { pushMessage } = globalStore
-
-import { useUserStore } from '@/stores/userStore.js'
-const userStore = useUserStore()
-const { favoriteId, addLoading } = storeToRefs(userStore)
-const { addFavorite, addCart, share } = userStore
-import { useUtils } from '@/composables/useUtils.js'
-const { currency, date, imgPath } = useUtils()
-
 const productId = route.params.productId
 const product = ref({})
 const notice = ref(1)
-
 onMounted(() => {
     isInlineLoading.value = true
     getProduct()
@@ -122,7 +115,7 @@ async function handleAddCart() {
                             :direction="'horizontal'" :freeMode="true" :watchSlidesProgress="true" :modules="modules"
                             class="mySwiper2">
                             <swiper-slide>
-                                <img :src="product.imageUrl" loading="lazy" class="slider-img"/>
+                                <img :src="product.imageUrl" loading="lazy" class="slider-img" />
                             </swiper-slide>
                             <swiper-slide v-for="item in product.imagesUrl">
                                 <img :src="item" loading="lazy" class="slider-img" />
@@ -130,7 +123,7 @@ async function handleAddCart() {
                         </swiper>
                     </div>
                     <div class="block md:hidden" v-else>
-                         <img :src="product.imageUrl" alt="">
+                        <img :src="product.imageUrl" alt="">
                     </div>
                 </div>
                 <div class="flex-1  relative">
@@ -144,10 +137,13 @@ async function handleAddCart() {
                                     src="/images/share-icon.svg" alt="" class="h-5.5"></button>
                         </div>
                         <div class="text-base sm:text-2xl font-bold">{{ product.title }}</div>
-                        <div class="text-lg sm:text-xl font-bold text-[#3F88B4] mt-1 sm:mt-5">NT$ {{ currency(product.price) }}</div>
-                        <div class="text-xs sm:text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-4 sm:p-5 text-justify mt-5 sm:mt-7">{{
-                            product.description
-                        }}
+                        <div class="text-lg sm:text-xl font-bold text-[#3F88B4] mt-1 sm:mt-5">NT$ {{
+                            currency(product.price) }}</div>
+                        <div
+                            class="text-xs sm:text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-4 sm:p-5 text-justify mt-5 sm:mt-7">
+                            {{
+                                product.description
+                            }}
                         </div>
                         <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
                         <div class="text-sm sm:text-base">{{ product.content }}</div>
@@ -219,7 +215,8 @@ async function handleAddCart() {
     cursor: pointer;
     transition: 0.3s;
 }
-.slider-img:hover{
+
+.slider-img:hover {
     transform: scale(1.1);
 }
 

@@ -2,11 +2,10 @@
 import BaseLayout from '@/components/user/BaseLayout.vue'
 import InlineLoading from '@/components/InlineLoading.vue'
 import ProductCard from '@/components/user/ProductCard.vue'
-import { ref, watch, computed, onMounted } from 'vue';
-import axios from 'axios'
+import { ref, watch, onMounted } from 'vue'
 import { useUtils } from '@/composables/useUtils.js'
-const { currency, date, imgPath } = useUtils()
-import { storeToRefs } from 'pinia';
+const { imgPath } = useUtils()
+import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isInlineLoading } = storeToRefs(globalStore)
@@ -75,7 +74,7 @@ function applyFilter(type) {
                     :disabled="filterType == 'bar'" @click="applyFilter('bar')">
                     <img :src="`${imgPath}${filterType == 'bar' ? 'icebar-white-icon' : 'icebar-dark-icon'}.svg`" alt=""
                         class="h-3.5 mt-0.5">
-                    雪糕</button>
+                    冰棒</button>
                 <button :class="{ active: filterType == 'store' }" class="filter-btn text-sm lg:text-base"
                     :disabled="filterType == 'store'" @click="applyFilter('store')">
                     <img :src="`${imgPath}${filterType == 'store' ? 'store-white-icon' : 'store-dark-icon'}.svg`" alt=""
