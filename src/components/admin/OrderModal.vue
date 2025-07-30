@@ -15,7 +15,7 @@ const { updateOrder, closeOrderModal } = adminStore
     <div class="w-full h-screen fixed top-0 left-0 bg-black/45 z-50" v-show="orderIsOpen">
         <transition name="fadeup">
             <div v-show="orderIsOpen"
-                class="bg-transparent max-w-[1200px] w-[95%] max-h-[90%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
+                class="bg-transparent max-w-[1200px] w-[95%] max-h-[80%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
 
                 <div class="bg-neutral-700 text-white py-5 px-5 sm:px-10 text-base sm:text-lg font-semibold">訂單</div>
 
