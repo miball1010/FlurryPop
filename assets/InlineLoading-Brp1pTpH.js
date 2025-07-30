@@ -1,1 +1,0 @@
-import{_ as e,a as n,b as d,f as s}from"./index-CCqPrBM4.js";const v={};function a(o,i){return s(),n("div",null,i[0]||(i[0]=[d("div",{class:"lds-spinner"},[d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div")],-1)]))}const t=e(v,[["render",a],["__scopeId","data-v-72f5d786"]]);export{t as I};
