@@ -1,9 +1,12 @@
 <script setup>
 import ProductCard from '@/components/user/ProductCard.vue'
-import { computed, onMounted } from 'vue'
+import { computed, nextTick, onMounted } from 'vue'
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isFullLoading } = storeToRefs(globalStore)
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { product } = storeToRefs(userStore)
@@ -17,6 +20,7 @@ const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
 
 onMounted(async () => {
+    isFullLoading.value = true
     await getProduct()
     gsap.fromTo('.ice',
         { y: 300, opacity: 0 },
@@ -39,6 +43,9 @@ onMounted(async () => {
             }
         }
     )
+    nextTick(() => {
+        isFullLoading.value = false
+    })
 })
 
 const popProduct = computed(() => {

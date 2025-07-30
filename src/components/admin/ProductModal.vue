@@ -62,7 +62,7 @@ function delImage(id) {
     <div class="w-full h-screen fixed top-0 left-0 bg-black/45 z-50" v-show="productIsOpen">
         <transition name="fadeup">
             <div v-show="productIsOpen"
-                class="bg-transparent max-w-[1200px] w-[95%] max-h-[90%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
+                class="bg-transparent max-w-[1200px] w-[95%] max-h-[80%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
 
                 <div class="bg-neutral-700 text-white py-5 px-5 sm:px-10 text-base sm:text-lg font-semibold">
                     {{ isNew ? "新增產品" : "編輯產品" }}
@@ -77,18 +77,6 @@ function delImage(id) {
                         <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="''"
                             :description="'價格'" />
 
-
-
-                        <!-- <div class="relative">
-                            <input :type="inputType" v-model="model" :id="id" :maxlength="maxlength" class="peer text-sm sm:text-base w-full border border-gray-300 pt-4 pb-1 px-2 placeholder-transparent 
-            focus:placeholder-gray-400 focus:outline-none sm:pt-5 sm:pb-2 sm:px-3" :placeholder="placeholder" />
-                            <label :for="id"
-                                class="absolute left-2 sm:left-2.5 top-0.5 sm:top-1 text-xs sm:text-sm text-gray-500 transition-all 
-            peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0.5 sm:peer-focus:top-1 peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
-                                {{ description }}
-                            </label>
-                        </div> -->
-
                         <div class="relative">
                             <textarea name="description" id="description" placeholder="產品描述"
                                 v-model="NowProduct.description"
@@ -99,6 +87,7 @@ function delImage(id) {
                                 產品描述
                             </label>
                         </div>
+
                         <div class="relative">
                             <textarea name="content" id="content" placeholder="主成分"
                                 v-model="NowProduct.content"

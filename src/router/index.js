@@ -93,11 +93,6 @@ const router = createRouter({
         }
       ]
     },
-     {
-          path: '/test',
-          
-          component: () => import('../views/test.vue')
-        },
     {
       //重新導向
       path: '/:pathMatch(.*)*',
