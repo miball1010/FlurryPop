@@ -12,7 +12,7 @@ export function useUtils() {
     }
 
     // 環境判斷
-    const imgPath = import.meta.env.BASE_URL+import.meta.env.VITE_IMG
+    const imgPath = import.meta.env.VITE_IMG
 
   
     return {

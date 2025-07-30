@@ -1,6 +1,6 @@
 <script setup>
 import ProductCard from '@/components/user/ProductCard.vue'
-import { computed, nextTick, onMounted } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { storeToRefs } from 'pinia'
@@ -19,8 +19,15 @@ import { Navigation } from 'swiper/modules'
 const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
 
+const preloadImage = (src) => {
+    const img = new Image()
+    img.src = src
+}
+
 onMounted(async () => {
     isFullLoading.value = true
+    preloadImage('/images/bg-1.jpg')
+    preloadImage('/images/bg-1.png')
     await getProduct()
     gsap.fromTo('.ice',
         { y: 300, opacity: 0 },
@@ -43,9 +50,10 @@ onMounted(async () => {
             }
         }
     )
-    nextTick(() => {
-        isFullLoading.value = false
-    })
+})
+
+window.addEventListener('load', () => {
+  isFullLoading.value = false
 })
 
 const popProduct = computed(() => {
@@ -56,7 +64,7 @@ const popProduct = computed(() => {
 
 <template>
     <div class="home-bg">
-        <img src="/images/bg-1.jpg" alt="" class="bg-img">
+        <img src="/images/bg-1.jpg" alt="" class="bg-img" @load="onImageLoaded">
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
 
@@ -64,7 +72,7 @@ const popProduct = computed(() => {
             <div class="title text-[2rem] sm:text-[3rem] lg:text-[5rem] mb-3">Little flurries, big joy!</div>
             <RouterLink :to="{ name: 'user-product' }" class="btn">立即探索</RouterLink>
         </div>
-        <img src="/images/bg-1.png" alt="" class="bg-img ice">
+        <img src="/images/bg-1.png" alt="" class="bg-img ice" @load="onImageLoaded">
     </div>
     <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white">
         <div class="w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row">

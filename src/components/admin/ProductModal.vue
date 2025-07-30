@@ -1,8 +1,8 @@
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
 import { ref } from 'vue'
-import axios from 'axios';
-import { storeToRefs } from 'pinia';
+import axios from 'axios'
+import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isFullLoading } = storeToRefs(globalStore)

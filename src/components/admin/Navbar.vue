@@ -20,13 +20,12 @@ async function logout() {
             router.push('/login')
         }
         else {
+            isFullLoading.value = false
             pushMessage(res.data.success, res.data.message)
         }
     } catch (err) {
-        pushMessage(false, err.message)
-    }
-    finally {
         isFullLoading.value = false
+        pushMessage(false, err.message)
     }
 }
 

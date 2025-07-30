@@ -29,21 +29,20 @@ async function login() {
       router.push('/dashboard/product')
     }
     else {
+      isFullLoading.value = false
       pushMessage(res.data.success, res.data.message)
     }
   } catch (err) {
-    pushMessage(false, err.message)
-  }
-  finally {
     isFullLoading.value = false
+    pushMessage(false, err.message)
   }
 }
 
-onMounted(async () => {
-  const isLoggedIn = await checkLogin()
-  if (isLoggedIn)
-    router.push('/dashboard/product')
-})
+// onMounted(async () => {
+//   const isLoggedIn = await checkLogin()
+//   if (isLoggedIn)
+//     router.push('/dashboard/product')
+// })
 </script>
 
 <template>

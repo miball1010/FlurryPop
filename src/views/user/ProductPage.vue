@@ -147,7 +147,7 @@ async function handleAddCart() {
                         </div>
                         <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
                         <div class="text-sm sm:text-base">{{ product.content }}</div>
-                        <div class="flex w-full mt-7">
+                        <div class="flex w-full mt-7 max-w-[1400px]">
                             <button @click="decrease"
                                 :class="number > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
                                 class=" w-10 aspect-square border border-gray-200 text-center">-</button>

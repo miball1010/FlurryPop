@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
 })
 
 
-router.afterEach((to, from, next) => {
+router.afterEach((to, from) => {
     const globalStore = useGlobalStore()
     window.scrollTo(0, 0)
     AOS.refresh()

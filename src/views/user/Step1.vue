@@ -82,6 +82,7 @@ async function delCart(id) {
 function moreProduct(id) {
     router.push(`/product/${id}`)
 }
+
 </script>
 
 <template>

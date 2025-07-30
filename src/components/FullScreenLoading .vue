@@ -7,6 +7,7 @@ const { isFullLoading } = storeToRefs(globalStore)
 
 <template>
   <transition name="fade">
+    <!-- bg-[#3F88B4] black/50 -->
     <div v-if="isFullLoading"
       class="fixed top-0 left-0 w-full h-screen bg-[#3F88B4] flex justify-center items-center z-70">
       <div class="flex flex-col items-center">

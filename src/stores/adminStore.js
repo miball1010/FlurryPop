@@ -27,7 +27,7 @@ export const useAdminStore = defineStore('adminStore', () => {
       return false
     }
     finally {
-      global.isFullLoading = false
+      // global.isFullLoading = false
     }
   }
 
