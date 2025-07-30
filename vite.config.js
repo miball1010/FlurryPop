@@ -5,9 +5,9 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ command}) => {
-  const isDev = command === 'serve';
+  // const isDev = command === 'serve';
   return{
-    base: isDev ? '/' : './',
+    base: '/FlurryPop/',
     plugins: [
       vue(),
       tailwindcss(),
