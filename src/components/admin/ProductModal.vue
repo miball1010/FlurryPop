@@ -77,23 +77,50 @@ function delImage(id) {
                         <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="''"
                             :description="'價格'" />
 
+
+
+                        <!-- <div class="relative">
+                            <input :type="inputType" v-model="model" :id="id" :maxlength="maxlength" class="peer text-sm sm:text-base w-full border border-gray-300 pt-4 pb-1 px-2 placeholder-transparent 
+            focus:placeholder-gray-400 focus:outline-none sm:pt-5 sm:pb-2 sm:px-3" :placeholder="placeholder" />
+                            <label :for="id"
+                                class="absolute left-2 sm:left-2.5 top-0.5 sm:top-1 text-xs sm:text-sm text-gray-500 transition-all 
+            peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-0.5 sm:peer-focus:top-1 peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
+                                {{ description }}
+                            </label>
+                        </div> -->
+
+
                         <div class="relative">
                             <textarea name="description" id="description" placeholder="產品描述"
                                 v-model="NowProduct.description"
-                                class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
+                                class="peer w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
                             <label for="description"
-                                class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
+                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
+                                 peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
                                 產品描述
                             </label>
                         </div>
-                        <div class="relative">
+                         <div class="relative">
+                            <textarea name="content" id="content" placeholder="主成分"
+                                v-model="NowProduct.content"
+                                class="peer w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
+                            <label for="content"
+                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
+                                 peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
+                                主成分
+                            </label>
+                        </div>
+
+
+
+                        <!-- <div class="relative">
                             <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
                                 class="peer w-full min-h-30 border border-gray-300 pt-5 pb-2 px-3 placeholder-transparent focus:outline-none"></textarea>
                             <label for="content"
                                 class="absolute bg-white w-[calc(100%-20px)] left-2.5 top-[1px] text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-sm peer-focus:text-gray-500">
                                 主成分
                             </label>
-                        </div>
+                        </div> -->
                         <div class="flex items-center gap-2">
                             <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
                                 :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>

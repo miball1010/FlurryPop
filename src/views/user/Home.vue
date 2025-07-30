@@ -16,12 +16,12 @@ import { Navigation } from 'swiper/modules'
 const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
 
-onMounted(async() => {
+onMounted(async () => {
     await getProduct()
     gsap.fromTo('.ice',
-        { y: 300,opacity:0},
+        { y: 300, opacity: 0 },
         {
-            opacity:1,
+            opacity: 1,
             y: 0,
             duration: 2,
             ease: 'power2.out',
@@ -41,8 +41,8 @@ onMounted(async() => {
     )
 })
 
-const popProduct=computed(()=>{
-    return product.value.filter((i)=>i.category!='store').sort((a,b)=>b.price-a.price).slice(0,10)
+const popProduct = computed(() => {
+    return product.value.filter((i) => i.category != 'store').sort((a, b) => b.price - a.price).slice(0, 10)
 })
 
 </script>
@@ -109,7 +109,7 @@ const popProduct=computed(()=>{
             <img data-aos="fade-right" src="/images/pop-title-2.svg" alt="" class="w-full absolute top-4 left-2 z-[-1]">
             <!-- <div class="bg-[#FFEFA8] h-5 w-30 absolute top-[-5px] left-[-20px] z-[-1]"></div> -->
         </div>
-        <div class="relative bg-gradient-to-b from-[#E4F2FA] to-[#F8FCFF] overflow-hidden">
+        <div class="pop-bg relative  overflow-hidden">
 
             <div class="absolute bottom-[-6vw] sm:bottom-[-4vw] left-0 flex gap-20">
                 <img src="/images/hollow-text.svg" alt="">
@@ -255,6 +255,11 @@ const popProduct=computed(()=>{
         0 0 10px #97C9E6;
     background-color: rgba(255, 255, 255, 0);
     backdrop-filter: blur(15px);
+}
+
+.pop-bg {
+    background: #E4F2FA;
+    background: linear-gradient(#E4F2FA 0%, #F8FCFF 100%);
 }
 
 .card {
