@@ -71,34 +71,31 @@ function delImage(id) {
                 <div class="bg-white flex p-5 gap-x-8 gap-y-4 flex-col sm:flex-row sm:p-10">
 
                     <div class="flex-1 flex flex-col gap-4">
-                        <BaseInput :inputType="'text'" v-model="NowProduct.title" :id="'title'" :placeholder="''"
+                        <BaseInput :inputType="'text'" v-model="NowProduct.title" :id="'title'" :placeholder="' '"
                             :description="'產品名稱'" />
 
-                        <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="''"
+                        <BaseInput :inputType="'number'" v-model="NowProduct.price" :id="'price'" :placeholder="' '"
                             :description="'價格'" />
 
                         <div class="relative">
                             <textarea name="description" id="description" placeholder="產品描述"
                                 v-model="NowProduct.description"
-                                class="peer text-sm sm:text-base w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
+                                class="peer w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
                             <label for="description"
-                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
-                                 peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
+                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 pt-[2px] top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
+                                 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
                                 產品描述
                             </label>
                         </div>
-
                         <div class="relative">
-                            <textarea name="content" id="content" placeholder="主成分"
-                                v-model="NowProduct.content"
-                                class="peer text-sm sm:text-base w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
+                            <textarea name="content" id="content" placeholder="主成分" v-model="NowProduct.content"
+                                class="peer w-full min-h-30 border border-gray-300 pt-4 sm:pt-5 pb-1 sm:pb-2 px-2 sm:px-3 placeholder-transparent focus:outline-none"></textarea>
                             <label for="content"
-                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
-                                 peer-placeholder-shown:top-2.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
+                                class="absolute bg-white w-[calc(100%-20px)] left-2 sm:left-2.5 pt-[2px] top-[1px] text-xs sm:text-sm text-gray-500 transition-all 
+                                 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-700 peer-focus:top-[1px] peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-gray-500">
                                 主成分
                             </label>
                         </div>
-
                         <div class="flex items-center gap-2">
                             <input type="checkbox" id="is_enabled" v-model="NowProduct.is_enabled" :true-value="1"
                                 :false-value="0" class="w-4 h-4 cursor-pointer"><label for="is_enabled">上架</label>

@@ -19,15 +19,8 @@ import { Navigation } from 'swiper/modules'
 const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
 
-const preloadImage = (src) => {
-    const img = new Image()
-    img.src = src
-}
-
 onMounted(async () => {
     isFullLoading.value = true
-    preloadImage('/images/bg-1.jpg')
-    preloadImage('/images/bg-1.png')
     await getProduct()
     gsap.fromTo('.ice',
         { y: 300, opacity: 0 },

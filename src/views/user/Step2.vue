@@ -87,14 +87,8 @@ const formattedValidDate = computed({
                 <div>
                     <div class="font-bold mb-2 text-base sm:text-lg">基本資料</div>
                     <!-- <button @click="test">test</button> -->
-                    <div class="bg-white shadow-md p-4 sm:p-5 space-y-5 sm:p-10 sm:space-y-8">
-
-                        <!-- <input :value="displayValue" @input="handleInput" class="border p-2 font-mono tracking-widest"
-                            maxlength="9" />
-                        {{ displayValue }} -->
-
-
-                        <BaseInput :inputType="'text'" v-model="information.name" :id="'name'" :placeholder="''"
+                    <div class="bg-white shadow-md py-5 px-4 sm:px-5 space-y-5 sm:p-10 sm:space-y-8">
+                        <BaseInput :inputType="'text'" v-model="information.name" :id="'name'" :placeholder="' '"
                             :description="'姓名'" />
                         <BaseInput :inputType="'text'" v-model="information.tel" :id="'tel'" :placeholder="'0912345678'"
                             :maxlength="10" :description="'手機號碼'" />
@@ -104,7 +98,7 @@ const formattedValidDate = computed({
                 </div>
                 <div>
                     <div class="font-bold mb-2 text-base sm:text-lg">寄送方式</div>
-                    <div class="bg-white shadow-md p-4 sm:p-5 space-y-5 sm:p-10 sm:space-y-8">
+                    <div class="bg-white shadow-md py-5 px-4 sm:px-5 space-y-5 sm:p-10 sm:space-y-8">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="radio" name="delivery" v-model="information.delivery" value="宅配"
                                 class="w-4 h-4">
@@ -129,7 +123,7 @@ const formattedValidDate = computed({
                 </div>
                 <div>
                     <div class="font-bold mb-2 text-base sm:text-lg">付款方式</div>
-                    <div class="bg-white shadow-md p-4 sm:p-5 space-y-5 sm:p-10 sm:space-y-8">
+                    <div class="bg-white shadow-md py-5 px-4 sm:px-5 space-y-5 sm:p-10 sm:space-y-8">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="radio" name="card" v-model="information.pay" value="信用卡" class="w-4 h-4">
                             <span>信用卡</span>
@@ -159,7 +153,7 @@ const formattedValidDate = computed({
                     <div class="font-bold mb-2 text-lg hidden lg:block">結帳明細</div>
                     <div class="bg-white shadow-md p-4 sm:p-5 flex items-end flex-col gap-5">
                         <div class="w-full border-b border-gray-200">
-                            <div class="flex justify-between my-2 items-center">
+                            <div class="flex justify-between mb-2 items-center">
                                 <div class="text-sm sm:text-base">總金額</div>
                                 <div class="">NT$ {{ currency(total) }}</div>
                             </div>

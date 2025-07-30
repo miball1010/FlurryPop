@@ -9,14 +9,14 @@
 }
 
 body {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   font-family: 'Noto Sans TC', sans-serif;
   min-width: 300px;
   @apply text-base text-neutral-700 leading-relaxed;
 }
 
 #app {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 img {
