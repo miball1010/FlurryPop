@@ -7,13 +7,12 @@ const { isFullLoading } = storeToRefs(globalStore)
 
 <template>
   <transition name="fade">
-    <!-- bg-[#3F88B4] black/50 -->
     <div v-if="isFullLoading"
       class="fixed top-0 left-0 w-full h-screen bg-[#3F88B4] flex justify-center items-center z-70">
       <div class="flex flex-col items-center">
         <div class="relative w-15 h-15">
-          <img src="/images/cake.svg" alt="" class="cake">
-          <img src="/images/cake.svg" alt="" class="cake cake-second">
+          <img src="/images/cake.svg" alt="cake logo" class="cake">
+          <img src="/images/cake.svg" alt="cake logo" class="cake cake-second">
         </div>
         <div class="load-text text-white mt-2">Loading...</div>
       </div>
@@ -47,11 +46,11 @@ const { isFullLoading } = storeToRefs(globalStore)
 }
 
 .fade-enter-active {
-  transition: none; /* 進場不要動畫 */
+  transition: none; 
 }
 
 .fade-leave-active {
-  transition: opacity 0.3s ease; /* 退場才淡出 */
+  transition: opacity 0.3s ease; 
 }
 
 .fade-enter-from,
@@ -62,16 +61,5 @@ const { isFullLoading } = storeToRefs(globalStore)
 .fade-enter-to,
 .fade-leave-from {
   opacity: 1;
-}
-/* 123 */
-.fadeup-enter-active,
-.fadeup-leave-active {
-  transition: all 0.4s ease;
-}
-
-.fadeup-enter-from,
-.fadeup-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
 }
 </style>

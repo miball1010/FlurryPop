@@ -56,28 +56,28 @@ function applyFilter(type) {
                 class="text-sm sm:text-base w-full p-1 border-b border-b-gray-200 focus:outline-none sm:w-auto"
                 @keyup.enter="applyFilter('search')" v-model="searchText">
             <button @click="applyFilter('search')" class="cursor-pointer transition hover:scale-110 "><img
-                    src="/images/search-icon.svg" alt="" class="h-5"></button>
+                    src="/images/search-icon.svg" alt="search-icon" class="h-5"></button>
         </div>
         <div class="flex flex-col space-x-5 space-y-5 mt-2 lg:flex-row sm:mt-5">
             <div class="w-full flex flex-row overflow-x-auto lg:flex-col lg:w-50">
                 <button :class="{ active: filterType == 'all' }" class="filter-btn text-sm lg:text-base"
                     :disabled="filterType == 'all'" @click="applyFilter('all')">
-                    <img :src="`${imgPath}${filterType == 'all' ? 'all-white-icon' : 'all-dark-icon'}.svg`" alt=""
+                    <img :src="`${imgPath}${filterType == 'all' ? 'all-white-icon' : 'all-dark-icon'}.svg`" alt="all-icon"
                         class="h-3.5 mt-0.5">
                     所有商品</button>
                 <button :class="{ active: filterType == 'ice' }" class="filter-btn text-sm lg:text-base"
                     :disabled="filterType == 'ice'" @click="applyFilter('ice')">
-                    <img :src="`${imgPath}${filterType == 'ice' ? 'ice-white-icon' : 'ice-dark-icon'}.svg`" alt=""
+                    <img :src="`${imgPath}${filterType == 'ice' ? 'ice-white-icon' : 'ice-dark-icon'}.svg`" alt="ice-icon"
                         class="h-3.5 mt-0.5">冰淇淋
                 </button>
                 <button :class="{ active: filterType == 'bar' }" class="filter-btn text-sm lg:text-base"
                     :disabled="filterType == 'bar'" @click="applyFilter('bar')">
-                    <img :src="`${imgPath}${filterType == 'bar' ? 'icebar-white-icon' : 'icebar-dark-icon'}.svg`" alt=""
+                    <img :src="`${imgPath}${filterType == 'bar' ? 'icebar-white-icon' : 'icebar-dark-icon'}.svg`" alt="icebar-icon"
                         class="h-3.5 mt-0.5">
                     冰棒</button>
                 <button :class="{ active: filterType == 'store' }" class="filter-btn text-sm lg:text-base"
                     :disabled="filterType == 'store'" @click="applyFilter('store')">
-                    <img :src="`${imgPath}${filterType == 'store' ? 'store-white-icon' : 'store-dark-icon'}.svg`" alt=""
+                    <img :src="`${imgPath}${filterType == 'store' ? 'store-white-icon' : 'store-dark-icon'}.svg`" alt="store-icon"
                         class="h-3.5 mt-0.5">
                     門市限定</button>
             </div>

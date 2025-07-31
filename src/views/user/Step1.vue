@@ -63,26 +63,21 @@ async function updateCart(item) {
 
 async function delCart(id) {
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart/${id}`
-    console.log(apiPath)
     try {
         const res = await axios.delete(apiPath)
         if (res.data.success) {
             getCheckProduct()
         }
-        console.log(res.data)
         pushMessage(res.data.success, res.data.message)
 
     } catch (err) {
-        console.error(err)
-    }
-    finally {
+        pushMessage(false, err.message)
     }
 }
 
 function moreProduct(id) {
     router.push(`/product/${id}`)
 }
-
 </script>
 
 <template>
@@ -109,7 +104,7 @@ function moreProduct(id) {
                             <div class="flex gap-4 sm:gap-5 min-w-0 w-full">
                                 <div @click="moreProduct(item.product.id)"
                                     class="cursor-pointer w-20 h-auto sm:w-30 sm:h-30">
-                                    <img :src="item.product.imageUrl" alt=""
+                                    <img :src="item.product.imageUrl" :alt="item.product.title"
                                         class="w-full h-full object-center object-cover">
                                 </div>
                                 <div class="flex flex-col flex-1 min-w-0">
@@ -127,7 +122,7 @@ function moreProduct(id) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-2 ml-3 mr-0 sm:mr-3 sm:ml-5"><img src="/images/trash-icon.svg" alt=""
+                            <div class="p-2 ml-3 mr-0 sm:mr-3 sm:ml-5"><img src="/images/trash-icon.svg" alt="trash-icon"
                                     @click="delCart(item.id)"
                                     class="h-5 sm:h-6 cursor-pointer transition duration-300 hover:scale-110">
                             </div>

@@ -114,7 +114,7 @@ async function nextPage() {
                 <button @click="prePage" :disabled="!pagination.has_pre"
                     :class="pagination.has_pre ? 'cursor-pointer hover:scale-110 opacity-60' : 'opacity-20'"
                     class="p-2 transition duration-3">
-                    <img src="/images/arrow-small.svg" alt="" class="h-3 scale-[-1]">
+                    <img src="/images/arrow-small.svg" alt="arrow" class="h-3 scale-[-1]">
                 </button>
 
                 <button @click="Page(i)" :disabled="pagination.current_page == i"
@@ -126,7 +126,7 @@ async function nextPage() {
                 <button @click="nextPage" :disabled="!pagination.has_next"
                     :class="pagination.has_next ? 'cursor-pointer hover:scale-110 opacity-60' : 'opacity-20'"
                     class="p-2 transition duration-3">
-                    <img src="/images/arrow-small.svg" alt="" class="h-3">
+                    <img src="/images/arrow-small.svg" alt="arrow" class="h-3">
                 </button>
             </div>
         </div>

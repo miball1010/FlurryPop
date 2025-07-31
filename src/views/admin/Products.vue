@@ -45,7 +45,7 @@ onMounted(() => {
       <div class="border-b border-gray-300 flex flex-wrap  gap-8 lg:gap-0  px-0 py-4 w-full flex-col md:flex-row"
         v-for="item in products" :key="item.id">
         <div class="flex flex-1">
-          <div class="w-25 sm:w-28"> <img :src="item.imageUrl" alt="" class="w-20 h-20 object-cover" /></div>
+          <div class="w-25 sm:w-28"> <img :src="item.imageUrl" :alt="item.title" class="w-20 h-20 object-cover" /></div>
           <div class="flex flex-1 gap-1 sm:gap-2 flex-col lg:flex-row items-start lg:items-center">
             <div class="w-auto lg:w-[250px]">
               <div class="text-sm sm:text-base font-bold break-words">{{ item.title }}</div>

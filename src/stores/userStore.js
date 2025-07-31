@@ -42,7 +42,7 @@ export const useUserStore = defineStore('userStore', () => {
   //購物車
   const addLoading = ref(false)
   async function addCart(id, num) {
-     global.isFullLoading = true
+    global.isFullLoading = true
     addLoading.value = true
     let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart`
     const cart = {
@@ -58,7 +58,7 @@ export const useUserStore = defineStore('userStore', () => {
       global.pushMessage(false, err.message)
     }
     finally {
-       global.isFullLoading = false
+      global.isFullLoading = false
       addLoading.value = false
     }
   }
@@ -182,7 +182,6 @@ export const useUserStore = defineStore('userStore', () => {
       global.isFullLoading = true
 
       let address = "實體店取貨"
-      // console.log("address" + address)
       if (information.delivery == '宅配') {
         await addFreight(freight.value.id, 1)
         address = information.city + information.area + information.address
@@ -217,12 +216,13 @@ export const useUserStore = defineStore('userStore', () => {
           return true
 
         }
-        global.pushMessage(res.data.success, res.data.message)
+        else {
+          global.isFullLoading = false
+          global.pushMessage(res.data.success, res.data.message)
+        }
       } catch (err) {
-        global.pushMessage(false, err.message)
-      }
-      finally {
         global.isFullLoading = false
+        global.pushMessage(false, err.message)
       }
     }
   }

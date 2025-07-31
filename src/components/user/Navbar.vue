@@ -45,12 +45,12 @@ window.addEventListener('resize', () => {
                 :class="menuIsOpen ? 'pointer-events-all opacity-100 md:pointer-events-none md:opacity-0' : 'pointer-events-none opacity-0'">
             </div>
             <RouterLink to="/" class="transition dduration-300 hover:scale-105">
-                <img :src="`${imgPath}${isScroll ? 'logo-black' : 'logo-white'}.svg`" alt="" class="h-6 sm:h-8">
+                <img :src="`${imgPath}${isScroll ? 'logo-black' : 'logo-white'}.svg`" alt="Flurry Pop logo" class="h-6 sm:h-8">
             </RouterLink>
 
             <div :class="{ open: menuIsOpen }" class="menu text-sm sm:text-base gap-8 shadow-lg md:shadow-none ">
                 <button @click="CloseMenu" class="cursor-pointer absolute top-4 right-4 md:hidden p-2">
-                    <img src="/images/cross.svg" alt="" class="h-4 sm:h-5">
+                    <img src="/images/cross.svg" alt="cross-icon" class="h-4 sm:h-5">
                 </button>
                 <RouterLink @click="CloseMenu" :to="{ name: 'user-about' }" class="navbtn">關於Flurry Pop</RouterLink>
                 <RouterLink @click="CloseMenu" :to="{ name: 'user-product' }" class="navbtn">所有商品</RouterLink>
@@ -60,17 +60,17 @@ window.addEventListener('resize', () => {
                     <RouterLink @click="CloseMenu" :to="{ name: 'user-favorite' }"
                         class="p-2 cursor-pointer flex items-center justify-center py-3 transition duration-300 hover:scale-110">
                         <img :src="`${imgPath}${isScroll || menuIsOpen ? 'heart-solid-dark-icon' : 'heart-solid-white-icon'}.svg`"
-                            alt="" class="h-4.5">
+                            alt="heart-icon" class="h-4.5">
                     </RouterLink>
                     <RouterLink @click="CloseMenu" :to="{ name: 'user-checkout-step1' }"
                         class="p-2 flex items-center justify-center py-3 transition duration-300 hover:scale-110">
                         <img :src="`${imgPath}${isScroll || menuIsOpen ? 'cart-solid-dark-icon' : 'cart-solid-white-icon'}.svg`"
-                            alt="" class="h-4.5">
+                            alt="cart-icon" class="h-4.5">
                     </RouterLink>
                 </div>
             </div>
             <button @click="OpenMenu" class="cursor-pointer md:hidden p-2"> <img
-                    :src="`${imgPath}${isScroll ? 'menu' : 'menu-white'}.svg`" alt="" class="h-4 sm:h-5"></button>
+                    :src="`${imgPath}${isScroll ? 'menu' : 'menu-white'}.svg`" alt="menu-icon" class="h-4 sm:h-5"></button>
         </div>
     </div>
 </template>

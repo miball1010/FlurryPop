@@ -65,14 +65,14 @@ async function copy() {
 
             <div v-else class="ani-fade">
                 <div class="flex items-center gap-2 justify-center mb-5">
-                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5">
+                    <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5">
                     <span class="serif text-lg sm:text-2xl font-bold text-[#3F88B4]">訂單完成</span>
-                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5 scale-x-[-1]">
+                    <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5 scale-x-[-1]">
                 </div>
                 <div @click="copy"
                     class="cursor-pointer text-[#7DB14A] font-bold flex flex-col sm:flex-row gap-x-2 justify-center items-center hover:opacity-80">
                     <div class="flex items-center gap-2 justify-center text-sm sm:text-base"><img
-                            src="/images/copy-icon.svg" alt="" class="h-3 sm:h-4">訂單編號</div>
+                            src="/images/copy-icon.svg" alt="copy-icon" class="h-3 sm:h-4">訂單編號</div>
                     <div class="text-center text-sm sm:text-base">{{ order.id }}</div>
                 </div>
                 <div class="w-fit flex mt-10 max-w-[500px] mx-auto gap-x-10 gap-y-4 flex-col sm:flex-row">

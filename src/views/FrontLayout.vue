@@ -8,6 +8,3 @@ import SiteFooter from '@/components/user/Footer.vue'
     <router-view></router-view>
     <SiteFooter />
 </template>
-
-<style scoped>
-</style>

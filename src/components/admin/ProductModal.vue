@@ -13,10 +13,8 @@ const { NowProduct, productIsOpen, isNew } = storeToRefs(adminStore)
 const { updateProduct, closeProductModal } = adminStore
 
 onMounted(() => {
-   
     adjustModalHeight()
     window.addEventListener('resize', adjustModalHeight)
-  
 })
 
 onBeforeUnmount(() => {
@@ -156,10 +154,10 @@ function delImage(id) {
                             <div class="mb-3">
                                 <div class="text-sm text-gray-500 mb-1">主要圖片</div>
                                 <div v-if="NowProduct.imageUrl" class="w-25 h-25 border border-gray-500 relative">
-                                    <img :src="NowProduct.imageUrl" alt="" class="w-full h-full object-contain ">
+                                    <img :src="NowProduct.imageUrl" :alt="NowProduct.title" class="w-full h-full object-contain ">
                                     <div @click="delImage('main')"
                                         class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center text-white opacity-0 hover:opacity-100 cursor-pointer">
-                                        <img src="/images/trash-white-icon.svg" alt="" class="w-5">
+                                        <img src="/images/trash-white-icon.svg" alt="trash-icon" class="w-5">
                                     </div>
                                 </div>
 
@@ -177,10 +175,10 @@ function delImage(id) {
                                 <div class="flex gap-2 mt-1 flex-wrap">
                                     <div v-for="(item, index) in NowProduct.imagesUrl" :key="index"
                                         class="w-25 h-25 border border-gray-300 relative">
-                                        <img :src="item" alt="" class="w-full h-full object-contain ">
+                                        <img :src="item" :alt="NowProduct.title" class="w-full h-full object-contain ">
                                         <div @click="delImage(index)"
                                             class="absolute top-0 left-0 bg-black/70 w-full h-full flex justify-center items-center text-white opacity-0 hover:opacity-100 cursor-pointer">
-                                            <img src="/images/trash-white-icon.svg" alt="" class="w-5">
+                                            <img src="/images/trash-white-icon.svg" alt="trash-icon" class="w-5">
                                         </div>
                                     </div>
 

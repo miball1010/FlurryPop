@@ -56,7 +56,7 @@ window.addEventListener('resize', () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <img src="/images/logo-black.svg" alt="" class="h-6 sm:h-8">
+                <img src="/images/logo-black.svg" alt="Flurry Pop logo" class="h-6 sm:h-8">
                 <div class="title text-xl font-bold">後臺系統</div>
             </div>
 
@@ -64,13 +64,13 @@ window.addEventListener('resize', () => {
                 :class="{ open: menuIsOpen }">
 
                 <button @click="CloseMenu" class="cursor-pointer absolute top-6 right-4 md:hidden">
-                    <img src="/images/cross.svg" alt="" class="h-4 sm:h-5"></button>
+                    <img src="/images/cross.svg" alt="cross-icon" class="h-4 sm:h-5"></button>
                 <RouterLink :to="{ name: 'admin-product' }" @click="CloseMenu" class="navbtn">產品</RouterLink>
                 <RouterLink :to="{ name: 'admin-order' }" @click="CloseMenu" class="navbtn">訂單</RouterLink>
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
 
-            <button @click="OpenMenu" class="p-2 cursor-pointer md:hidden"> <img src="/images/menu.svg" alt=""
+            <button @click="OpenMenu" class="p-2 cursor-pointer md:hidden"> <img src="/images/menu.svg" alt="menu-ion"
                     class="h-4 sm:h-5"></button>
         </div>
     </div>

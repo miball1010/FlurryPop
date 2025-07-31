@@ -44,16 +44,16 @@ const orderId = ref('')
                 :description="'訂單編號'" />
             <button @click="getOrder(orderId)"
                 class="absolute translate-y-[-50%] top-[50%] right-3 cursor-pointer transition hover:scale-110 "><img
-                    src="/images/search-icon.svg" alt="" class="h-4 sm:h-5"></button>
+                    src="/images/search-icon.svg" alt="search-icon" class="h-4 sm:h-5"></button>
         </div>
 
         <template #bottom>
             <div v-if="order" class="relative py-5 top-55 w-[90%] max-w-[650px] mx-auto sm:py-0 sm:top-90">
                 <div class="bg-white shadow-md p-8 sm:p-10">
                     <div class="flex items-center gap-2 justify-center">
-                        <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5">
+                        <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5">
                         <span class="serif text-lg sm:text-2xl font-bold text-[#3F88B4]">訂單資訊</span>
-                        <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5 scale-x-[-1]">
+                        <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5 scale-x-[-1]">
                     </div>
 
                     <div>

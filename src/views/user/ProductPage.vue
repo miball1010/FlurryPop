@@ -94,8 +94,8 @@ async function handleAddCart() {
             <div class="flex gap-8 mt-0 sm:mt-2 flex-col md:flex-row lg:gap-12">
                 <div class="w-full lg:w-[calc((100%-48px)/2)]">
                     <div class="hidden md:block">
-                        <img :src="product.imageUrl" alt="">
-                        <img :src="item" alt="" v-for="item in product.imagesUrl">
+                        <img :src="product.imageUrl" :alt="product.title">
+                        <img :src="item" :alt="product.title" v-for="item in product.imagesUrl">
                     </div>
 
                     <div class="block md:hidden" v-if="product.imagesUrl">
@@ -123,7 +123,7 @@ async function handleAddCart() {
                         </swiper>
                     </div>
                     <div class="block md:hidden" v-else>
-                        <img :src="product.imageUrl" alt="">
+                        <img :src="product.imageUrl" :alt="product.title">
                     </div>
                 </div>
                 <div class="w-full lg:w-[calc((100%-48px)/2)] relative">
@@ -132,9 +132,9 @@ async function handleAddCart() {
                             <button @click="addFavorite(product.id)"
                                 class="cursor-pointer transition duration-300 hover:scale-110"><img
                                     :src="`${favoriteId.indexOf(product.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
-                                    alt="" class="h-5.5"></button>
+                                    alt="heart-icon" class="h-5.5"></button>
                             <button @click="share" class="cursor-pointer transition duration-300 hover:scale-110"><img
-                                    src="/images/share-icon.svg" alt="" class="h-5.5"></button>
+                                    src="/images/share-icon.svg" alt="share-icon" class="h-5.5"></button>
                         </div>
                         <div class="text-base sm:text-2xl font-bold">{{ product.title }}</div>
                         <div class="text-lg sm:text-xl font-bold text-[#3F88B4] mt-1 sm:mt-5">NT$ {{

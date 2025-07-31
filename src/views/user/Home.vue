@@ -1,6 +1,6 @@
 <script setup>
 import ProductCard from '@/components/user/ProductCard.vue'
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, onBeforeUnmount } from 'vue'
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { storeToRefs } from 'pinia'
@@ -19,10 +19,14 @@ import { Navigation } from 'swiper/modules'
 const modules = [Navigation]
 gsap.registerPlugin(ScrollTrigger)
 
+let enterTween = null
+let scrollTween = null
+
 onMounted(async () => {
     isFullLoading.value = true
     await getProduct()
-    gsap.fromTo('.ice',
+
+    enterTween = gsap.fromTo('.ice',
         { y: 300, opacity: 0 },
         {
             opacity: 1,
@@ -30,13 +34,14 @@ onMounted(async () => {
             duration: 2,
             ease: 'power2.out',
             onComplete: () => {
-                gsap.to('.ice', {
+                scrollTween = gsap.to('.ice', {
                     y: 300,
                     scrollTrigger: {
                         trigger: '.home-bg',
                         start: 'top top',
                         end: 'bottom top',
                         scrub: 3,
+                        id: 'iceScroll',
                     }
                 })
             }
@@ -47,6 +52,12 @@ onMounted(async () => {
     })
 })
 
+onBeforeUnmount(() => {
+    enterTween?.kill()
+    scrollTween?.kill()
+    ScrollTrigger.getById('iceScroll')?.kill()
+})
+
 const popProduct = computed(() => {
     return product.value.filter((i) => i.category != 'store').sort((a, b) => b.price - a.price).slice(0, 5)
 })
@@ -55,7 +66,7 @@ const popProduct = computed(() => {
 
 <template>
     <div class="home-bg">
-        <img src="/images/bg-1.jpg" alt="" class="bg-img left-0">
+        <img src="/images/bg-1.jpg" alt="背景" class="bg-img left-0">
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
 
@@ -63,13 +74,13 @@ const popProduct = computed(() => {
             <div class="title text-[2rem] sm:text-[3rem] lg:text-[5rem] mb-3">Little flurries, big joy!</div>
             <RouterLink :to="{ name: 'user-product' }" class="btn">立即探索</RouterLink>
         </div>
-        <img src="/images/bg-1.png" alt="" class="bg-img ice">
+        <img src="/images/bg-1.png" alt="背景冰淇淋" class="bg-img ice">
     </div>
     <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white overflow-hidden">
         <div class="w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row">
             <div data-aos="fade-right" class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
-                    <img src="/images/sparkles-icon.svg" alt="" class="mt-0.5 h-5 sm:h-8">
+                    <img src="/images/sparkles-icon.svg" alt="sparkles-icon" class="mt-0.5 h-5 sm:h-8">
                     <div class="serif text-[#85B1CA] text-lg sm:text-2xl font-bold">獨特風味</div>
                 </div>
                 <div class="text-justify text-sm sm:text-base">
@@ -82,14 +93,14 @@ const popProduct = computed(() => {
                 </div>
             </div>
             <div data-aos="flip-right" class="flex-1">
-                <img src="/images/home-1.jpg" alt="" class="w-full">
+                <img src="/images/home-1.jpg" alt="Flurry Pop店內冰淇淋" class="w-full">
             </div>
         </div>
         <div
             class="mt-15 sm:mt-37 pt-[0] pb-6 w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row-reverse sm:pt-[7vw] sm:pb-[7vw]">
             <div data-aos="fade-left" class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
-                    <img src="/images/milk-icon.svg" alt="" class="h-5 sm:h-8">
+                    <img src="/images/milk-icon.svg" alt="milk-icon" class="h-5 sm:h-8">
                     <div class="serif text-[#85B1CA] text-lg sm:text-2xl font-bold">嚴選食材</div>
                 </div>
                 <div class="text-justify text-sm sm:text-base">
@@ -100,10 +111,10 @@ const popProduct = computed(() => {
                 </div>
             </div>
             <div class="flex-1 flex sm:block overflow-x-auto sm:overflow-x-hidden overflow-y-hidden">
-                <img data-aos="flip-left" src="/images/home-2.jpg" alt="" class="object-cover w-[80%] sm:w-full">
-                <img data-aos="flip-left" data-aos-delay="100" src="/images/home-3.jpg" alt=""
+                <img data-aos="flip-left" src="/images/home-2.jpg" alt="乳牛" class="object-cover w-[80%] sm:w-full">
+                <img data-aos="flip-left" data-aos-delay="100" src="/images/home-3.jpg" alt="藍莓"
                     class="object-cover w-[80%] sm:w-full block">
-                <img data-aos="flip-left" data-aos-delay="200" src="/images/home-4.jpg" alt=""
+                <img data-aos="flip-left" data-aos-delay="200" src="/images/home-4.jpg" alt="奶油"
                     class="object-cover w-[80%] sm:w-full block">
             </div>
         </div>
@@ -111,15 +122,15 @@ const popProduct = computed(() => {
     <div class="relative">
         <div
             class="absolute top-[-20px] left-[50%] lg:left-30 w-[55%] max-w-[300px] z-[2] translate-x-[-50%] lg:translate-x-0">
-            <img data-aos="fade-right" src="/images/pop-title-1.svg" alt="" class="w-full">
-            <img data-aos="fade-right" src="/images/pop-title-2.svg" alt="" class="w-full absolute top-4 left-2 z-[-1]">
-            <!-- <div class="bg-[#FFEFA8] h-5 w-30 absolute top-[-5px] left-[-20px] z-[-1]"></div> -->
+            <img data-aos="fade-right" src="/images/pop-title-1.svg" alt="pop-title" class="w-full">
+            <img data-aos="fade-right" src="/images/pop-title-2.svg" alt="pop-title-shadow"
+                class="w-full absolute top-4 left-2 z-[-1]">
         </div>
         <div class="pop-bg relative  overflow-hidden">
 
             <div class="absolute bottom-[-6vw] sm:bottom-[-4vw] left-0 flex gap-20">
-                <img src="/images/hollow-text.svg" alt="">
-                <img src="/images/hollow-text.svg" alt="">
+                <img src="/images/hollow-text.svg" alt="hollow-text">
+                <img src="/images/hollow-text.svg" alt="hollow-text">
             </div>
 
             <div class="w-[90%] mx-auto lg:ml-auto pt-12 pb-8 sm:pb-22">
@@ -175,7 +186,7 @@ const popProduct = computed(() => {
 }
 
 .ice {
-    left: 50% ;
+    left: 50%;
     transform: translateX(-50%);
 }
 

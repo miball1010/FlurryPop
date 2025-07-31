@@ -92,9 +92,9 @@ const question = ref([
             <div v-for="(item, index) in question" :key="index">
                
                 <div class="flex items-center gap-2 justify-center mb-5 sm:mb-10">
-                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5">
+                    <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5">
                     <div class="serif text-lg sm:text-2xl font-bold text-[#3F88B4]">{{ item.title }}</div>
-                    <img src="/images/snow-icon.svg" alt="" class="h-4 sm:h-5 scale-x-[-1]">
+                    <img src="/images/snow-icon.svg" alt="snow-icon" class="h-4 sm:h-5 scale-x-[-1]">
                 </div>
 
                 <div class="text-sm sm:text-base flex flex-col gap-4 sm:gap-8">

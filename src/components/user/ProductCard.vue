@@ -14,13 +14,12 @@ const props = defineProps(['product', 'page'])
 function moreProduct(id) {
     router.push(`/product/${id}`)
 }
-
 </script>
 <template>
     <div :class="page" class="bg-white p-2 sm:p-5">
 
         <div @click="moreProduct(product.id)" class="ice-box">
-            <img :src="product.imageUrl" alt="" class="ice-img">
+            <img :src="product.imageUrl" alt="product.title" class="ice-img">
             <div class="ice-ifo">
                 <div class="ice-ifo-text">詳細資訊</div>
             </div>
@@ -38,10 +37,10 @@ function moreProduct(id) {
                 <button @click="addFavorite(product.id)"
                     class="cursor-pointer transition duration-300 hover:scale-110"><img
                         :src="`${favoriteId.indexOf(product.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
-                        alt="" class="h-5.5"></button>
+                        alt="heart-icon" class="h-5.5"></button>
 
                 <button @click="addCart(product.id, 1)" class="cursor-pointer transition duration-300 hover:scale-110"><img
-                        src="/images/cart-hollow-icon.svg" alt="" class="h-6"></button>
+                        src="/images/cart-hollow-icon.svg" alt="cart-icon" class="h-6"></button>
             </div>
         </div>
     </div>

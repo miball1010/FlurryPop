@@ -8,13 +8,10 @@ import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
 const { isFullLoading } = storeToRefs(globalStore)
 const { pushMessage } = globalStore
-import { useAdminStore } from '@/stores/adminStore.js'
-const adminStore = useAdminStore()
-const { checkLogin } = adminStore
 
 const admin = ref({
-  username: 'FlurryPop@gmail.com',
-  password: 'FlurryPop'
+  username: '',
+  password: ''
 })
 
 async function login() {
@@ -37,19 +34,13 @@ async function login() {
     pushMessage(false, err.message)
   }
 }
-
-// onMounted(async () => {
-//   const isLoggedIn = await checkLogin()
-//   if (isLoggedIn)
-//     router.push('/dashboard/product')
-// })
 </script>
 
 <template>
   <div class="bg-[url('images/bg-2.jpg')] bg-cover bg-center h-screen w-full flex justify-center items-center">
     <div class="w-[90%] max-w-lg bg-white rounded-lg p-10">
       <div class="flex items-center justify-center gap-2 sm:gap-3">
-        <img src="/images/logo-black.svg" alt="" class="h-8 sm:h-11">
+        <img src="/images/logo-black.svg" alt="Flurry Pop logo" class="h-8 sm:h-11">
         <div class="text-lg sm:text-xl font-bold">後臺系統</div>
       </div>
 
