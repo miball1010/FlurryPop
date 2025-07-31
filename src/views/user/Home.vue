@@ -43,21 +43,20 @@ onMounted(async () => {
             }
         }
     )
-})
-
-window.addEventListener('load', () => {
-  isFullLoading.value = false
+    nextTick(() => {
+        isFullLoading.value = false
+    })
 })
 
 const popProduct = computed(() => {
-    return product.value.filter((i) => i.category != 'store').sort((a, b) => b.price - a.price).slice(0, 10)
+    return product.value.filter((i) => i.category != 'store').sort((a, b) => b.price - a.price).slice(0, 5)
 })
 
 </script>
 
 <template>
     <div class="home-bg">
-        <img src="/images/bg-1.jpg" alt="" class="bg-img" @load="onImageLoaded">
+        <img src="/images/bg-1.jpg" alt="" class="bg-img">
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
 
@@ -65,9 +64,9 @@ const popProduct = computed(() => {
             <div class="title text-[2rem] sm:text-[3rem] lg:text-[5rem] mb-3">Little flurries, big joy!</div>
             <RouterLink :to="{ name: 'user-product' }" class="btn">立即探索</RouterLink>
         </div>
-        <img src="/images/bg-1.png" alt="" class="bg-img ice" @load="onImageLoaded">
+        <img src="/images/bg-1.png" alt="" class="bg-img ice">
     </div>
-    <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white">
+    <div class="pt-15 pb-20 sm:pt-25 sm:pb-25 bg-white overflow-hidden">
         <div class="w-[85%] max-w-[996px] flex flex-col mx-auto gap-10 items-center lg:gap-35 sm:gap-20 sm:flex-row">
             <div data-aos="fade-right" class="flex-1">
                 <div class="flex gap-2 items-center mb-2">
@@ -177,6 +176,8 @@ const popProduct = computed(() => {
 }
 
 .ice {
+    position: absolute;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }

@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useUtils } from '@/composables/useUtils.js'
 const { currency, date } = useUtils()
 import { storeToRefs } from 'pinia'
@@ -9,10 +10,26 @@ import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { NowOrder, orderIsOpen, productCount, address } = storeToRefs(adminStore)
 const { updateOrder, closeOrderModal } = adminStore
+
+onMounted(() => {
+    adjustModalHeight()
+    window.addEventListener('resize', adjustModalHeight)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', adjustModalHeight)
+})
+
+const modalHeight = ref('100vh')
+function adjustModalHeight() {
+    const vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+    modalHeight.value = `calc(var(--vh, 1vh) * 100)`
+}
 </script>
 
 <template>
-    <div class="w-full h-screen fixed top-0 left-0 bg-black/45 z-50" v-show="orderIsOpen">
+    <div :style="{ height: modalHeight }" class="w-full fixed top-0 left-0 bg-black/45 z-50" v-show="orderIsOpen">
         <transition name="fadeup">
             <div v-show="orderIsOpen"
                 class="bg-transparent max-w-[1200px] w-[95%] max-h-[80%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
@@ -91,7 +108,7 @@ const { updateOrder, closeOrderModal } = adminStore
                                 <div class="text-sm sm:text-base w-20 sm:w-25">購買款項</div>
                                 <div class="flex-1">
                                     <div v-for="(item, index) in NowOrder.products" :key="index">{{ item.product.title
-                                        }}
+                                    }}
                                         x{{ item.qty }}
                                     </div>
                                 </div>
@@ -107,5 +124,4 @@ const { updateOrder, closeOrderModal } = adminStore
             </div>
         </transition>
     </div>
-
 </template>

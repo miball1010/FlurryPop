@@ -8,7 +8,7 @@ const route = useRoute()
 import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '@/stores/globalStore.js'
 const globalStore = useGlobalStore()
-const {  isInlineLoading } = storeToRefs(globalStore)
+const { isInlineLoading } = storeToRefs(globalStore)
 import { useUserStore } from '@/stores/userStore.js'
 const userStore = useUserStore()
 const { favoriteId, addLoading } = storeToRefs(userStore)
@@ -92,7 +92,7 @@ async function handleAddCart() {
 
             <!-- 商品 -->
             <div class="flex gap-8 mt-0 sm:mt-2 flex-col md:flex-row lg:gap-12">
-                <div class="flex-1">
+                <div class="w-full lg:w-[calc((100%-48px)/2)]">
                     <div class="hidden md:block">
                         <img :src="product.imageUrl" alt="">
                         <img :src="item" alt="" v-for="item in product.imagesUrl">
@@ -126,7 +126,7 @@ async function handleAddCart() {
                         <img :src="product.imageUrl" alt="">
                     </div>
                 </div>
-                <div class="flex-1  relative">
+                <div class="w-full lg:w-[calc((100%-48px)/2)] relative">
                     <div class="sticky top-27">
                         <div class="absolute top-1 right-0 flex gap-3">
                             <button @click="addFavorite(product.id)"
@@ -141,13 +141,11 @@ async function handleAddCart() {
                             currency(product.price) }}</div>
                         <div
                             class="text-xs sm:text-sm border-l-5 border-[#BFD6E4]  bg-[#F3F3F3] p-4 sm:p-5 text-justify mt-5 sm:mt-7">
-                            {{
-                                product.description
-                            }}
+                            {{ product.description }}
                         </div>
                         <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
                         <div class="text-sm sm:text-base">{{ product.content }}</div>
-                        <div class="flex w-full mt-7 max-w-[1400px]">
+                        <div class="flex w-full mt-7">
                             <button @click="decrease"
                                 :class="number > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
                                 class=" w-10 aspect-square border border-gray-200 text-center">-</button>
@@ -159,7 +157,7 @@ async function handleAddCart() {
 
                         <button @click="handleAddCart" :disabled="addLoading"
                             :class="addLoading ? 'bg-gray-400' : 'cursor-pointer bg-[#3F88B4] hover:opacity-90'"
-                            class="text-sm sm:text-base w-full text-white p-2 text-center mt-3 transition">加入購物車
+                            class="text-sm sm:text-base w-full text-white p-3 text-center mt-3 transition">加入購物車
                         </button>
                         <!-- text-white bg-[#3F88B4] hover:text-[#3F88B4] hover:bg-white -->
                     </div>

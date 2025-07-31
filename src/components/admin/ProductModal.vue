@@ -1,6 +1,6 @@
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
-import { ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '@/stores/globalStore.js'
@@ -11,6 +11,22 @@ import { useAdminStore } from '@/stores/adminStore.js'
 const adminStore = useAdminStore()
 const { NowProduct, productIsOpen, isNew } = storeToRefs(adminStore)
 const { updateProduct, closeProductModal } = adminStore
+
+onMounted(() => {
+    adjustModalHeight()
+    window.addEventListener('resize', adjustModalHeight)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', adjustModalHeight)
+})
+
+const modalHeight = ref('100vh')
+function adjustModalHeight() {
+    const vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+    modalHeight.value = `calc(var(--vh, 1vh) * 100)`
+}
 
 const fileInput1 = ref(null)
 const fileInput2 = ref(null)
@@ -59,9 +75,9 @@ function delImage(id) {
 </script>
 
 <template>
-    <div class="w-full h-screen fixed top-0 left-0 bg-black/45 z-50" v-show="productIsOpen">
+    <div :style="{ height: modalHeight }" class="w-full fixed top-0 left-0 bg-black/45 z-50" v-show="productIsOpen">
         <transition name="fadeup">
-            <div v-show="productIsOpen"
+            <div v-show="productIsOpen" 
                 class="bg-transparent max-w-[1200px] w-[95%] max-h-[80%] absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] overflow-x-hidden overflow-y-auto">
 
                 <div class="bg-neutral-700 text-white py-5 px-5 sm:px-10 text-base sm:text-lg font-semibold">

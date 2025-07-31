@@ -35,9 +35,12 @@ router.afterEach((to, from) => {
     const globalStore = useGlobalStore()
     window.scrollTo(0, 0)
     AOS.refresh()
-    setTimeout(() => {
-        globalStore.isFullLoading = false
-    }, 1000)
+    if (to.path === '/') { }
+    else {
+        setTimeout(() => {
+            globalStore.isFullLoading = false
+        }, 1000)
+    }
 })
 
 
