@@ -145,14 +145,15 @@ async function handleAddCart() {
                         </div>
                         <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
                         <div class="text-sm sm:text-base">{{ product.content }}</div>
+
                         <div class="flex w-full mt-7">
                             <button @click="decrease"
                                 :class="number > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
-                                class=" w-10 aspect-square border border-gray-200 text-center">-</button>
+                                class=" w-10 h-10 border border-gray-200 text-center">-</button>
                             <input type="number" v-model.number.lazy="number"
-                                class="flex-1 border-t border-b border-gray-200 text-center outline-none" />
+                                class="w-[calc(100%-80px)] border-t border-b border-gray-200 text-center outline-none" />
                             <button @click="increase"
-                                class="cursor-pointer hover:bg-gray-100 w-10 aspect-square border border-gray-200 text-center">+</button>
+                                class="w-10 h-10 cursor-pointer hover:bg-gray-100 border border-gray-200 text-center">+</button>
                         </div>
 
                         <button @click="handleAddCart" :disabled="addLoading"

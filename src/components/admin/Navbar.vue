@@ -51,7 +51,7 @@ window.addEventListener('resize', () => {
         <div class="w-full max-w-[1400px] mx-auto flex justify-between items-center">
 
             <div @click="CloseMenu"
-                class="w-full h-screen fixed top-0 left-0 bg-black/45 transition md:transition-none duration-300"
+                class="p-2 w-full h-screen fixed top-0 left-0 bg-black/45 transition md:transition-none duration-300"
                 :class="menuIsOpen ? 'pointer-events-all opacity-100 md:pointer-events-none md:opacity-0' : 'pointer-events-none opacity-0'">
             </div>
 
@@ -70,7 +70,7 @@ window.addEventListener('resize', () => {
                 <div @click="logout" class="navbtn cursor-pointer">登出</div>
             </div>
 
-            <button @click="OpenMenu" class="cursor-pointer md:hidden"> <img src="/images/menu.svg" alt=""
+            <button @click="OpenMenu" class="p-2 cursor-pointer md:hidden"> <img src="/images/menu.svg" alt=""
                     class="h-4 sm:h-5"></button>
         </div>
     </div>
@@ -102,6 +102,10 @@ window.addEventListener('resize', () => {
 
     .open.menu {
         right: 0;
+    }
+
+    .navbtn {
+        padding: 8px;
     }
 }
 

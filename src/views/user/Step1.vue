@@ -127,7 +127,7 @@ function moreProduct(id) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="ml-4 mr-1 sm:mr-5 sm:ml-7"><img src="/images/trash-icon.svg" alt=""
+                            <div class="p-2 ml-3 mr-0 sm:mr-3 sm:ml-5"><img src="/images/trash-icon.svg" alt=""
                                     @click="delCart(item.id)"
                                     class="h-5 sm:h-6 cursor-pointer transition duration-300 hover:scale-110">
                             </div>

@@ -12,9 +12,9 @@ export const useAdminStore = defineStore('adminStore', () => {
     closeProductModal()
     closeOrderModal()
     const token = getCookie('token')
-    
+
     if (!token) {
-       global.isFullLoading = false
+      global.isFullLoading = false
       return false
     }
     axios.defaults.headers.common['Authorization'] = token
@@ -66,8 +66,12 @@ export const useAdminStore = defineStore('adminStore', () => {
   }
 
   function closeProductModal() {
+    const modalEl = document.querySelector('.modal-product')
+    if (modalEl)
+      modalEl.scrollTop = 0
     productIsOpen.value = false
     document.body.style.overflow = ''
+
   }
 
   async function getProduct() {
@@ -191,6 +195,9 @@ export const useAdminStore = defineStore('adminStore', () => {
 
   function closeOrderModal() {
     document.body.style.overflow = ''
+    const modalEl = document.querySelector('.modal-order')
+    if (modalEl)
+      modalEl.scrollTop = 0
     orderIsOpen.value = false
   }
 

@@ -37,7 +37,6 @@ onMounted(async () => {
                         start: 'top top',
                         end: 'bottom top',
                         scrub: 3,
-                        // markers: true,
                     }
                 })
             }
@@ -56,7 +55,7 @@ const popProduct = computed(() => {
 
 <template>
     <div class="home-bg">
-        <img src="/images/bg-1.jpg" alt="" class="bg-img">
+        <img src="/images/bg-1.jpg" alt="" class="bg-img left-0">
     </div>
     <div class="w-full h-130 lg:h-screen overflow-hidden relative ">
 
@@ -167,7 +166,7 @@ const popProduct = computed(() => {
 .bg-img {
     position: absolute;
     bottom: 0;
-    left: 0;
+    /* left: 0; */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -176,9 +175,7 @@ const popProduct = computed(() => {
 }
 
 .ice {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
+    left: 50% ;
     transform: translateX(-50%);
 }
 
