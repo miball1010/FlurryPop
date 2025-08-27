@@ -1,0 +1,173 @@
+<script setup>
+import InlineLoading from '@/components/InlineLoading.vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+import { useUtils } from '@/composables/useUtils.js'
+const { currency } = useUtils()
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '@/stores/globalStore.js'
+const globalStore = useGlobalStore()
+const { isInlineLoading } = storeToRefs(globalStore)
+const { pushMessage } = globalStore
+import { useUserStore } from '@/stores/userStore.js'
+const userStore = useUserStore()
+const { step, cartData, total } = storeToRefs(userStore)
+const { getCheckProduct } = userStore
+
+onMounted(async () => {
+  step.value = 1
+  isInlineLoading.value = true
+  await getCheckProduct()
+  isInlineLoading.value = false
+})
+
+function decrease(item) {
+  if (item.qty > 1) {
+    item.qty--
+    updateCart(item)
+  }
+}
+
+function increase(item) {
+  item.qty++
+  updateCart(item)
+}
+
+const nowCartId = ref('')
+async function updateCart(item) {
+  nowCartId.value = item.id
+  if (item.qty <= 0 || isNaN(item.qty)) {
+    item.qty = 1
+  }
+  let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart/${item.id}`
+  const cart = {
+    data: {
+      product_id: item.id,
+      qty: item.qty,
+    },
+  }
+  try {
+    const res = await axios.put(apiPath, cart)
+    if (res.data.success) {
+      await getCheckProduct()
+    }
+    pushMessage(res.data.success, res.data.message)
+  } catch (err) {
+    console.error(err)
+  }
+  finally {
+    nowCartId.value = ''
+  }
+}
+
+async function delCart(id) {
+  let apiPath = `${import.meta.env.VITE_API}api/${import.meta.env.VITE_PATH}/cart/${id}`
+  try {
+    const res = await axios.delete(apiPath)
+    if (res.data.success) {
+      getCheckProduct()
+    }
+    pushMessage(res.data.success, res.data.message)
+  } catch (err) {
+    pushMessage(false, err.message)
+  }
+}
+
+function moreProduct(id) {
+  router.push(`/product/${id}`)
+}
+</script>
+
+<template>
+  <div class="relative py-5 top-55 w-[90%] max-w-[1050px] mx-auto sm:py-0 sm:top-90">
+    <div class="w-full p-10 text-center" v-if="isInlineLoading">
+      <InlineLoading />
+    </div>
+    <div v-else>
+      <div v-if="cartData.length == 0" class="flex flex-col gap-4 sm:gap-7 justify-center items-center ani-fade">
+        <div class="text-[#70a9ca] text-sm sm:text-base">目前沒有任何商品</div>
+        <RouterLink :to="{ name: 'user-product' }" class="btn transition text-white bg-[#3F88B4] hover:opacity-90">
+          購物去</RouterLink>
+      </div>
+
+      <div v-else class="ani-fade flex flex-col gap-5 lg:flex-row">
+        <div class="flex-2">
+          <div class="font-bold mb-2 text-base sm:text-lg">購物清單</div>
+          <div class="bg-white shadow-md ">
+            <div :class="{ 'border-b border-b-gray-200': cartData.length != index + 1 }"
+              class="flex justify-between p-3 sm:p-5" v-for="(item, index) in cartData" :key="item.id">
+              <div class="flex gap-4 sm:gap-5 min-w-0 w-full">
+                <div @click="moreProduct(item.product.id)" class="cursor-pointer w-20 h-auto sm:w-30 sm:h-30">
+                  <img :src="item.product.imageUrl" :alt="item.product.title"
+                    class="w-full h-full object-center object-cover" />
+                </div>
+                <div class="flex flex-col flex-1 min-w-0">
+                  <div class="sm:font-bold text-sm sm:text-base">{{ item.product.title }}</div>
+                  <div class="font-bold text-[#3F88B4]">NT$ {{ currency(item.product.price) }}</div>
+
+                  <div class="flex w-full max-w-[300px] mt-3"
+                    :class="{ 'bg-gray-100 pointer-events-none': nowCartId == item.id }">
+                    <button @click="decrease(item)"
+                      :class="item.qty > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
+                      class="w-8 aspect-square border border-gray-200 text-center sm:w-10">
+                      -
+                    </button>
+                    <input type="number" v-model.number.lazy="item.qty" @change="updateCart(item)"
+                      class="text-sm sm:text-base flex-1 min-w-0 border-t border-b border-gray-200 text-center outline-none" />
+                    <button @click="increase(item)"
+                      class="cursor-pointer hover:bg-gray-100 w-8 aspect-square border border-gray-200 text-center sm:w-10">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-[2px] ml-3 sm:ml-5">
+                <!-- <div class="text-lg text-gray-500 cursor-pointer transition duration-300 hover:opacity-80"
+                  @click="delCart(item.id)">x
+                </div> -->
+                <img src="/images/cross.svg" alt="trash-icon" @click="delCart(item.id)"
+                  class="h-3 sm:h-4 cursor-pointer transition duration-300 opacity-70 hover:opacity-50" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1">
+          <div class="sticky top-25">
+            <div class="font-bold mb-2 text-lg hidden lg:block">結帳明細</div>
+            <div class="bg-white shadow-md p-4 sm:p-5 flex justify-end flex-col items-end">
+              <div class="w-full border-b border-gray-200">
+                <div class="flex justify-between items-center mb-2" v-for="(item, index) in cartData" :key="index">
+                  <div class="text-sm sm:text-base">{{ item.product.title }}</div>
+                  <div class="">NT$ {{ currency(item.total) }}</div>
+                </div>
+              </div>
+              <div class="mt-2 mb-7 sm:mb-12">
+                <span class="font-bold text-sm sm:text-base">總計</span><span
+                  class="ml-1 font-bold text-[#7DB14A] text-lg sm:text-xl">NT$ {{ currency(total) }}</span>
+              </div>
+              <RouterLink :to="{ name: 'user-checkout-step2' }"
+                class="btn bg-[#3F88B4] text-white transition hover:opacity-90">下一步
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>
