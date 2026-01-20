@@ -128,7 +128,8 @@ async function handleAddCart() {
         <div class="w-full lg:w-[calc((100%-48px)/2)] relative">
           <div class="sticky top-27">
             <div class="absolute top-1 right-0 flex gap-3">
-              <button @click="addFavorite(product.id)" class="cursor-pointer transition duration-300 hover:scale-110">
+              <button @click="addFavorite(product.id, $event)" v-if="product.category != 'store'"
+                class="cursor-pointer transition duration-300 hover:scale-110">
                 <img
                   :src="`${favoriteId.indexOf(product.id) != -1 ? `${imgPath}heart-solid-red-icon.svg` : `${imgPath}heart-hollow-red-icon.svg`}`"
                   alt="heart-icon" class="h-5.5" />
@@ -148,7 +149,7 @@ async function handleAddCart() {
             <div class="mt-5 font-bold text-sm sm:text-base">主成分</div>
             <div class="text-sm sm:text-base">{{ product.content }}</div>
 
-            <div class="flex w-full mt-7">
+            <div class="flex w-full mt-7" v-if="product.category != 'store'">
               <button @click="decrease" :class="number > 1 ? 'cursor-pointer hover:bg-gray-100' : 'bg-gray-100'"
                 class="w-10 h-10 border border-gray-200 text-center">
                 -
@@ -161,7 +162,7 @@ async function handleAddCart() {
               </button>
             </div>
 
-            <button @click="handleAddCart" :disabled="activeProductId == product.id"
+            <button @click="handleAddCart" :disabled="activeProductId == product.id" v-if="product.category != 'store'"
               :class="activeProductId == product.id ? 'bg-gray-400' : 'cursor-pointer bg-[#3F88B4] hover:opacity-90'"
               class="flex justify-center items-center text-sm sm:text-base w-full text-white p-3 text-center mt-3 transition">
               <span v-if="activeProductId != product.id">加入購物車</span>

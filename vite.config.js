@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig(({ command }) => {
   const isDev = command === 'serve'
   return {
-    base: isDev ? '/' : './',
+    base: isDev ? '/' : '/FlurryPop/',
     plugins: [vue(), tailwindcss()],
     resolve: {
       alias: {
