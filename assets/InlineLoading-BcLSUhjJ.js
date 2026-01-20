@@ -1,0 +1,1 @@
+import{_ as e,d as n,e as d,l as s}from"./index-B1B9pEGA.js";const v={};function a(o,i){return s(),n("div",null,i[0]||(i[0]=[d("div",{class:"lds-spinner"},[d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div"),d("div")],-1)]))}const c=e(v,[["render",a],["__scopeId","data-v-a0367c58"]]);export{c as I};
